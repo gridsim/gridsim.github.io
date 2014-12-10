@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. The Simulator General Use &mdash; Gridsim 0.1.1-rc documentation</title>
+  <title>2. The Simulator General Use &mdash; Gridsim 0.1.1-rc1 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="index.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/>
         <link rel="next" title="3. The Simulation Core" href="core.html"/>
         <link rel="prev" title="1. Overview" href="overview.html"/> 
 
@@ -2778,7 +2778,7 @@ classical example is a simple thermostat:</p>
 <span class="c">#   |___________|</span>
 <span class="c">#</span>
 <span class="c"># The room has a surface of 50m2 and a height of 2.5m.</span>
-<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="n">room</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalProcess</span><span class="o">.</span><span class="n">room</span><span class="p">(</span><span class="s">&#39;room&#39;</span><span class="p">,</span>
                                            <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
                                            <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>
@@ -2826,7 +2826,7 @@ classical example is a simple thermostat:</p>
 <span class="c">#                __|__    |__________________________|</span>
 <span class="c">#                 ---</span>
 <span class="c">#</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="c"># the hysteresis is a delta of temperature</span>
 <span class="n">hysteresis</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_degC</span>
 
@@ -3650,7 +3650,7 @@ into the file.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc',
+            VERSION:'0.1.1-rc1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
