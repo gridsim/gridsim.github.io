@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Gridsim simulator &mdash; Gridsim 0.1.1-rc documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="#"/>
+        <link rel="next" title="1. Overview" href="overview.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="#" class="fa fa-home"> Gridsim</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>The Gridsim simulator</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="the-gridsim-simulator">
+<span id="intro-ref"></span><h1>The Gridsim simulator<a class="headerlink" href="#the-gridsim-simulator" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center">
+<img alt="_images/logo.png" src="_images/logo.png" />
+</div>
+<div class="section" id="table-of-content">
+<h2>Table of Content<a class="headerlink" href="#table-of-content" title="Permalink to this headline">¶</a></h2>
+<p>This documentation is separated into four parts:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="context-and-objective">
+<h2>Context and objective<a class="headerlink" href="#context-and-objective" title="Permalink to this headline">¶</a></h2>
+<p>The energy world is quite complex: energy is moved, stored and transformed using
+a heterogeneous and vastly distributed infrastructure. The move towards a
+cleaner and more sustainable energy system, which is favoured by people, has
+major implications on the energy system. Large controllable plants will be
+replaced by small distributed units featuring most of the time a stochastic
+behaviour. To accommodate these changes, the energy system as a whole must
+become more flexible.
+Many processes like building heating or cooling feature some level of
+flexibility. This flexibility potential is mostly unused today. To make the
+energy system more flexible, some of its elements must be orchestrated so they
+interact harmoniously. This is the role of a control strategy.</p>
+<p>Before real deployment, the effect of control strategies applied to energy
+system/flexible elements should be assessed by simulation. The Gridsim simulator
+has been designed for that purpose.</p>
+</div>
+<div class="section" id="why-using-the-gridsim-simulator">
+<h2>Why using the Gridsim simulator?<a class="headerlink" href="#why-using-the-gridsim-simulator" title="Permalink to this headline">¶</a></h2>
+<p>Many powerful energy simulators do exist either as open source or licensed
+software...
+So why a new simulation framework?</p>
+<p>Gridsim has two distinctive features:</p>
+<ul class="simple">
+<li>Gridsim  can model the complex interactions between energy carriers. It is not
+limited to a single energy carrier like electricity or heat.</li>
+<li>Gridsim should be seen as an open toolbox to quickly design the simulator
+adapted to specific needs.</li>
+</ul>
+<p>Hence Gridsim expected users are researchers and developers in energy systems
+who need to simulate complex, multi-carrier energy systems with their control
+strategies.</p>
+<p>The Gridsim simulator benefits of the power of the Python programming language.
+A clear object oriented design makes the simulator scalable: the number of types
+and instances can be increased while keeping a manageable program structure.
+New element(s) types are typically designed by specialising existing elements.</p>
+</div>
+<div class="section" id="main-features">
+<h2>Main features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h2>
+<p>The main features of the Gridsim simulator are listed below:</p>
+<ul class="simple">
+<li>The simulator allows to define the topology of an energy system (electrical
+grid, generation, consumption and storage elements, elements transforming
+energy from a form to another form) as well as dynamic environment parameters
+(for example, temperature or solar radiation over time at a given point).</li>
+<li>An energy system is simulated over a given time period (simulation period,
+typically one year) with a given unit time step (typically one second).</li>
+<li>Any energy system parameter can be recorded over the simulation period.</li>
+</ul>
+<p>Each element has its own independent behaviour. At each unit time step, the
+Gridsim core module addresses each element twice:</p>
+<ul class="simple">
+<li>Upon the first call, the element updates its internal state. To do this it has
+a logic defined by its type. It can request the public state of other
+elements.</li>
+<li>Upon the second call, the element updates its public state with its internal
+state.</li>
+</ul>
+<p>This two step process guarantees that elements access the system in a steady
+state.</p>
+<p>For questions, bug reports, patches and new elements/modules,
+contact <a class="reference external" href="mailto:gridsim&#37;&#52;&#48;hevs&#46;ch">gridsim<span>&#64;</span>hevs<span>&#46;</span>ch</a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="overview.html" class="btn btn-neutral float-right" title="1. Overview"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
+      Last updated on Dec 10, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1-rc',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

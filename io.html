@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. The Gridsim Input/Output &mdash; Gridsim 0.1.1-rc documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="index.html"/>
+        <link rel="next" title="7. Further Information" href="copyright.html"/>
+        <link rel="prev" title="5. The Simulation Unit" href="unit.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Gridsim</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>6. The Gridsim Input/Output</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/io.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="module-gridsim.iodata">
+<span id="the-gridsim-input-output"></span><span id="io-ref"></span><h1>6. The Gridsim Input/Output<a class="headerlink" href="#module-gridsim.iodata" title="Permalink to this headline">¶</a></h1>
+<p>The input/output module provides loader and saver interfaces.</p>
+<p>Currently Gridsim provides loader for CSV file (<a class="reference internal" href="#gridsim.iodata.input.CSVReader" title="gridsim.iodata.input.CSVReader"><tt class="xref py py-class docutils literal"><span class="pre">CSVReader</span></tt></a>) and savers
+for CSV file (<a class="reference internal" href="#gridsim.iodata.output.CSVSaver" title="gridsim.iodata.output.CSVSaver"><tt class="xref py py-class docutils literal"><span class="pre">CSVSaver</span></tt></a>) and images &#8211; .png, .jpg, .pdf, etc. &#8211;
+(<a class="reference internal" href="#gridsim.iodata.output.FigureSaver" title="gridsim.iodata.output.FigureSaver"><tt class="xref py py-class docutils literal"><span class="pre">FigureSaver</span></tt></a>).</p>
+<div class="section" id="module-gridsim.iodata.input">
+<span id="input"></span><h2>6.1. Input<a class="headerlink" href="#module-gridsim.iodata.input" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="gridsim.iodata.input.Reader">
+<em class="property">class </em><tt class="descclassname">gridsim.iodata.input.</tt><tt class="descname">Reader</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.Reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This class is the based class of all readers/loaders.</p>
+<dl class="method">
+<dt id="gridsim.iodata.input.Reader.clear">
+<tt class="descname">clear</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.Reader.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empties the data of the Reader.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.input.Reader.load">
+<tt class="descname">load</tt><big>(</big><em>self</em>, <em>stream</em>, <em>data_type=str</em>, <em>clear_data=False</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.Reader.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method MUST returns formatted data following this format
+<tt class="docutils literal"><span class="pre">[(label1,</span> <span class="pre">data1],</span> <span class="pre">(label2,</span> <span class="pre">data2),</span> <span class="pre">...]</span></tt></p>
+<p>with:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">labelX</span></tt>: a str</li>
+<li><tt class="docutils literal"><span class="pre">dataX</span></tt>: a list of <tt class="docutils literal"><span class="pre">data_type</span></tt></li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>stream</strong> (<em>str, BufferedReader</em>) &#8211; a stream of data or a file name</li>
+<li><strong>data_type</strong> (<em>type (default str)</em>) &#8211; the type of stored data</li>
+<li><strong>clear_data</strong> (<em>bool</em>) &#8211; if clear data is <tt class="docutils literal"><span class="pre">True</span></tt> load the file even if the
+file is already loaded.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dict of values</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.iodata.input.CSVReader">
+<em class="property">class </em><tt class="descclassname">gridsim.iodata.input.</tt><tt class="descname">CSVReader</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.CSVReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gridsim.iodata.input.Reader" title="gridsim.iodata.input.Reader"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.iodata.input.Reader</span></tt></a></p>
+<p>This class reads a CSV file and stores the data as follow:</p>
+<p><tt class="docutils literal"><span class="pre">[(label1,</span> <span class="pre">data1],</span> <span class="pre">(label2,</span> <span class="pre">data2),</span> <span class="pre">...]</span></tt></p>
+<p>with:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">labelX</span></tt>: a str</li>
+<li><tt class="docutils literal"><span class="pre">dataX</span></tt>: a list of <tt class="docutils literal"><span class="pre">data_type</span></tt></li>
+</ul>
+<dl class="attribute">
+<dt id="gridsim.iodata.input.CSVReader.DEFAULT_DATA_NAME">
+<tt class="descname">DEFAULT_DATA_NAME</tt><em class="property"> = 'DATA_'</em><a class="headerlink" href="#gridsim.iodata.input.CSVReader.DEFAULT_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>If no header, the label of the <tt class="docutils literal"><span class="pre">dict</span></tt> returned by
+<a class="reference internal" href="#gridsim.iodata.input.CSVReader.load" title="gridsim.iodata.input.CSVReader.load"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.input.CSVReader.load()</span></tt></a> will be <tt class="docutils literal"><span class="pre">DATA_X</span></tt> with <tt class="docutils literal"><span class="pre">X</span></tt> an
+integer representing the column in the file:</p>
+<p><tt class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">X</span> <span class="pre">&lt;</span> <span class="pre">column</span> <span class="pre">number</span> <span class="pre">-</span> <span class="pre">1</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.input.CSVReader.clear">
+<tt class="descname">clear</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.CSVReader.clear" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.input.CSVReader.load">
+<tt class="descname">load</tt><big>(</big><em>self</em>, <em>stream</em>, <em>data_type=str</em>, <em>clear_data=False</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.CSVReader.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the data from the given CSV data file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stream</strong> (<em>str, BufferedReader</em>) &#8211; A stream of the CSV data to read</li>
+<li><strong>data_type</strong> (<em>type</em>) &#8211; the type of the stored data</li>
+<li><strong>clear_data</strong> (<em>bool</em>) &#8211; if <tt class="docutils literal"><span class="pre">True</span></tt> clear the data if the reader already
+loads a file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.iodata.output">
+<span id="output"></span><h2>6.2. Output<a class="headerlink" href="#module-gridsim.iodata.output" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p>This module provides interfaces to save data.</p>
+<p>To use the <tt class="xref py py-class docutils literal"><span class="pre">Saver</span></tt> a class has to implement the <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter" title="gridsim.iodata.output.AttributesGetter"><tt class="xref py py-class docutils literal"><span class="pre">AttributesGetter</span></tt></a>
+interface.</p>
+<p><em>Example:</em></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
+<span class="kn">from</span> <span class="nn">gridsim.thermal.core</span> <span class="kn">import</span> <span class="n">ThermalCoupling</span><span class="p">,</span> <span class="n">ThermalProcess</span>
+<span class="kn">from</span> <span class="nn">gridsim.thermal.element</span> <span class="kn">import</span> <span class="n">ConstantTemperatureProcess</span>
+<span class="kn">from</span> <span class="nn">gridsim.recorder</span> <span class="kn">import</span> <span class="n">PlotRecorder</span>
+<span class="kn">from</span> <span class="nn">gridsim.iodata.output</span> <span class="kn">import</span> <span class="n">FigureSaver</span><span class="p">,</span> <span class="n">CSVSaver</span>
+
+<span class="c"># Gridsim simulator.</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">()</span>
+
+<span class="c"># Create a simple thermal process: Two rooms and the thermal coupling between</span>
+<span class="c"># them and to the outside temperature.</span>
+<span class="c">#             __________                        ___________</span>
+<span class="c">#           |          |   ________________   |           |</span>
+<span class="c">#           |   room1  |]-| room1 to room2 |-[| cold_room |</span>
+<span class="c">#           |    18 C  |  |_____50_W/K_____|  |    25 C   |      outside 5 C</span>
+<span class="c">#  10 W/K -[|          |                      |           |]- 10 W/K</span>
+<span class="c">#           |__________|                      |___________|</span>
+<span class="c">#</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">room1</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalProcess</span><span class="o">.</span><span class="n">room</span><span class="p">(</span><span class="s">&#39;room1&#39;</span><span class="p">,</span>
+                                            <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+                                            <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>
+                                            <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">room2</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalProcess</span><span class="o">.</span><span class="n">room</span><span class="p">(</span><span class="s">&#39;room2&#39;</span><span class="p">,</span>
+                                            <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
+                                            <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>
+                                            <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
+
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">outside</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">ConstantTemperatureProcess</span><span class="p">(</span><span class="s">&#39;outside&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
+
+<span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalCoupling</span><span class="p">(</span><span class="s">&#39;room1 to outside&#39;</span><span class="p">,</span>
+                                <span class="mi">10</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">thermal_conductivity</span><span class="p">,</span>
+                                <span class="n">room1</span><span class="p">,</span> <span class="n">outside</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalCoupling</span><span class="p">(</span><span class="s">&#39;room2 to outside&#39;</span><span class="p">,</span>
+                                <span class="mi">10</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">thermal_conductivity</span><span class="p">,</span>
+                                <span class="n">room2</span><span class="p">,</span> <span class="n">outside</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalCoupling</span><span class="p">(</span><span class="s">&#39;room1 to room2&#39;</span><span class="p">,</span>
+                                <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">thermal_conductivity</span><span class="p">,</span>
+                                <span class="n">room1</span><span class="p">,</span> <span class="n">room2</span><span class="p">))</span>
+
+<span class="c"># Create a plot recorder that records the temperatures of all thermal processes.</span>
+<span class="n">kelvin</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">kelvin</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
+
+<span class="c"># Create a plot recorder that records the temperatures of all thermal</span>
+<span class="c"># processes in Kelvin.</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">),</span>
+           <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">))</span>
+
+<span class="c"># Create a second plot recorder which records all energy flows</span>
+<span class="c"># (thermal couplings) between the different processes.</span>
+
+<span class="n">flow</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;power&#39;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">flow</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">element_class</span><span class="o">=</span><span class="n">ThermalCoupling</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
+
+<span class="c"># Run the simulation for an hour with a resolution of 1 second.</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Saving data...&quot;</span><span class="p">)</span>
+
+<span class="c"># Save the figures as images.</span>
+<span class="n">FigureSaver</span><span class="p">(</span><span class="n">kelvin</span><span class="p">,</span> <span class="s">&quot;Temperature (K)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/fig1.png&#39;</span><span class="p">)</span>
+<span class="n">FigureSaver</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="s">&quot;Temperature (C)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/fig2.png&#39;</span><span class="p">)</span>
+<span class="n">FigureSaver</span><span class="p">(</span><span class="n">flow</span><span class="p">,</span> <span class="s">&quot;Flow&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/fig3.png&#39;</span><span class="p">)</span>
+
+<span class="n">CSVSaver</span><span class="p">(</span><span class="n">celsius</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/fig2.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<ul class="simple">
+<li>On lines 46, 51 and 85, we create <a class="reference internal" href="documentation.html#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> objects.</li>
+<li>On lines 47, 52 and 86, we add the recorders to the simulation.</li>
+<li>On lines 69 to 71, we use the recorders as <tt class="xref py py-class docutils literal"><span class="pre">AttributeGetter</span></tt> to
+save them in figure. Here, the 3 images file saved:</li>
+</ul>
+<div class="figure align-center">
+<img alt="_images/fig1.png" src="_images/fig1.png" />
+</div>
+<div class="figure align-center">
+<img alt="_images/fig2.png" src="_images/fig2.png" />
+</div>
+<div class="figure align-center">
+<img alt="_images/fig3.png" src="_images/fig3.png" />
+</div>
+<ul class="simple">
+<li>On line 73, we use a second saver to save in a csv file the a recorder we
+already saved, here the 20th first lines:</li>
+</ul>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">second</span><span class="p">,</span><span class="n">outside</span><span class="p">,</span><span class="n">room2</span><span class="p">,</span><span class="n">room1</span>
+<span class="mi">0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">25.0</span><span class="p">,</span><span class="mf">18.0</span>
+<span class="mi">1</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9963515755</span><span class="p">,</span><span class="mf">18.0014593698</span>
+<span class="mi">2</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9927050871</span><span class="p">,</span><span class="mf">18.0029169487</span>
+<span class="mi">3</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9890605334</span><span class="p">,</span><span class="mf">18.004372738</span>
+<span class="mi">4</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9854179132</span><span class="p">,</span><span class="mf">18.0058267391</span>
+<span class="mi">5</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9817772251</span><span class="p">,</span><span class="mf">18.0072789533</span>
+<span class="mi">6</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9781384676</span><span class="p">,</span><span class="mf">18.008729382</span>
+<span class="mi">7</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9745016395</span><span class="p">,</span><span class="mf">18.0101780265</span>
+<span class="mi">8</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9708667394</span><span class="p">,</span><span class="mf">18.0116248882</span>
+<span class="mi">9</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9672337658</span><span class="p">,</span><span class="mf">18.0130699684</span>
+<span class="mi">10</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9636027176</span><span class="p">,</span><span class="mf">18.0145132685</span>
+<span class="mi">11</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9599735932</span><span class="p">,</span><span class="mf">18.0159547898</span>
+<span class="mi">12</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9563463914</span><span class="p">,</span><span class="mf">18.0173945337</span>
+<span class="mi">13</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9527211107</span><span class="p">,</span><span class="mf">18.0188325015</span>
+<span class="mi">14</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9490977499</span><span class="p">,</span><span class="mf">18.0202686946</span>
+<span class="mi">15</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9454763076</span><span class="p">,</span><span class="mf">18.0217031143</span>
+<span class="mi">16</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9418567824</span><span class="p">,</span><span class="mf">18.0231357619</span>
+<span class="mi">17</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.938239173</span><span class="p">,</span><span class="mf">18.0245666388</span>
+<span class="mi">18</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.934623478</span><span class="p">,</span><span class="mf">18.0259957463</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="class">
+<dt id="gridsim.iodata.output.AttributesGetter">
+<em class="property">class </em><tt class="descclassname">gridsim.iodata.output.</tt><tt class="descname">AttributesGetter</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This is the based class for all data which have to be saved.</p>
+<dl class="method">
+<dt id="gridsim.iodata.output.AttributesGetter.get_x_values">
+<tt class="descname">get_x_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_x_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns x values of data stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of values</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.output.AttributesGetter.get_x_unit">
+<tt class="descname">get_x_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_x_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns x unit of data stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a string representing the unit.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.output.AttributesGetter.get_y_values">
+<tt class="descname">get_y_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_y_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns y values of data stored. As more than one data can
+be sent, the values have to be sent with the following format:
+<tt class="docutils literal"><span class="pre">[(label1,</span> <span class="pre">data1),</span> <span class="pre">(label2,</span> <span class="pre">data2),</span> <span class="pre">...]</span></tt>
+with:
+* labelX: a string representing the dataX
+* dataX: a list of data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a dict of values</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.output.AttributesGetter.get_y_unit">
+<tt class="descname">get_y_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_y_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns y unit of data stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a string representing the unit.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.iodata.output.FigureSaver">
+<em class="property">class </em><tt class="descclassname">gridsim.iodata.output.</tt><tt class="descname">FigureSaver</tt><big>(</big><em>self</em>, <em>values</em>, <em>title</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.FigureSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>A <a class="reference internal" href="#gridsim.iodata.output.FigureSaver" title="gridsim.iodata.output.FigureSaver"><tt class="xref py py-class docutils literal"><span class="pre">FigureSaver</span></tt></a> can be used to record a class:<cite>.AttributesGetter</cite>
+and plot it in a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>values</strong> (<em>AttributesGetter</em>) &#8211; The values to display</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The title of the plot.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.iodata.output.FigureSaver.figure">
+<tt class="descname">figure</tt><a class="headerlink" href="#gridsim.iodata.output.FigureSaver.figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>The matplotlib figure identifier. If the figure was not already
+rendered, it will do this by calling <a class="reference internal" href="#gridsim.iodata.output.FigureSaver.render" title="gridsim.iodata.output.FigureSaver.render"><tt class="xref py py-func docutils literal"><span class="pre">render()</span></tt></a> automatically
+before actually returning the figure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.output.FigureSaver.render">
+<tt class="descname">render</tt><big>(</big><em>self</em>, <em>y_min=None</em>, <em>y_max=None</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.FigureSaver.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the actual figure and returns the matplotlib figure identifier.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">you do not need to call this method explicitly as it will get
+called as soon as needed by other methods like <a class="reference internal" href="#gridsim.iodata.output.FigureSaver.save" title="gridsim.iodata.output.FigureSaver.save"><tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt></a>
+or the property getter <strong>figure</strong> are called. This method
+offers some fine tuning parameters to control the look of the
+figure.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>y_min</strong> (<em>float</em>) &#8211; Minimal value on the y-axis.</li>
+<li><strong>y_max</strong> (<em>float</em>) &#8211; Maximal value on the y-axis.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.iodata.output.FigureSaver.save">
+<tt class="descname">save</tt><big>(</big><em>self</em>, <em>file_name</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.FigureSaver.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the figure in the given file (<tt class="docutils literal"><span class="pre">file_name</span></tt>). The format is
+deduced from the file name extension. The output supported formats
+available depend on the backend being used. On Unix systems these
+formats are normally supported:</p>
+<blockquote>
+<div><p><strong>Scalable Vector Graphics</strong> - *.svg, *.svgz (zip *.svg)</p>
+<p><strong>Graphics Interchange Format</strong> - *.gif</p>
+<p><strong>Portable Network Graphics</strong> - *.png</p>
+<p><strong>JPEG Image</strong> - *.jpg, *.jpeg</p>
+<p><strong>Postscript</strong> - *.ps</p>
+<p><strong>Encapsulated Postscript</strong> - *.eps</p>
+<p><strong>Tagged Image Format File</strong> - *.tif, *.tiff</p>
+<p><strong>Raw RGBA bitmap</strong> - *.raw, *.rgba</p>
+<p><strong>Portable Document Format</strong> - *.pdf</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>str</em>) &#8211; File name (path) where to save the figure. The file
+format is deduced from the file extension.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.iodata.output.CSVSaver">
+<em class="property">class </em><tt class="descclassname">gridsim.iodata.output.</tt><tt class="descname">CSVSaver</tt><big>(</big><em>self</em>, <em>values</em>, <em>separator='</em>, <em>'</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.CSVSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This saver save data as a text file with the csv format with the given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>values</strong> (<em>AttributesGetter</em>) &#8211; The values to display</li>
+<li><strong>separator</strong> (<em>str</em>) &#8211; the separator of two data in the same line</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="gridsim.iodata.output.CSVSaver.save">
+<tt class="descname">save</tt><big>(</big><em>self</em>, <em>file_name</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.CSVSaver.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the data in the given file (<tt class="docutils literal"><span class="pre">file_name</span></tt>). The format is a text
+file regardless the extension of the file.
+The data is store with the csv format and the header are the data
+returned by <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.get_x_unit" title="gridsim.iodata.output.AttributesGetter.get_x_unit"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter.get_x_unit()</span></tt></a>
+and <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.get_y_unit" title="gridsim.iodata.output.AttributesGetter.get_y_unit"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter.get_y_unit()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>str</em>) &#8211; File name (path) where to save the file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="copyright.html" class="btn btn-neutral float-right" title="7. Further Information"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="unit.html" class="btn btn-neutral" title="5. The Simulation Unit"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
+      Last updated on Dec 10, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1-rc',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

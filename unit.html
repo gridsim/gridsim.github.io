@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. The Simulation Unit &mdash; Gridsim 0.1.1-rc documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="index.html"/>
+        <link rel="next" title="6. The Gridsim Input/Output" href="io.html"/>
+        <link rel="prev" title="4. The Simulation Tools" href="tools.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Gridsim</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>5. The Simulation Unit</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/unit.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="the-simulation-unit">
+<span id="gridsim-unit"></span><h1>5. The Simulation Unit<a class="headerlink" href="#the-simulation-unit" title="Permalink to this headline">¶</a></h1>
+<p>The following section describes the unit management provide by Gridsim.</p>
+<span class="target" id="module-gridsim.unit"></span><p><em>Module author: Gillian Basso&lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Gillian Basso&lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p>This module provides a unit management based on pint
+(<a class="reference external" href="https://pypi.python.org/pypi/Pint/">https://pypi.python.org/pypi/Pint/</a>).</p>
+<div class="section" id="how-to-use-gridsim-units">
+<h2>5.1. How to use <tt class="xref py py-mod docutils literal"><span class="pre">gridsim.units</span></tt><a class="headerlink" href="#how-to-use-gridsim-units" title="Permalink to this headline">¶</a></h2>
+<p>It provides an object call <tt class="docutils literal"><span class="pre">units</span></tt> which is a wrapper to all useful features
+of pint, thus it should used as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">area</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span> <span class="o">*</span> <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">area</span>
+<span class="go">3.0 meter ** 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">area</span><span class="p">)</span>
+<span class="go">3.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">dimension</span><span class="p">(</span><span class="n">area</span><span class="p">)</span>
+<span class="go">[length] ** 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">unit</span><span class="p">(</span><span class="n">area</span><span class="p">)</span>
+<span class="go">meter ** 2</span>
+</pre></div>
+</div>
+<p>As it is possible to create a measurement by crossing a number value by the unit:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size1</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+</pre></div>
+</div>
+<p>it is also possible to create a measurement in an oriented-object way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size2</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size1</span> <span class="o">==</span> <span class="n">size2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The second method to create a measurement MUST be used to define
+non standard temperature and SHALL be converted in standard unit
+before sending to the simulator unless
+a <tt class="docutils literal"><span class="pre">pint.unit.OffsetUnitCalculusError</span></tt> will be raised:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>                                   <span class="c"># define temperature in degree celsius</span>
+<span class="n">room</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalProcess</span><span class="o">.</span><span class="n">room</span><span class="p">(</span><span class="s">&#39;room&#39;</span><span class="p">,</span>
+                           <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>            <span class="c"># define square metre</span>
+                           <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>                       <span class="c"># define metre</span>
+                           <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span> <span class="c"># convert celsius to kelvin for the simulation</span>
+</pre></div>
+</div>
+<p>Also, there is a delta counterpart to specify temperature
+differences. Absolute units have no delta counterpart.
+For example, the change in celsius is equal to the change
+in kelvin, but not in fahrenheit (as the scaling factor is
+different):</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hysteresis</span> <span class="o">=</span> <span class="mf">2.4</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_degC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">hysteresis</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">))</span>
+<span class="go">2.4 kelvin</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">hysteresis</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">delta_degF</span><span class="p">))</span>
+<span class="go">4.32 delta_degF</span>
+</pre></div>
+</div>
+</div>
+<dl class="method">
+<dt id="gridsim.unit.units">
+<tt class="descclassname">gridsim.unit.</tt><tt class="descname">units</tt><big>(</big><em>value</em>, <em>unit</em><big>)</big><a class="headerlink" href="#gridsim.unit.units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a measurement of <tt class="docutils literal"><span class="pre">value</span></tt> times <tt class="docutils literal"><span class="pre">unit</span></tt>
+Equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">value</span><span class="o">*</span><span class="n">unit</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>int, float</em>) &#8211; the value of the measurement</li>
+<li><strong>unit</strong> (see <a class="reference internal" href="#all-unit"><em>Information of existing units</em></a>) &#8211; the unit of the measurement</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.unit.units.value">
+<tt class="descclassname">units.</tt><tt class="descname">value</tt><big>(</big><em>measurement</em><big>)</big><a class="headerlink" href="#gridsim.unit.units.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the <tt class="docutils literal"><span class="pre">measurement</span></tt> without any conversion:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="go">meter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kilometer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="go">kilometer</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the value of the measurement</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.unit.units.unit">
+<tt class="descclassname">units.</tt><tt class="descname">unit</tt><big>(</big><em>measurement</em><big>)</big><a class="headerlink" href="#gridsim.unit.units.unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the unit of the measurement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">unit</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="go">meter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kilometer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">unit</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="go">kilometer</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the unit of the measurement</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.unit.units.dimension">
+<tt class="descclassname">units.</tt><tt class="descname">dimension</tt><big>(</big><em>measurement</em><big>)</big><a class="headerlink" href="#gridsim.unit.units.dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the unit of the measurement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="go">[length]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kilometer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="go">[length]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the unit of the measurement</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.unit.units.convert">
+<tt class="descclassname">units.</tt><tt class="descname">convert</tt><big>(</big><em>measurement</em>, <em>unit</em><big>)</big><a class="headerlink" href="#gridsim.unit.units.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the <tt class="docutils literal"><span class="pre">measurement</span></tt> to the unit if possible else raises
+<tt class="docutils literal"><span class="pre">pint.unit.DimensionalityError</span></tt> exception:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">centimetre</span><span class="p">)</span>
+<span class="go">100.0 centimeter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">litre</span><span class="p">)</span>
+<span class="go">[...]</span>
+<span class="go">pint.unit.DimensionalityError: Cannot convert from &#39;meter&#39; ([length]) to &#39;liter&#39; ([length] ** 3)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the converted measurement</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">unit</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="information-of-existing-units">
+<span id="all-unit"></span><h2>5.2. Information of existing units<a class="headerlink" href="#information-of-existing-units" title="Permalink to this headline">¶</a></h2>
+<p>Here is a summary of all units that could be used to create a measurement.
+This content is based on data of file <tt class="docutils literal"><span class="pre">default_en.txt</span></tt> of <tt class="docutils literal"><span class="pre">pint</span></tt> package.</p>
+<div class="section" id="references">
+<h3>5.2.1. References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<p>The data in <strong>square brackets</strong> <tt class="docutils literal"><span class="pre">[]</span></tt> are the dimension returned by
+<a class="reference internal" href="#gridsim.unit.units.dimension" title="gridsim.unit.units.dimension"><tt class="xref py py-func docutils literal"><span class="pre">units.dimension()</span></tt></a>.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">meter</span> <span class="pre">=</span> <span class="pre">[length]</span> <span class="pre">=</span> <span class="pre">m</span> <span class="pre">=</span> <span class="pre">metre</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">second</span> <span class="pre">=</span> <span class="pre">[time]</span> <span class="pre">=</span> <span class="pre">s</span> <span class="pre">=</span> <span class="pre">sec</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ampere</span> <span class="pre">=</span> <span class="pre">[current]</span> <span class="pre">=</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">amp</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">candela</span> <span class="pre">=</span> <span class="pre">[luminosity]</span> <span class="pre">=</span> <span class="pre">cd</span> <span class="pre">=</span> <span class="pre">candle</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gram</span> <span class="pre">=</span> <span class="pre">[mass]</span> <span class="pre">=</span> <span class="pre">g</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mole</span> <span class="pre">=</span> <span class="pre">[substance]</span> <span class="pre">=</span> <span class="pre">mol</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kelvin</span> <span class="pre">=</span> <span class="pre">[temperature];</span> <span class="pre">offset:</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">K</span> <span class="pre">=</span> <span class="pre">degK</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">radian</span> <span class="pre">=</span> <span class="pre">[]</span> <span class="pre">=</span> <span class="pre">rad</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">bit</span> <span class="pre">=</span> <span class="pre">[]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">count</span> <span class="pre">=</span> <span class="pre">[]</span></tt></li>
+</ul>
+</div>
+<div class="section" id="prefixes">
+<h3>5.2.2. Prefixes<a class="headerlink" href="#prefixes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="decimal-prefixes">
+<h4>5.2.2.1. Decimal prefixes<a class="headerlink" href="#decimal-prefixes" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">yocto-</span> <span class="pre">=</span> <span class="pre">1e-24</span> <span class="pre">=</span> <span class="pre">y-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">zepto-</span> <span class="pre">=</span> <span class="pre">1e-21</span> <span class="pre">=</span> <span class="pre">z-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">atto-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e-18</span> <span class="pre">=</span> <span class="pre">a-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">femto-</span> <span class="pre">=</span> <span class="pre">1e-15</span> <span class="pre">=</span> <span class="pre">f-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pico-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e-12</span> <span class="pre">=</span> <span class="pre">p-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">nano-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e-9</span>&nbsp; <span class="pre">=</span> <span class="pre">n-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">micro-</span> <span class="pre">=</span> <span class="pre">1e-6</span>&nbsp; <span class="pre">=</span> <span class="pre">u-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">milli-</span> <span class="pre">=</span> <span class="pre">1e-3</span>&nbsp; <span class="pre">=</span> <span class="pre">m-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">centi-</span> <span class="pre">=</span> <span class="pre">1e-2</span>&nbsp; <span class="pre">=</span> <span class="pre">c-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">deci-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e-1</span>&nbsp; <span class="pre">=</span> <span class="pre">d-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">deca-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e+1</span>&nbsp; <span class="pre">=</span> <span class="pre">da-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">hecto-</span> <span class="pre">=</span> <span class="pre">1e2</span>&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">h-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kilo-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e3</span>&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">k-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mega-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e6</span>&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">M-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">giga-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e9</span>&nbsp;&nbsp; <span class="pre">=</span> <span class="pre">G-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tera-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e12</span>&nbsp; <span class="pre">=</span> <span class="pre">T-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">peta-</span> <span class="pre">=</span>&nbsp; <span class="pre">1e15</span>&nbsp; <span class="pre">=</span> <span class="pre">P-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">exa-</span> <span class="pre">=</span>&nbsp;&nbsp; <span class="pre">1e18</span>&nbsp; <span class="pre">=</span> <span class="pre">E-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">zetta-</span> <span class="pre">=</span> <span class="pre">1e21</span>&nbsp; <span class="pre">=</span> <span class="pre">Z-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">yotta-</span> <span class="pre">=</span> <span class="pre">1e24</span>&nbsp; <span class="pre">=</span> <span class="pre">Y-</span></tt></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">yottagram</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">gram</span><span class="p">)</span>
+<span class="go">1e+24 gram</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">Yg</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">g</span><span class="p">)</span>
+<span class="go">1e+24 gram</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="binary-prefixes">
+<h4>5.2.2.2. Binary_prefixes<a class="headerlink" href="#binary-prefixes" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">kibi-</span> <span class="pre">=</span> <span class="pre">2**10</span> <span class="pre">=</span> <span class="pre">Ki-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mebi-</span> <span class="pre">=</span> <span class="pre">2**20</span> <span class="pre">=</span> <span class="pre">Mi-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gibi-</span> <span class="pre">=</span> <span class="pre">2**30</span> <span class="pre">=</span> <span class="pre">Gi-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tebi-</span> <span class="pre">=</span> <span class="pre">2**40</span> <span class="pre">=</span> <span class="pre">Ti-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pebi-</span> <span class="pre">=</span> <span class="pre">2**50</span> <span class="pre">=</span> <span class="pre">Pi-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">exbi-</span> <span class="pre">=</span> <span class="pre">2**60</span> <span class="pre">=</span> <span class="pre">Ei-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">zebi-</span> <span class="pre">=</span> <span class="pre">2**70</span> <span class="pre">=</span> <span class="pre">Zi-</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">yobi-</span> <span class="pre">=</span> <span class="pre">2**80</span> <span class="pre">=</span> <span class="pre">Yi-</span></tt></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kibibit</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">bit</span><span class="p">)</span>
+<span class="go">1024.0 bit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">Kibit</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">bit</span><span class="p">)</span>
+<span class="go">1024.0 bit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="other-units">
+<h3>5.2.3. Other units<a class="headerlink" href="#other-units" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="gridsim-units">
+<h4>5.2.3.1. Gridsim units<a class="headerlink" href="#gridsim-units" title="Permalink to this headline">¶</a></h4>
+<p>Gridsim defines its own units to simplify coding as these special units is used
+often times.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">heat_capacity</span> <span class="pre">=</span> <span class="pre">joule/(gram*kelvin)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mass_density</span> <span class="pre">=</span> <span class="pre">gram/(metre*metre*metre)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">thermal_conductivity</span> <span class="pre">=</span> <span class="pre">watt/(kelvin*metre)</span></tt></li>
+</ul>
+</div>
+<div class="section" id="acceleration">
+<h4>5.2.3.2. Acceleration<a class="headerlink" href="#acceleration" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[acceleration]</span> <span class="pre">=</span> <span class="pre">[length]</span> <span class="pre">/</span> <span class="pre">[time]</span> <span class="pre">**</span> <span class="pre">2</span></tt></li>
+</ul>
+</div>
+<div class="section" id="angle">
+<h4>5.2.3.3. Angle<a class="headerlink" href="#angle" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">turn</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">pi</span> <span class="pre">*</span> <span class="pre">radian</span> <span class="pre">=</span> <span class="pre">revolution</span> <span class="pre">=</span> <span class="pre">cycle</span> <span class="pre">=</span> <span class="pre">circle</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">degree</span> <span class="pre">=</span> <span class="pre">pi</span> <span class="pre">/</span> <span class="pre">180</span> <span class="pre">*</span> <span class="pre">radian</span> <span class="pre">=</span> <span class="pre">deg</span> <span class="pre">=</span> <span class="pre">arcdeg</span> <span class="pre">=</span> <span class="pre">arcdegree</span> <span class="pre">=</span> <span class="pre">angular_degree</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">arcminute</span> <span class="pre">=</span> <span class="pre">arcdeg</span> <span class="pre">/</span> <span class="pre">60</span> <span class="pre">=</span> <span class="pre">arcmin</span> <span class="pre">=</span> <span class="pre">arc_minute</span> <span class="pre">=</span> <span class="pre">angular_minute</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">arcsecond</span> <span class="pre">=</span> <span class="pre">arcmin</span> <span class="pre">/</span> <span class="pre">60</span> <span class="pre">=</span>&nbsp; <span class="pre">arcsec</span> <span class="pre">=</span> <span class="pre">arc_second</span> <span class="pre">=</span> <span class="pre">angular_second</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">steradian</span> <span class="pre">=</span> <span class="pre">radian</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">sr</span></tt></li>
+</ul>
+</div>
+<div class="section" id="area">
+<h4>5.2.3.4. Area<a class="headerlink" href="#area" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[area]</span> <span class="pre">=</span> <span class="pre">[length]</span> <span class="pre">**</span> <span class="pre">2</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">are</span> <span class="pre">=</span> <span class="pre">100</span> <span class="pre">*</span> <span class="pre">m**2</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">barn</span> <span class="pre">=</span> <span class="pre">1e-28</span> <span class="pre">*</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">b</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cmil</span> <span class="pre">=</span> <span class="pre">5.067075e-10</span> <span class="pre">*</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">circular_mils</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">darcy</span> <span class="pre">=</span> <span class="pre">9.869233e-13</span> <span class="pre">*</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">2</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">acre</span> <span class="pre">=</span> <span class="pre">4046.8564224</span> <span class="pre">*</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">international_acre</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">US_survey_acre</span> <span class="pre">=</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">rod</span> <span class="pre">**</span> <span class="pre">2</span></tt></li>
+</ul>
+</div>
+<div class="section" id="electromagnetism">
+<h4>5.2.3.5. Electromagnetism<a class="headerlink" href="#electromagnetism" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">esu</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">*</span> <span class="pre">erg**0.5</span> <span class="pre">*</span> <span class="pre">centimeter**0.5</span> <span class="pre">=</span> <span class="pre">statcoulombs</span> <span class="pre">=</span> <span class="pre">statC</span> <span class="pre">=</span> <span class="pre">franklin</span> <span class="pre">=</span> <span class="pre">Fr</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">esu_per_second</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">*</span> <span class="pre">esu</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">statampere</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ampere_turn</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">*</span> <span class="pre">A</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gilbert</span> <span class="pre">=</span> <span class="pre">10</span> <span class="pre">/</span> <span class="pre">(4</span> <span class="pre">*</span> <span class="pre">pi</span> <span class="pre">)</span> <span class="pre">*</span> <span class="pre">ampere_turn</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">coulomb</span> <span class="pre">=</span> <span class="pre">ampere</span> <span class="pre">*</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">C</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">volt</span> <span class="pre">=</span> <span class="pre">joule</span> <span class="pre">/</span> <span class="pre">coulomb</span> <span class="pre">=</span> <span class="pre">V</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">farad</span> <span class="pre">=</span> <span class="pre">coulomb</span> <span class="pre">/</span> <span class="pre">volt</span> <span class="pre">=</span> <span class="pre">F</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ohm</span> <span class="pre">=</span> <span class="pre">volt</span> <span class="pre">/</span> <span class="pre">ampere</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">siemens</span> <span class="pre">=</span> <span class="pre">ampere</span> <span class="pre">/</span> <span class="pre">volt</span> <span class="pre">=</span> <span class="pre">S</span> <span class="pre">=</span> <span class="pre">mho</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">weber</span> <span class="pre">=</span> <span class="pre">volt</span> <span class="pre">*</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">Wb</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tesla</span> <span class="pre">=</span> <span class="pre">weber</span> <span class="pre">/</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">T</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">henry</span> <span class="pre">=</span> <span class="pre">weber</span> <span class="pre">/</span> <span class="pre">ampere</span> <span class="pre">=</span> <span class="pre">H</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">elementary_charge</span> <span class="pre">=</span> <span class="pre">1.602176487e-19</span> <span class="pre">*</span> <span class="pre">coulomb</span> <span class="pre">=</span> <span class="pre">e</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">chemical_faraday</span> <span class="pre">=</span> <span class="pre">9.64957e4</span> <span class="pre">*</span> <span class="pre">coulomb</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">physical_faraday</span> <span class="pre">=</span> <span class="pre">9.65219e4</span> <span class="pre">*</span> <span class="pre">coulomb</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">faraday</span> <span class="pre">=</span>&nbsp; <span class="pre">96485.3399</span> <span class="pre">*</span> <span class="pre">coulomb</span> <span class="pre">=</span> <span class="pre">C12_faraday</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1e-9</span> <span class="pre">*</span> <span class="pre">tesla</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gauss</span> <span class="pre">=</span> <span class="pre">1e-4</span> <span class="pre">*</span> <span class="pre">tesla</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">maxwell</span> <span class="pre">=</span> <span class="pre">1e-8</span> <span class="pre">*</span> <span class="pre">weber</span> <span class="pre">=</span> <span class="pre">mx</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">oersted</span> <span class="pre">=</span> <span class="pre">1000</span> <span class="pre">/</span> <span class="pre">(4</span> <span class="pre">*</span> <span class="pre">pi)</span> <span class="pre">*</span> <span class="pre">A</span> <span class="pre">/</span> <span class="pre">m</span> <span class="pre">=</span> <span class="pre">Oe</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">statfarad</span> <span class="pre">=</span> <span class="pre">1.112650e-12</span> <span class="pre">*</span> <span class="pre">farad</span> <span class="pre">=</span> <span class="pre">statF</span> <span class="pre">=</span> <span class="pre">stF</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">stathenry</span> <span class="pre">=</span> <span class="pre">8.987554e11</span> <span class="pre">*</span> <span class="pre">henry</span> <span class="pre">=</span> <span class="pre">statH</span> <span class="pre">=</span> <span class="pre">stH</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">statmho</span> <span class="pre">=</span> <span class="pre">1.112650e-12</span> <span class="pre">*</span> <span class="pre">siemens</span> <span class="pre">=</span> <span class="pre">statS</span> <span class="pre">=</span> <span class="pre">stS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">statohm</span> <span class="pre">=</span> <span class="pre">8.987554e11</span> <span class="pre">*</span> <span class="pre">ohm</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">statvolt</span> <span class="pre">=</span> <span class="pre">2.997925e2</span> <span class="pre">*</span> <span class="pre">volt</span> <span class="pre">=</span> <span class="pre">statV</span> <span class="pre">=</span> <span class="pre">stV</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">unit_pole</span> <span class="pre">=</span> <span class="pre">1.256637e-7</span> <span class="pre">*</span> <span class="pre">weber</span></tt></li>
+</ul>
+</div>
+<div class="section" id="energy">
+<h4>5.2.3.6. Energy<a class="headerlink" href="#energy" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[energy]</span> <span class="pre">=</span> <span class="pre">[force]</span> <span class="pre">*</span> <span class="pre">[length]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">joule</span> <span class="pre">=</span> <span class="pre">newton</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">=</span> <span class="pre">J</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">erg</span> <span class="pre">=</span> <span class="pre">dyne</span> <span class="pre">*</span> <span class="pre">centimeter</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">btu</span> <span class="pre">=</span> <span class="pre">1.05505585262e3</span> <span class="pre">*</span> <span class="pre">joule</span> <span class="pre">=</span> <span class="pre">Btu</span> <span class="pre">=</span> <span class="pre">BTU</span> <span class="pre">=</span> <span class="pre">british_thermal_unit</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">eV</span> <span class="pre">=</span> <span class="pre">1.60217653e-19</span> <span class="pre">*</span> <span class="pre">J</span> <span class="pre">=</span> <span class="pre">electron_volt</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">thm</span> <span class="pre">=</span> <span class="pre">100000</span> <span class="pre">*</span> <span class="pre">BTU</span> <span class="pre">=</span> <span class="pre">therm</span> <span class="pre">=</span> <span class="pre">EC_therm</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cal</span> <span class="pre">=</span> <span class="pre">4.184</span> <span class="pre">*</span> <span class="pre">joule</span> <span class="pre">=</span> <span class="pre">calorie</span> <span class="pre">=</span> <span class="pre">thermochemical_calorie</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">international_steam_table_calorie</span> <span class="pre">=</span> <span class="pre">4.1868</span> <span class="pre">*</span> <span class="pre">joule</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ton_TNT</span> <span class="pre">=</span> <span class="pre">4.184e9</span> <span class="pre">*</span> <span class="pre">joule</span> <span class="pre">=</span> <span class="pre">tTNT</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">US_therm</span> <span class="pre">=</span> <span class="pre">1.054804e8</span> <span class="pre">*</span> <span class="pre">joule</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">watt_hour</span> <span class="pre">=</span> <span class="pre">watt</span> <span class="pre">*</span> <span class="pre">hour</span> <span class="pre">=</span> <span class="pre">Wh</span> <span class="pre">=</span> <span class="pre">watthour</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">E_h</span> <span class="pre">=</span> <span class="pre">4.35974394e-18</span> <span class="pre">*</span> <span class="pre">joule</span> <span class="pre">=</span> <span class="pre">hartree</span> <span class="pre">=</span> <span class="pre">hartree_energy</span></tt></li>
+</ul>
+</div>
+<div class="section" id="force">
+<h4>5.2.3.7. Force<a class="headerlink" href="#force" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[force]</span> <span class="pre">=</span> <span class="pre">[mass]</span> <span class="pre">*</span> <span class="pre">[acceleration]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newton</span> <span class="pre">=</span> <span class="pre">kilogram</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">N</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dyne</span> <span class="pre">=</span> <span class="pre">gram</span> <span class="pre">*</span> <span class="pre">centimeter</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">dyn</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">force_kilogram</span> <span class="pre">=</span> <span class="pre">g_0</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">=</span> <span class="pre">kgf</span> <span class="pre">=</span> <span class="pre">kilogram_force</span> <span class="pre">=</span> <span class="pre">pond</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">force_gram</span> <span class="pre">=</span> <span class="pre">g_0</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">=</span> <span class="pre">gf</span> <span class="pre">=</span> <span class="pre">gram_force</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">force_ounce</span> <span class="pre">=</span> <span class="pre">g_0</span> <span class="pre">*</span> <span class="pre">ounce</span> <span class="pre">=</span> <span class="pre">ozf</span> <span class="pre">=</span> <span class="pre">ounce_force</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">force_pound</span> <span class="pre">=</span> <span class="pre">g_0</span> <span class="pre">*</span> <span class="pre">lb</span> <span class="pre">=</span> <span class="pre">lbf</span> <span class="pre">=</span> <span class="pre">pound_force</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">force_ton</span> <span class="pre">=</span> <span class="pre">2000</span> <span class="pre">*</span> <span class="pre">force_pound</span> <span class="pre">=</span> <span class="pre">ton_force</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">poundal</span> <span class="pre">=</span> <span class="pre">lb</span> <span class="pre">*</span> <span class="pre">feet</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">pdl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kip</span> <span class="pre">=</span> <span class="pre">1000*lbf</span></tt></li>
+</ul>
+</div>
+<div class="section" id="frequency">
+<h4>5.2.3.8. Frequency<a class="headerlink" href="#frequency" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[frequency]</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">/</span> <span class="pre">[time]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">hertz</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">Hz</span> <span class="pre">=</span> <span class="pre">rps</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">revolutions_per_minute</span> <span class="pre">=</span> <span class="pre">revolution</span> <span class="pre">/</span> <span class="pre">minute</span> <span class="pre">=</span> <span class="pre">rpm</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">counts_per_second</span> <span class="pre">=</span> <span class="pre">count</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">cps</span></tt></li>
+</ul>
+</div>
+<div class="section" id="information">
+<h4>5.2.3.9. Information<a class="headerlink" href="#information" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">byte</span> <span class="pre">=</span> <span class="pre">8</span> <span class="pre">*</span> <span class="pre">bit</span> <span class="pre">=</span> <span class="pre">Bo</span> <span class="pre">=</span> <span class="pre">octet</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">baud</span> <span class="pre">=</span> <span class="pre">bit</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">Bd</span> <span class="pre">=</span> <span class="pre">bps</span></tt></li>
+</ul>
+</div>
+<div class="section" id="length">
+<h4>5.2.3.10. Length<a class="headerlink" href="#length" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">angstrom</span> <span class="pre">=</span> <span class="pre">1e-10</span> <span class="pre">*</span> <span class="pre">meter</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">inch</span> <span class="pre">=</span> <span class="pre">2.54</span> <span class="pre">*</span> <span class="pre">centimeter</span> <span class="pre">=</span> <span class="pre">in</span> <span class="pre">=</span> <span class="pre">international_inch</span> <span class="pre">=</span> <span class="pre">inches</span> <span class="pre">=</span> <span class="pre">international_inches</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">foot</span> <span class="pre">=</span> <span class="pre">12</span> <span class="pre">*</span> <span class="pre">inch</span> <span class="pre">=</span> <span class="pre">ft</span> <span class="pre">=</span> <span class="pre">international_foot</span> <span class="pre">=</span> <span class="pre">feet</span> <span class="pre">=</span> <span class="pre">international_feet</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mile</span> <span class="pre">=</span> <span class="pre">5280</span> <span class="pre">*</span> <span class="pre">foot</span> <span class="pre">=</span> <span class="pre">mi</span> <span class="pre">=</span> <span class="pre">international_mile</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">yard</span> <span class="pre">=</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">feet</span> <span class="pre">=</span> <span class="pre">yd</span> <span class="pre">=</span> <span class="pre">international_yard</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mil</span> <span class="pre">=</span> <span class="pre">inch</span> <span class="pre">/</span> <span class="pre">1000</span> <span class="pre">=</span> <span class="pre">thou</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">parsec</span> <span class="pre">=</span> <span class="pre">3.08568025e16</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">=</span> <span class="pre">pc</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">light_year</span> <span class="pre">=</span> <span class="pre">speed_of_light</span> <span class="pre">*</span> <span class="pre">julian_year</span> <span class="pre">=</span> <span class="pre">ly</span> <span class="pre">=</span> <span class="pre">lightyear</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">astronomical_unit</span> <span class="pre">=</span> <span class="pre">149597870691</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">=</span> <span class="pre">au</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">nautical_mile</span> <span class="pre">=</span> <span class="pre">1.852e3</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">=</span> <span class="pre">nmi</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">printers_point</span> <span class="pre">=</span> <span class="pre">127</span> <span class="pre">*</span> <span class="pre">millimeter</span> <span class="pre">/</span> <span class="pre">360</span> <span class="pre">=</span> <span class="pre">point</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">printers_pica</span> <span class="pre">=</span> <span class="pre">12</span> <span class="pre">*</span> <span class="pre">printers_point</span> <span class="pre">=</span> <span class="pre">pica</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">US_survey_foot</span> <span class="pre">=</span> <span class="pre">1200</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">/</span> <span class="pre">3937</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">US_survey_yard</span> <span class="pre">=</span>&nbsp; <span class="pre">3</span> <span class="pre">*</span> <span class="pre">US_survey_foot</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">US_survey_mile</span> <span class="pre">=</span> <span class="pre">5280</span> <span class="pre">*</span> <span class="pre">US_survey_foot</span> <span class="pre">=</span> <span class="pre">US_statute_mile</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rod</span> <span class="pre">=</span> <span class="pre">16.5</span> <span class="pre">*</span> <span class="pre">US_survey_foot</span> <span class="pre">=</span> <span class="pre">pole</span> <span class="pre">=</span> <span class="pre">perch</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">furlong</span> <span class="pre">=</span> <span class="pre">660</span> <span class="pre">*</span> <span class="pre">US_survey_foot</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fathom</span> <span class="pre">=</span> <span class="pre">6</span> <span class="pre">*</span> <span class="pre">US_survey_foot</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">chain</span> <span class="pre">=</span> <span class="pre">66</span> <span class="pre">*</span> <span class="pre">US_survey_foot</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">barleycorn</span> <span class="pre">=</span> <span class="pre">inch</span> <span class="pre">/</span> <span class="pre">3</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">arpentlin</span> <span class="pre">=</span> <span class="pre">191.835</span> <span class="pre">*</span> <span class="pre">feet</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kayser</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">/</span> <span class="pre">centimeter</span> <span class="pre">=</span> <span class="pre">wavenumber</span></tt></li>
+</ul>
+</div>
+<div class="section" id="mass">
+<h4>5.2.3.11. Mass<a class="headerlink" href="#mass" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">dram</span> <span class="pre">=</span> <span class="pre">oz</span> <span class="pre">/</span> <span class="pre">16</span> <span class="pre">=</span> <span class="pre">dr</span> <span class="pre">=</span> <span class="pre">avoirdupois_dram</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ounce</span> <span class="pre">=</span> <span class="pre">28.349523125</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">=</span> <span class="pre">oz</span> <span class="pre">=</span> <span class="pre">avoirdupois_ounce</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pound</span> <span class="pre">=</span> <span class="pre">0.45359237</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">=</span> <span class="pre">lb</span> <span class="pre">=</span> <span class="pre">avoirdupois_pound</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">stone</span> <span class="pre">=</span> <span class="pre">14</span> <span class="pre">*</span> <span class="pre">lb</span> <span class="pre">=</span> <span class="pre">st</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">carat</span> <span class="pre">=</span> <span class="pre">200</span> <span class="pre">*</span> <span class="pre">milligram</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">grain</span> <span class="pre">=</span> <span class="pre">64.79891</span> <span class="pre">*</span> <span class="pre">milligram</span> <span class="pre">=</span> <span class="pre">gr</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">long_hundredweight</span> <span class="pre">=</span> <span class="pre">112</span> <span class="pre">*</span> <span class="pre">lb</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">short_hundredweight</span> <span class="pre">=</span> <span class="pre">100</span> <span class="pre">*</span> <span class="pre">lb</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">metric_ton</span> <span class="pre">=</span> <span class="pre">1000</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">=</span> <span class="pre">t</span> <span class="pre">=</span> <span class="pre">tonne</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pennyweight</span> <span class="pre">=</span> <span class="pre">24</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">=</span> <span class="pre">dwt</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">slug</span> <span class="pre">=</span> <span class="pre">14.59390</span> <span class="pre">*</span> <span class="pre">kilogram</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">troy_ounce</span> <span class="pre">=</span> <span class="pre">480</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">=</span> <span class="pre">toz</span> <span class="pre">=</span> <span class="pre">apounce</span> <span class="pre">=</span> <span class="pre">apothecary_ounce</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">troy_pound</span> <span class="pre">=</span> <span class="pre">12</span> <span class="pre">*</span> <span class="pre">toz</span> <span class="pre">=</span> <span class="pre">tlb</span> <span class="pre">=</span> <span class="pre">appound</span> <span class="pre">=</span> <span class="pre">apothecary_pound</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">drachm</span> <span class="pre">=</span> <span class="pre">60</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">=</span> <span class="pre">apdram</span> <span class="pre">=</span> <span class="pre">apothecary_dram</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">atomic_mass_unit</span> <span class="pre">=</span> <span class="pre">1.660538782e-27</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">=</span>&nbsp; <span class="pre">u</span> <span class="pre">=</span> <span class="pre">amu</span> <span class="pre">=</span> <span class="pre">dalton</span> <span class="pre">=</span> <span class="pre">Da</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">scruple</span> <span class="pre">=</span> <span class="pre">20</span> <span class="pre">*</span> <span class="pre">gram</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">bag</span> <span class="pre">=</span> <span class="pre">94</span> <span class="pre">*</span> <span class="pre">lb</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ton</span> <span class="pre">=</span> <span class="pre">2000</span> <span class="pre">*</span> <span class="pre">lb</span> <span class="pre">=</span> <span class="pre">short_ton</span></tt></li>
+</ul>
+</div>
+<div class="section" id="textile">
+<h4>5.2.3.12. Textile<a class="headerlink" href="#textile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">denier</span> <span class="pre">=</span>&nbsp; <span class="pre">gram</span> <span class="pre">/</span> <span class="pre">(9000</span> <span class="pre">*</span> <span class="pre">meter)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tex</span> <span class="pre">=</span> <span class="pre">gram/</span> <span class="pre">(1000</span> <span class="pre">*</span> <span class="pre">meter)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dtex</span> <span class="pre">=</span> <span class="pre">decitex</span></tt></li>
+</ul>
+</div>
+<div class="section" id="power">
+<h4>5.2.3.13. Power<a class="headerlink" href="#power" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[power]</span> <span class="pre">=</span> <span class="pre">[energy]</span> <span class="pre">/</span> <span class="pre">[time]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">watt</span> <span class="pre">=</span> <span class="pre">joule</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">W</span> <span class="pre">=</span> <span class="pre">volt_ampere</span> <span class="pre">=</span> <span class="pre">VA</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">horsepower</span> <span class="pre">=</span> <span class="pre">33000</span> <span class="pre">*</span> <span class="pre">ft</span> <span class="pre">*</span> <span class="pre">lbf</span> <span class="pre">/</span> <span class="pre">min</span> <span class="pre">=</span> <span class="pre">hp</span> <span class="pre">=</span> <span class="pre">UK_horsepower</span> <span class="pre">=</span> <span class="pre">British_horsepower</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">boiler_horsepower</span> <span class="pre">=</span> <span class="pre">33475</span> <span class="pre">*</span> <span class="pre">btu</span> <span class="pre">/</span> <span class="pre">hour</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">metric_horsepower</span> <span class="pre">=</span>&nbsp; <span class="pre">75</span> <span class="pre">*</span> <span class="pre">force_kilogram</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">/</span> <span class="pre">second</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">electric_horsepower</span> <span class="pre">=</span> <span class="pre">746</span> <span class="pre">*</span> <span class="pre">watt</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">hydraulic_horsepower</span> <span class="pre">=</span> <span class="pre">550</span> <span class="pre">*</span> <span class="pre">feet</span> <span class="pre">*</span> <span class="pre">lbf</span> <span class="pre">/</span> <span class="pre">second</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">refrigeration_ton</span> <span class="pre">=</span> <span class="pre">12000</span> <span class="pre">*</span> <span class="pre">btu</span> <span class="pre">/</span> <span class="pre">hour</span> <span class="pre">=</span> <span class="pre">ton_of_refrigeration</span></tt></li>
+</ul>
+</div>
+<div class="section" id="pressure">
+<h4>5.2.3.14. Pressure<a class="headerlink" href="#pressure" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[pressure]</span> <span class="pre">=</span> <span class="pre">[force]</span> <span class="pre">/</span> <span class="pre">[area]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Hg</span> <span class="pre">=</span> <span class="pre">gravity</span> <span class="pre">*</span> <span class="pre">13.59510</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">/</span> <span class="pre">centimeter</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">mercury</span> <span class="pre">=</span> <span class="pre">conventional_mercury</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mercury_60F</span> <span class="pre">=</span> <span class="pre">gravity</span> <span class="pre">*</span> <span class="pre">13.5568</span> <span class="pre">*</span> <span class="pre">gram</span> <span class="pre">/</span> <span class="pre">centimeter</span> <span class="pre">**</span> <span class="pre">3</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">H2O</span> <span class="pre">=</span> <span class="pre">gravity</span> <span class="pre">*</span> <span class="pre">1000</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">/</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">h2o</span> <span class="pre">=</span> <span class="pre">water</span> <span class="pre">=</span> <span class="pre">conventional_water</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">water_4C</span> <span class="pre">=</span> <span class="pre">gravity</span> <span class="pre">*</span> <span class="pre">999.972</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">/</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">water_39F</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">water_60F</span> <span class="pre">=</span> <span class="pre">gravity</span> <span class="pre">*</span> <span class="pre">999.001</span> <span class="pre">*</span> <span class="pre">kilogram</span> <span class="pre">/</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">3</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pascal</span> <span class="pre">=</span> <span class="pre">newton</span> <span class="pre">/</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">Pa</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">bar</span> <span class="pre">=</span> <span class="pre">100000</span> <span class="pre">*</span> <span class="pre">pascal</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">atmosphere</span> <span class="pre">=</span> <span class="pre">101325</span> <span class="pre">*</span> <span class="pre">pascal</span> <span class="pre">=</span> <span class="pre">atm</span> <span class="pre">=</span> <span class="pre">standard_atmosphere</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">technical_atmosphere</span> <span class="pre">=</span> <span class="pre">kilogram</span> <span class="pre">*</span> <span class="pre">gravity</span> <span class="pre">/</span> <span class="pre">centimeter</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">at</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">torr</span> <span class="pre">=</span> <span class="pre">atm</span> <span class="pre">/</span> <span class="pre">760</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">psi</span> <span class="pre">=</span> <span class="pre">pound</span> <span class="pre">*</span> <span class="pre">gravity</span> <span class="pre">/</span> <span class="pre">inch</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">pound_force_per_square_inch</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ksi</span> <span class="pre">=</span> <span class="pre">kip</span> <span class="pre">/</span> <span class="pre">inch</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">kip_per_square_inch</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">barye</span> <span class="pre">=</span> <span class="pre">0.1</span> <span class="pre">*</span> <span class="pre">newton</span> <span class="pre">/</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">barie</span> <span class="pre">=</span> <span class="pre">barad</span> <span class="pre">=</span> <span class="pre">barrie</span> <span class="pre">=</span> <span class="pre">baryd</span> <span class="pre">=</span> <span class="pre">Ba</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mmHg</span> <span class="pre">=</span> <span class="pre">millimeter</span> <span class="pre">*</span> <span class="pre">Hg</span> <span class="pre">=</span> <span class="pre">mm_Hg</span> <span class="pre">=</span> <span class="pre">millimeter_Hg</span> <span class="pre">=</span> <span class="pre">millimeter_Hg_0C</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cmHg</span> <span class="pre">=</span> <span class="pre">centimeter</span> <span class="pre">*</span> <span class="pre">Hg</span> <span class="pre">=</span> <span class="pre">cm_Hg</span> <span class="pre">=</span> <span class="pre">centimeter_Hg</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">inHg</span> <span class="pre">=</span> <span class="pre">inch</span> <span class="pre">*</span> <span class="pre">Hg</span> <span class="pre">=</span> <span class="pre">in_Hg</span> <span class="pre">=</span> <span class="pre">inch_Hg</span> <span class="pre">=</span> <span class="pre">inch_Hg_32F</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">inch_Hg_60F</span> <span class="pre">=</span> <span class="pre">inch</span> <span class="pre">*</span> <span class="pre">mercury_60F</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">inch_H2O_39F</span> <span class="pre">=</span> <span class="pre">inch</span> <span class="pre">*</span> <span class="pre">water_39F</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">inch_H2O_60F</span> <span class="pre">=</span> <span class="pre">inch</span> <span class="pre">*</span> <span class="pre">water_60F</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">footH2O</span> <span class="pre">=</span> <span class="pre">ft</span> <span class="pre">*</span> <span class="pre">water</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cmH2O</span> <span class="pre">=</span> <span class="pre">centimeter</span> <span class="pre">*</span> <span class="pre">water</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">foot_H2O</span> <span class="pre">=</span> <span class="pre">ft</span> <span class="pre">*</span> <span class="pre">water</span> <span class="pre">=</span> <span class="pre">ftH2O</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">standard_liter_per_minute</span> <span class="pre">=</span> <span class="pre">1.68875</span> <span class="pre">*</span> <span class="pre">Pa</span> <span class="pre">*</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">/</span> <span class="pre">s</span> <span class="pre">=</span> <span class="pre">slpm</span> <span class="pre">=</span> <span class="pre">slm</span></tt></li>
+</ul>
+</div>
+<div class="section" id="radiation">
+<h4>5.2.3.15. Radiation<a class="headerlink" href="#radiation" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Bq</span> <span class="pre">=</span> <span class="pre">Hz</span> <span class="pre">=</span> <span class="pre">becquerel</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">curie</span> <span class="pre">=</span> <span class="pre">3.7e10</span> <span class="pre">*</span> <span class="pre">Bq</span> <span class="pre">=</span> <span class="pre">Ci</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rutherford</span> <span class="pre">=</span> <span class="pre">1e6*Bq</span> <span class="pre">=</span> <span class="pre">rd</span> <span class="pre">=</span> <span class="pre">Rd</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Gy</span> <span class="pre">=</span> <span class="pre">joule</span> <span class="pre">/</span> <span class="pre">kilogram</span> <span class="pre">=</span> <span class="pre">gray</span> <span class="pre">=</span> <span class="pre">Sv</span> <span class="pre">=</span> <span class="pre">sievert</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rem</span> <span class="pre">=</span> <span class="pre">1e-2</span> <span class="pre">*</span> <span class="pre">sievert</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rads</span> <span class="pre">=</span> <span class="pre">1e-2</span> <span class="pre">*</span> <span class="pre">gray</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">roentgen</span> <span class="pre">=</span> <span class="pre">2.58e-4</span> <span class="pre">*</span> <span class="pre">coulomb</span> <span class="pre">/</span> <span class="pre">kilogram</span></tt></li>
+</ul>
+</div>
+<div class="section" id="temperature">
+<h4>5.2.3.16. Temperature<a class="headerlink" href="#temperature" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">degC</span> <span class="pre">=</span> <span class="pre">kelvin;</span> <span class="pre">offset:</span> <span class="pre">273.15</span> <span class="pre">=</span> <span class="pre">celsius</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">degR</span> <span class="pre">=</span> <span class="pre">5</span> <span class="pre">/</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">kelvin;</span> <span class="pre">offset:</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">rankine</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">degF</span> <span class="pre">=</span> <span class="pre">5</span> <span class="pre">/</span> <span class="pre">9</span> <span class="pre">*</span> <span class="pre">kelvin;</span> <span class="pre">offset:</span> <span class="pre">255.372222</span> <span class="pre">=</span> <span class="pre">fahrenheit</span></tt></li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As temperature can have an offset, it could be necessary to <a class="reference internal" href="#gridsim.unit.units.convert" title="gridsim.unit.units.convert"><tt class="xref py py-func docutils literal"><span class="pre">units.convert()</span></tt></a>
+degree to kelvin to avoid errors.</p>
+</div>
+</div>
+<div class="section" id="delta-temperature">
+<h4>5.2.3.17. Delta temperature<a class="headerlink" href="#delta-temperature" title="Permalink to this headline">¶</a></h4>
+<p>There is a delta counterpart to specify temperature differences. Absolute
+units have no delta counterpart. For example, the change in celsius is equal to
+the change in kelvin, but not in fahrenheit (as the scaling factor is
+different).</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">delta_degC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">delta_degF</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kelvin</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rankine</span></tt></li>
+</ul>
+</div>
+<div class="section" id="time">
+<h4>5.2.3.18. Time<a class="headerlink" href="#time" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">minute</span> <span class="pre">=</span> <span class="pre">60</span> <span class="pre">*</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">min</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">hour</span> <span class="pre">=</span> <span class="pre">60</span> <span class="pre">*</span> <span class="pre">minute</span> <span class="pre">=</span> <span class="pre">hr</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">day</span> <span class="pre">=</span> <span class="pre">24</span> <span class="pre">*</span> <span class="pre">hour</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">week</span> <span class="pre">=</span> <span class="pre">7</span> <span class="pre">*</span> <span class="pre">day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fortnight</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">week</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">year</span> <span class="pre">=</span> <span class="pre">31556925.9747</span> <span class="pre">*</span> <span class="pre">second</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">month</span> <span class="pre">=</span> <span class="pre">year/12</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">shake</span> <span class="pre">=</span> <span class="pre">1e-8</span> <span class="pre">*</span> <span class="pre">second</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sidereal_day</span> <span class="pre">=</span> <span class="pre">day</span> <span class="pre">/</span> <span class="pre">1.00273790935079524</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sidereal_hour</span> <span class="pre">=</span> <span class="pre">sidereal_day/24</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sidereal_minute=sidereal_hour/60</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sidereal_second</span> <span class="pre">=sidereal_minute/60</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sidereal_year</span> <span class="pre">=</span> <span class="pre">366.25636042</span> <span class="pre">*</span> <span class="pre">sidereal_day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sidereal_month</span> <span class="pre">=</span> <span class="pre">27.321661</span> <span class="pre">*</span> <span class="pre">sidereal_day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tropical_month</span> <span class="pre">=</span> <span class="pre">27.321661</span> <span class="pre">*</span> <span class="pre">day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">synodic_month</span> <span class="pre">=</span> <span class="pre">29.530589</span> <span class="pre">*</span> <span class="pre">day</span> <span class="pre">=</span> <span class="pre">lunar_month</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">common_year</span> <span class="pre">=</span> <span class="pre">365</span> <span class="pre">*</span> <span class="pre">day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">leap_year</span> <span class="pre">=</span> <span class="pre">366</span> <span class="pre">*</span> <span class="pre">day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">julian_year</span> <span class="pre">=</span> <span class="pre">365.25</span> <span class="pre">*</span> <span class="pre">day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gregorian_year</span> <span class="pre">=</span> <span class="pre">365.2425</span> <span class="pre">*</span> <span class="pre">day</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">millenium</span> <span class="pre">=</span> <span class="pre">1000</span> <span class="pre">*</span> <span class="pre">year</span> <span class="pre">=</span> <span class="pre">millenia</span> <span class="pre">=</span> <span class="pre">milenia</span> <span class="pre">=</span> <span class="pre">milenium</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">eon</span> <span class="pre">=</span> <span class="pre">1e9</span> <span class="pre">*</span> <span class="pre">year</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">work_year</span> <span class="pre">=</span> <span class="pre">2056</span> <span class="pre">*</span> <span class="pre">hour</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">work_month</span> <span class="pre">=</span> <span class="pre">work_year/12</span></tt></li>
+</ul>
+</div>
+<div class="section" id="velocity">
+<h4>5.2.3.19. Velocity<a class="headerlink" href="#velocity" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[speed]</span> <span class="pre">=</span> <span class="pre">[length]</span> <span class="pre">/</span> <span class="pre">[time]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">knot</span> <span class="pre">=</span> <span class="pre">nautical_mile</span> <span class="pre">/</span> <span class="pre">hour</span> <span class="pre">=</span> <span class="pre">kt</span> <span class="pre">=</span> <span class="pre">knot_international</span> <span class="pre">=</span> <span class="pre">international_knot</span> <span class="pre">=</span> <span class="pre">nautical_miles_per_hour</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mph</span> <span class="pre">=</span> <span class="pre">mile</span> <span class="pre">/</span> <span class="pre">hour</span> <span class="pre">=</span> <span class="pre">MPH</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kph</span> <span class="pre">=</span> <span class="pre">kilometer</span> <span class="pre">/</span> <span class="pre">hour</span> <span class="pre">=</span> <span class="pre">KPH</span></tt></li>
+</ul>
+</div>
+<div class="section" id="viscosity">
+<h4>5.2.3.20. Viscosity<a class="headerlink" href="#viscosity" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[viscosity]</span> <span class="pre">=</span> <span class="pre">[pressure]</span> <span class="pre">*</span> <span class="pre">[time]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">poise</span> <span class="pre">=</span> <span class="pre">1e-1</span> <span class="pre">*</span> <span class="pre">Pa</span> <span class="pre">*</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">P</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">stokes</span> <span class="pre">=</span> <span class="pre">1e-4</span> <span class="pre">*</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">/</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">St</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rhe</span> <span class="pre">=</span> <span class="pre">10</span> <span class="pre">/</span> <span class="pre">(Pa</span> <span class="pre">*</span> <span class="pre">s)</span></tt></li>
+</ul>
+</div>
+<div class="section" id="volume">
+<h4>5.2.3.21. Volume<a class="headerlink" href="#volume" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">[volume]</span> <span class="pre">=</span> <span class="pre">[length]</span> <span class="pre">**</span> <span class="pre">3</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">liter</span> <span class="pre">=</span> <span class="pre">1e-3</span> <span class="pre">*</span> <span class="pre">m</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">l</span> <span class="pre">=</span> <span class="pre">L</span> <span class="pre">=</span> <span class="pre">litre</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cc</span> <span class="pre">=</span> <span class="pre">centimeter</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">cubic_centimeter</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">stere</span> <span class="pre">=</span> <span class="pre">meter</span> <span class="pre">**</span> <span class="pre">3</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gross_register_ton</span> <span class="pre">=</span> <span class="pre">100</span> <span class="pre">*</span> <span class="pre">foot</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">register_ton</span> <span class="pre">=</span> <span class="pre">GRT</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">acre_foot</span> <span class="pre">=</span> <span class="pre">acre</span> <span class="pre">*</span> <span class="pre">foot</span> <span class="pre">=</span> <span class="pre">acre_feet</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">board_foot</span> <span class="pre">=</span> <span class="pre">foot</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">inch</span> <span class="pre">=</span> <span class="pre">FBM</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">bushel</span> <span class="pre">=</span> <span class="pre">2150.42</span> <span class="pre">*</span> <span class="pre">inch</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">bu</span> <span class="pre">=</span> <span class="pre">US_bushel</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dry_gallon</span> <span class="pre">=</span> <span class="pre">bushel</span> <span class="pre">/</span> <span class="pre">8</span> <span class="pre">=</span> <span class="pre">US_dry_gallon</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dry_quart</span> <span class="pre">=</span> <span class="pre">dry_gallon</span> <span class="pre">/</span> <span class="pre">4</span> <span class="pre">=</span> <span class="pre">US_dry_quart</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">dry_pint</span> <span class="pre">=</span> <span class="pre">dry_quart</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">US_dry_pint</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gallon</span> <span class="pre">=</span> <span class="pre">231</span> <span class="pre">*</span> <span class="pre">inch</span> <span class="pre">**</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">liquid_gallon</span> <span class="pre">=</span> <span class="pre">US_liquid_gallon</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">quart</span> <span class="pre">=</span> <span class="pre">gallon</span> <span class="pre">/</span> <span class="pre">4</span> <span class="pre">=</span> <span class="pre">liquid_quart</span> <span class="pre">=</span> <span class="pre">US_liquid_quart</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pint</span> <span class="pre">=</span> <span class="pre">quart</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">pt</span> <span class="pre">=</span> <span class="pre">liquid_pint</span> <span class="pre">=</span> <span class="pre">US_liquid_pint</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cup</span> <span class="pre">=</span> <span class="pre">pint</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">liquid_cup</span> <span class="pre">=</span> <span class="pre">US_liquid_cup</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">gill</span> <span class="pre">=</span> <span class="pre">cup</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">liquid_gill</span> <span class="pre">=</span> <span class="pre">US_liquid_gill</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fluid_ounce</span> <span class="pre">=</span> <span class="pre">gill</span> <span class="pre">/</span> <span class="pre">4</span> <span class="pre">=</span> <span class="pre">floz</span> <span class="pre">=</span> <span class="pre">US_fluid_ounce</span> <span class="pre">=</span> <span class="pre">US_liquid_ounce</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_bushel</span> <span class="pre">=</span> <span class="pre">36.36872</span> <span class="pre">*</span> <span class="pre">liter</span> <span class="pre">=</span> <span class="pre">UK_bushel</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_gallon</span> <span class="pre">=</span> <span class="pre">imperial_bushel</span> <span class="pre">/</span> <span class="pre">8</span> <span class="pre">=</span> <span class="pre">UK_gallon</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_quart</span> <span class="pre">=</span> <span class="pre">imperial_gallon</span> <span class="pre">/</span> <span class="pre">4</span> <span class="pre">=</span> <span class="pre">UK_quart</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_pint</span> <span class="pre">=</span> <span class="pre">imperial_quart</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">UK_pint</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_cup</span> <span class="pre">=</span> <span class="pre">imperial_pint</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">UK_cup</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_gill</span> <span class="pre">=</span> <span class="pre">imperial_cup</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">UK_gill</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">imperial_floz</span> <span class="pre">=</span> <span class="pre">imperial_gill</span> <span class="pre">/</span> <span class="pre">5</span> <span class="pre">=</span> <span class="pre">UK_fluid_ounce</span> <span class="pre">=</span> <span class="pre">imperial_fluid_ounce</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">barrel</span> <span class="pre">=</span> <span class="pre">42</span> <span class="pre">*</span> <span class="pre">gallon</span> <span class="pre">=</span> <span class="pre">bbl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tablespoon</span> <span class="pre">=</span> <span class="pre">floz</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">tbsp</span> <span class="pre">=</span> <span class="pre">Tbsp</span> <span class="pre">=</span> <span class="pre">Tblsp</span> <span class="pre">=</span> <span class="pre">tblsp</span> <span class="pre">=</span> <span class="pre">tbs</span> <span class="pre">=</span> <span class="pre">Tbl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">teaspoon</span> <span class="pre">=</span> <span class="pre">tablespoon</span> <span class="pre">/</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">tsp</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">peck</span> <span class="pre">=</span> <span class="pre">bushel</span> <span class="pre">/</span> <span class="pre">4</span> <span class="pre">=</span> <span class="pre">pk</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">fluid_dram</span> <span class="pre">=</span> <span class="pre">floz</span> <span class="pre">/</span> <span class="pre">8</span> <span class="pre">=</span> <span class="pre">fldr</span> <span class="pre">=</span> <span class="pre">fluidram</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">firkin</span> <span class="pre">=</span> <span class="pre">barrel</span> <span class="pre">/</span> <span class="pre">4</span></tt></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="io.html" class="btn btn-neutral float-right" title="6. The Gridsim Input/Output"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tools.html" class="btn btn-neutral" title="4. The Simulation Tools"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
+      Last updated on Dec 10, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1-rc',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

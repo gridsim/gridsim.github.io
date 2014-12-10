@@ -1,0 +1,1164 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. The Simulation Core &mdash; Gridsim 0.1.1-rc documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="index.html"/>
+        <link rel="next" title="4. The Simulation Tools" href="tools.html"/>
+        <link rel="prev" title="2. The Simulator General Use" href="documentation.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Gridsim</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>3. The Simulation Core</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/core.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="the-simulation-core">
+<span id="gridsim-core"></span><h1>3. The Simulation Core<a class="headerlink" href="#the-simulation-core" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This section will be only interesting for Gridsim module developers,
+if you just use the library, you should be more interested by
+<a class="reference internal" href="documentation.html#gridsim-use"><em>The Simulator General Use</em></a>.</p>
+</div>
+<p>The following section describes the core of Gridsim hidden to the user but
+useful for developers.
+It consists into three parts :</p>
+<ul class="simple">
+<li><a class="reference internal" href="#gridsim-core-mod"><em>The core module</em></a></li>
+<li><a class="reference internal" href="#gridsim-electrical-core-mod"><em>The electrical module</em></a></li>
+<li><a class="reference internal" href="#gridsim-thermal-core-mod"><em>The thermal module</em></a></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This part is the low level of the simulator, Gridsim also provides
+tools to help the development of modules or elements: <a class="reference internal" href="tools.html#gridsim-tools"><em>The Simulation Tools</em></a>.</p>
+</div>
+<div class="section" id="module-gridsim.core">
+<span id="the-core-module"></span><span id="gridsim-core-mod"></span><h2>3.1. The core module<a class="headerlink" href="#module-gridsim.core" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p>Gridsim core module. Defines the interface to the different simulation modules
+and controls the sequence of the whole simulation.</p>
+<dl class="docutils">
+<dt>This core module provides 2 interesting classes to add new features to Gridsim:</dt>
+<dd><ul class="first last">
+<li><p class="first">The <a class="reference internal" href="#gridsim.core.AbstractSimulationModule" title="gridsim.core.AbstractSimulationModule"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule</span></tt></a> that provides a simple
+way to add features to Gridsim.</p>
+<p>and</p>
+</li>
+<li><p class="first">The <a class="reference internal" href="#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement</span></tt></a> that provides a simple
+way to a features in already implemented
+<a class="reference internal" href="#gridsim.core.AbstractSimulationModule" title="gridsim.core.AbstractSimulationModule"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule</span></tt></a>.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Despite the fact that the simulation module is completely free how to organize
+its internal simulation behavior, the normal case is shown in the following
+sequence diagram:</p>
+<div class="figure align-center" id="fig-core-model-sequence2">
+<a class="reference internal image-reference" href="_images/model-sequence2.png"><img alt="_images/model-sequence2.png" src="_images/model-sequence2.png" style="width: 870.0px; height: 669.0px;" /></a>
+</div>
+<p>The <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.simulation.Simulator</span></tt></a> is simply an aggregator of several
+<a class="reference internal" href="#gridsim.core.AbstractSimulationModule" title="gridsim.core.AbstractSimulationModule"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule</span></tt></a>. When the user calls the
+<a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.reset" title="gridsim.simulation.Simulator.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.reset()</span></tt></a> the simulator simply calls the
+<a class="reference internal" href="#gridsim.core.AbstractSimulationModule.reset" title="gridsim.core.AbstractSimulationModule.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.reset()</span></tt></a> of every loaded modules.
+Likewise, when the user calls the <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.step" title="gridsim.simulation.Simulator.step"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.step()</span></tt></a> the
+simulator calls first the <a class="reference internal" href="#gridsim.core.AbstractSimulationModule.calculate" title="gridsim.core.AbstractSimulationModule.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.calculate()</span></tt></a>
+of every loaded modules then their <a class="reference internal" href="#gridsim.core.AbstractSimulationModule.update" title="gridsim.core.AbstractSimulationModule.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.update()</span></tt></a>.</p>
+<p>Finally the <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.run" title="gridsim.simulation.Simulator.run"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.run()</span></tt></a> function of the simulator
+is only a set of sequential calls of <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.step" title="gridsim.simulation.Simulator.step"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.step()</span></tt></a>
+incrementing the time.</p>
+<dl class="class">
+<dt id="gridsim.core.AbstractSimulationModule">
+<em class="property">class </em><tt class="descclassname">gridsim.core.</tt><tt class="descname">AbstractSimulationModule</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for simulation modules. Gridsim groups different simulation
+aspects into different Python modules in oder to separate and
+organize the implementations.</p>
+<p>All Gridsim simulation modules have to implement the pure abstract
+methods of this interface class.</p>
+<p><em>Example of a minimal simulation module:</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">gridsim.core</span> <span class="kn">import</span> <span class="n">AbstractSimulationModule</span><span class="p">,</span> <span class="n">AbstractSimulationElement</span>
+<span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
+
+
+<span class="c"># A very simple simulation element of the minimal simulation module example:</span>
+<span class="c"># tracks only the time.</span>
+<span class="k">class</span> <span class="nc">MinimalSimulationElement</span><span class="p">(</span><span class="n">AbstractSimulationElement</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">friendly_name</span><span class="p">):</span>
+        <span class="c"># It is important to call the base class constructor with the</span>
+        <span class="c"># friendly name!</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinimalSimulationElement</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">friendly_name</span><span class="p">)</span>
+
+        <span class="c"># Initialize all attributes within the __init__ method. Python standard</span>
+        <span class="c"># rules apply.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c"># Called by the simulation module to reset this element.</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="o">=</span> <span class="mf">0.</span>
+
+    <span class="c"># Calculates the next state of the element. Note that we do not make the new</span>
+    <span class="c"># state public. This will be done in the update() method.</span>
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="o">+=</span> <span class="n">delta_time</span>
+
+    <span class="c"># When all elements have been calculated the simulation is calling this</span>
+    <span class="c"># method on all elements in order to put their internal state outside.</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_val</span>
+
+
+<span class="c"># A simulation module has to derive from AbstractSimulationModule and has to</span>
+<span class="c"># implement all methods.</span>
+<span class="k">class</span> <span class="nc">MinimalGridsimModuleAbstract</span><span class="p">(</span><span class="n">AbstractSimulationModule</span><span class="p">):</span>
+
+    <span class="c"># It is important that the module has an __init__() method without</span>
+    <span class="c"># parameters, as the modules were instantiated by the core simulator using</span>
+    <span class="c"># constructors without parameters.</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Prepare list of all contained elements. Here we have just one type</span>
+        <span class="c"># of elements.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinimalGridsimModuleAbstract</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+    <span class="c"># This is a custom method of our minimal simulation module.</span>
+    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Hello&#39;</span>
+
+    <span class="c"># Each module has to offer its own methods to add elements to the control</span>
+    <span class="c"># of the module.</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="c"># To avoid errors from library users we</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">MinimalSimulationElement</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">element</span>
+
+    <span class="k">def</span> <span class="nf">attribute_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;minimal&#39;</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;reset&#39;</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;calculate, time=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;, delta_time=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;update, time=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;, delta_time=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
+
+<span class="n">Simulator</span><span class="o">.</span><span class="n">register_simulation_module</span><span class="p">(</span><span class="n">MinimalGridsimModuleAbstract</span><span class="p">)</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">()</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">minimal</span><span class="o">.</span><span class="n">say_hello</span><span class="p">()</span>
+<span class="n">el</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">minimal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MinimalSimulationElement</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">))</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">250</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">milliseconds</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationModule.attribute_name">
+<tt class="descname">attribute_name</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule.attribute_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method should return the module&#8217;s attribute name which can be used 
+in order to get the reference to the module at the main simulation
+level. If for example this string is &#8220;electrical&#8221;, the reference to the
+simulation module can be retrieved using this name as the attribute
+passed to the simulation object.</p>
+<p>If the user wants a reference to the simulation&#8217;s module, he uses:</p>
+<div class="highlight-python"><div class="highlight"><pre>sim = Simulation()
+sim.&lt;attribute_name&gt;
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Attribute name under which the module should be accessible on 
+the main simulator object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationModule.all_elements">
+<tt class="descname">all_elements</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule.all_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method should return a list of all elements contained in the
+module. The core simulator will use these lists in order to be able
+to retrieve objects or list of objects by certain criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationModule.find">
+<tt class="descname">find</tt><big>(</big><em>self</em>, <em>uid=None</em>, <em>friendly_name=None</em>, <em>element_class=None</em>, <em>instance_of=None</em>, <em>has_attribute=None</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method, already implemented for all modules in Gridsim.core.
+Finds all AbstractSimulationElement derived objects matching the
+given criteria by searching this Gridsim simulation module. Note that
+the method returns always a list of elements, even if only a single
+instance is found. All parameters are optional, if <a class="reference internal" href="#gridsim.core.AbstractSimulationModule.find" title="gridsim.core.AbstractSimulationModule.find"><tt class="xref py py-func docutils literal"><span class="pre">find()</span></tt></a> will be
+called without any parameters, the list of all elements in the actual
+simulation module will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>uid</strong> (<em>int</em>) &#8211; ID of the element. Note that these ID&#8217;s are only unique for
+a given class , so you should never search just for an ID without 
+specifying the class.</li>
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; The friendly name to search for.</li>
+<li><strong>element_class</strong> (<em>type</em>) &#8211; The exact class the element has to be an instance 
+of. Superclasses are not considered.</li>
+<li><strong>instance_of</strong> (<em>type</em>) &#8211; The object has to be an instance of the given class,
+whereas this can be the superclass of the object too.</li>
+<li><strong>has_attribute</strong> (<em>str</em>) &#8211; The object should have an attribute with the given
+name. This can be used in order to find all objects that have a 
+&#8216;power&#8217; attribute.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationModule.reset">
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The module has to reset/initialize his internal variables and to call 
+the reset method of all simulation elements it owns/manages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationModule.update">
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>The master simulation object executes this method on all registered
+simulation modules in order to finish a simulation step. The module has
+to update its external state/variables and/or call the <a class="reference internal" href="#gridsim.core.AbstractSimulationModule.update" title="gridsim.core.AbstractSimulationModule.update"><tt class="xref py py-func docutils literal"><span class="pre">update()</span></tt></a>
+method on all simulation elements it owns/manages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the update has
+to be done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationModule.calculate">
+<tt class="descname">calculate</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationModule.calculate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The master simulation object executes this method on all registered
+simulation modules in order to calculate a step during the simulation
+process. The module has to calculate its internal state and/or call
+the <a class="reference internal" href="#gridsim.core.AbstractSimulationModule.update" title="gridsim.core.AbstractSimulationModule.update"><tt class="xref py py-func docutils literal"><span class="pre">update()</span></tt></a> method on all simulation elements it owns/manages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the calculation
+has to be done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.core.AbstractSimulationElement">
+<em class="property">class </em><tt class="descclassname">gridsim.core.</tt><tt class="descname">AbstractSimulationElement</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>element_id=None</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the base for all elements that can be part of the
+simulation. It basically defines the &#8216;friendly_name&#8217; and the &#8216;id&#8217;
+properties and all abstract methods an element should provide for to be
+part of a simulation in Gridsim.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the element. Should be unique 
+within the simulation module.</li>
+<li><strong>element_id</strong> (<em>int</em>) &#8211; ID of the element. Has to be unique per module and 
+element class. Defaults to None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>You find an example of an <a class="reference internal" href="#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractSimulationElement</span></tt></a> in the </dt>
+<dd>description of <a class="reference internal" href="#gridsim.core.AbstractSimulationModule" title="gridsim.core.AbstractSimulationModule"><tt class="xref py py-class docutils literal"><span class="pre">AbstractSimulationModule</span></tt></a>.</dd>
+</dl>
+<dl class="attribute">
+<dt id="gridsim.core.AbstractSimulationElement.id">
+<tt class="descname">id</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.core.AbstractSimulationElement.id" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>ID of the simulation element. Note that the ID has not to be unique</dt>
+<dd>simulation wide, it has just to be unique in order a simulation
+module can retrieve the element using the ID and the class
+(base-class) information.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.core.AbstractSimulationElement.friendly_name">
+<tt class="descname">friendly_name</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.core.AbstractSimulationElement.friendly_name" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>User friendly name of the simulation element. Note that the name has not</dt>
+<dd>to be unique simulation wide, it has just to be unique in order a
+simulation module can retrieve the element using the friendly name
+and the class (base-class) information.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationElement.reset">
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationElement.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by the core simulator or the simulator module in 
+order to reset the elements internal data and state to initial values.
+Each simulation element has to implement this method without exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationElement.calculate">
+<tt class="descname">calculate</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationElement.calculate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by the core simulator or the simulator module in 
+order to calculate the element&#8217;s next state. Each element should have an
+internal and an external representation of its state and data. During
+the calculation step (this method) an element should only update its
+internal state and data, another method <a class="reference internal" href="#gridsim.core.AbstractSimulationElement.update" title="gridsim.core.AbstractSimulationElement.update"><tt class="xref py py-func docutils literal"><span class="pre">update()</span></tt></a> will be used to
+copy these values to the public properties/attributes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The delta time for which the calculation has to be 
+done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.core.AbstractSimulationElement.update">
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.core.AbstractSimulationElement.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will be called after all simulation elements have done their
+calculation step. Each element should copy its internal state and data
+to the external accessible locations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The delta time for which the update has to be done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.electrical.core">
+<span id="the-electrical-module"></span><span id="gridsim-electrical-core-mod"></span><h2>3.2. The electrical module<a class="headerlink" href="#module-gridsim.electrical.core" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Gilbert Maitre &lt;<a class="reference external" href="mailto:gilbert&#46;maitre&#37;&#52;&#48;hevs&#46;ch">gilbert<span>&#46;</span>maitre<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<dl class="class">
+<dt id="gridsim.electrical.core.AbstractElectricalElement">
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.core.</tt><tt class="descname">AbstractElectricalElement</tt><big>(</big><em>self</em>, <em>friendly_name</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the base for all elements that can take place in the
+electrical simulator. It is based on the general
+<a class="reference internal" href="#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement</span></tt></a>. At
+initialization the user has to give the element <tt class="docutils literal"><span class="pre">friendly_name</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the element.
+Should be unique within the simulation module.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.electrical.core.ElectricalBus">
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.core.</tt><tt class="descname">ElectricalBus</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>bus_type</em>, <em>position=Position()</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the base for all type of buses (i.e. nodes) in the
+considered electrical network. It is based on the general
+<a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalElement" title="gridsim.electrical.core.AbstractElectricalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalElement</span></tt></a> class. At initialization the user
+has to give the bus <tt class="docutils literal"><span class="pre">friendly_name</span></tt>.</p>
+<p>If there is interest for the geographical <tt class="docutils literal"><span class="pre">position</span></tt> of the element,
+defined by the <a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.util.Position</span></tt></a> class. Apart from
+the methods provided by the superclass
+<a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalElement" title="gridsim.electrical.core.AbstractElectricalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalElement</span></tt></a>, this class provides the method
+<tt class="docutils literal"><span class="pre">position</span></tt> for getting the position property of the object.</p>
+<p>The chosen representation for bus electrical values is :
+active power (P), reactive power (Q), voltage amplitude
+(V), and voltage phase (Th). Their default values are None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the element.
+Should be unique within the simulation module.</li>
+<li><strong>bus_type</strong> (<a class="reference internal" href="#gridsim.electrical.core.ElectricalBus.Type" title="gridsim.electrical.core.ElectricalBus.Type"><tt class="xref py py-class docutils literal"><span class="pre">ElectricalBus.Type</span></tt></a>) &#8211; The type of the bus. Note that Slack Bus is
+automatically added to the simulation</li>
+<li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; Bus geographical position.
+Defaults to Position default value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="gridsim.electrical.core.ElectricalBus.Type">
+<em class="property">class </em><tt class="descname">Type</tt><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.Type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.Type.SLACK_BUS">
+<tt class="descname">SLACK_BUS</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.Type.SLACK_BUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type for slack (or swing) bus, i.e. the bus insuring that produced
+power is balanced to consumed power. Since it is unique, there is no
+input parameter for the slack bus.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.Type.PV_BUS">
+<tt class="descname">PV_BUS</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.Type.PV_BUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type for bus of type PV, i.e. bus where active power (P) and voltage
+amplitude (V) are given by the element(s) (generator) attached to the
+bus. Reactive power (Q) and voltage angle (Th) are then fixed by the
+network.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.Type.PQ_BUS">
+<tt class="descname">PQ_BUS</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.Type.PQ_BUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type for bus of type PQ, i.e. bus where active power (P) and
+reactive power (Q) are given by the element(s) (load) attached to the
+bus. Voltage amplitude (V) and voltage angle (Th) are then fixed by the
+network.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.type">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">type</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of the electrical bus (in Slack, PV, PQ)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.position">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">position</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bus geographical position.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.P">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">P</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.P" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bus active power.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.Q">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">Q</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.Q" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bus reactive power.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.V">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">V</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.V" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bus voltage amplitude.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalBus.Th">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">Th</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.Th" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bus voltage angle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.electrical.core.ElectricalBus.reset">
+<tt class="descclassname">ElectricalBus.</tt><tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.ElectricalBus.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset bus electrical values to their default values: None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.electrical.core.AbstractElectricalTwoPort">
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.core.</tt><tt class="descname">AbstractElectricalTwoPort</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>X</em>, <em>R=0*units.ohm</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalTwoPort" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the base for all electrical elements that can be placed
+on a network branch, e.g. transmission lines, transformers,
+phase shifters,... It is based on the general
+<a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalElement" title="gridsim.electrical.core.AbstractElectricalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalElement</span></tt></a> class. At initialization the user
+has to give the two-port <tt class="docutils literal"><span class="pre">friendly_name</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the element.
+Should be unique within the simulation module.</li>
+<li><strong>X</strong> (ohm, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; reactance of the element</li>
+<li><strong>R</strong> (ohm, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; resistance of the element</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.electrical.core.AbstractElectricalTwoPort.X">
+<tt class="descname">X</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalTwoPort.X" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reactance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.AbstractElectricalTwoPort.R">
+<tt class="descname">R</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalTwoPort.R" title="Permalink to this definition">¶</a></dt>
+<dd><p>The resistance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch">
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.core.</tt><tt class="descname">ElectricalNetworkBranch</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>from_bus</em>, <em>to_bus</em>, <em>two_port</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for a branch of an electrical network, i.e. connection between two
+buses (or nodes). It is oriented from one bus to the other. It is
+based on the general <a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalElement" title="gridsim.electrical.core.AbstractElectricalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalElement</span></tt></a> class. At
+initialization, in addition to the &#8216;friendly_name&#8217;, the bus it is
+starting from, and the bus it is going to, have to be given, together
+with the two-port, e.g. transmission line, transformer,... it is made
+of.</p>
+<p>The chosen representation for branch electrical values is: active power
+<tt class="docutils literal"><span class="pre">Pi</span></tt> and reactive power <tt class="docutils literal"><span class="pre">Qi</span></tt> flowing into the branch at branch start,
+and active power Po and reactive power <tt class="docutils literal"><span class="pre">Qo</span></tt> flowing out of the branch at
+branch end. Their default values are None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the branch.
+Should be unique within the simulation module,
+i.e. different for example from the friendly name of a bus</li>
+<li><strong>from_bus</strong> (<a class="reference internal" href="#gridsim.electrical.core.ElectricalBus" title="gridsim.electrical.core.ElectricalBus"><tt class="xref py py-class docutils literal"><span class="pre">ElectricalBus</span></tt></a>) &#8211; Electrical bus from which branch is starting.</li>
+<li><strong>to_bus</strong> (<a class="reference internal" href="#gridsim.electrical.core.ElectricalBus" title="gridsim.electrical.core.ElectricalBus"><tt class="xref py py-class docutils literal"><span class="pre">ElectricalBus</span></tt></a>) &#8211; Electrical bus to which branch is going.</li>
+<li><strong>two_port</strong> (<a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalTwoPort" title="gridsim.electrical.core.AbstractElectricalTwoPort"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalTwoPort</span></tt></a>) &#8211; Electrical two-port on the branch,
+e.g. transmission line, transformer, ...</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.Pij">
+<tt class="descname">Pij</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.Pij" title="Permalink to this definition">¶</a></dt>
+<dd><p>Active power flowing into the branch from the from-bus terminal.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.Qij">
+<tt class="descname">Qij</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.Qij" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactive power flowing into the branch from the from-bus terminal.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.Pji">
+<tt class="descname">Pji</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.Pji" title="Permalink to this definition">¶</a></dt>
+<dd><p>Active power flowing into the branch from the to-bus terminal.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.Qji">
+<tt class="descname">Qji</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.Qji" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactive power flowing into the branch from the to-bus terminal.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.from_bus_id">
+<tt class="descname">from_bus_id</tt><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.from_bus_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>from_bus_id(self)</p>
+<p>Gets the id of the bus the branch is starting from.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">id of the bus the branch is starting from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.to_bus_id">
+<tt class="descname">to_bus_id</tt><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.to_bus_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>to_bus_id(self)</p>
+<p>Gets the id of the bus the branch is going to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">id of the bus the branch is going to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.electrical.core.ElectricalNetworkBranch.reset">
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.ElectricalNetworkBranch.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset branch electrical values to their default : None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.electrical.core.AbstractElectricalCPSElement">
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.core.</tt><tt class="descname">AbstractElectricalCPSElement</tt><big>(</big><em>self</em>, <em>friendly_name</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalCPSElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>CPS stands for &#8220;Consuming-Producing-Storing&#8221;.</p>
+<p>This class is based on the <a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalElement" title="gridsim.electrical.core.AbstractElectricalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalElement</span></tt></a> class.
+It has the same initialization parameters : <tt class="docutils literal"><span class="pre">friendly_name</span></tt>.
+It differs from the superclass <a class="reference internal" href="#gridsim.electrical.core.AbstractElectricalElement" title="gridsim.electrical.core.AbstractElectricalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractElectricalElement</span></tt></a> in
+giving access to the property <tt class="docutils literal"><span class="pre">delta_energy</span></tt>, which is the amount of
+energy consumed or stored (if positive), produced or un-stored (if
+negative) during a simulation step. The class also implements the
+methods <a class="reference internal" href="#gridsim.core.AbstractSimulationElement.reset" title="gridsim.core.AbstractSimulationElement.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.reset()</span></tt></a>
+to set the <tt class="docutils literal"><span class="pre">delta_energy</span></tt> property to 0 and
+<a class="reference internal" href="#gridsim.core.AbstractSimulationElement.update" title="gridsim.core.AbstractSimulationElement.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.update()</span></tt></a> to update the
+<tt class="docutils literal"><span class="pre">delta_energy</span></tt> property to its current value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the element. Should be unique
+within the simulation module.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.electrical.core.AbstractElectricalCPSElement.delta_energy">
+<tt class="descname">delta_energy</tt><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalCPSElement.delta_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>delta_energy(self)</p>
+<p>Gets the element consumed energy during last simulation step. Getting a
+negative value means that. the element has produced energy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">energy consumed by element during last simulation step.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.electrical.core.AbstractElectricalCPSElement.reset">
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalCPSElement.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the element to its initial state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.electrical.core.AbstractElectricalCPSElement.update">
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.electrical.core.AbstractElectricalCPSElement.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates <tt class="docutils literal"><span class="pre">delta_energy</span></tt> property to ist current value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The delta time for which the update has to be done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.thermal.core">
+<span id="the-thermal-module"></span><span id="gridsim-thermal-core-mod"></span><h2>3.3. The thermal module<a class="headerlink" href="#module-gridsim.thermal.core" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Gillian Basso (<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>)</em></p>
+<p><em>Code author: Michael Clausen (<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>)</em></p>
+<dl class="class">
+<dt id="gridsim.thermal.core.AbstractThermalElement">
+<em class="property">class </em><tt class="descclassname">gridsim.thermal.core.</tt><tt class="descname">AbstractThermalElement</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>position=Position()</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.AbstractThermalElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class of all <a class="reference internal" href="#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractSimulationElement</span></tt></a> that have to be in
+the <a class="reference internal" href="documentation.html#gridsim.thermal.simulation.ThermalSimulator" title="gridsim.thermal.simulation.ThermalSimulator"><tt class="xref py py-class docutils literal"><span class="pre">ThermalSimulator</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; User friendly name to give to the element.</li>
+<li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; The position of the thermal element.
+Defaults to [0,0,0].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.thermal.core.AbstractThermalElement.position">
+<tt class="descname">position</tt><a class="headerlink" href="#gridsim.thermal.core.AbstractThermalElement.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>position(self)</p>
+<p>Returns the thermal simulation element&#8217;s position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Position of the element.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.thermal.core.ThermalProcess">
+<em class="property">class </em><tt class="descclassname">gridsim.thermal.core.</tt><tt class="descname">ThermalProcess</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>__init__(self, friendly_name, thermal_capacity, initial_temperature, mass=1*units.kilogram, position=Position()):</p>
+<p>The very basic element of a thermal simulation. A thermal process
+represents a closed thermal envelope like a room or a amount of
+matter which has an uniform thermal capacity and and stores an amount of
+thermal energy resulting in a temperature. Those thermal processes
+can be coupled by <a class="reference internal" href="#gridsim.thermal.core.ThermalCoupling" title="gridsim.thermal.core.ThermalCoupling"><tt class="xref py py-class docutils literal"><span class="pre">ThermalCoupling</span></tt></a> elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; The name to give to the thermal process.</li>
+<li><strong>thermal_capacity</strong> (heat_capacity, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The thermal capacity of the process.
+See <a class="reference internal" href="tools.html#gridsim.util.Material" title="gridsim.util.Material"><tt class="xref py py-class docutils literal"><span class="pre">Material</span></tt></a>.</li>
+<li><strong>initial_temperature</strong> (kelvin, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The initial temperature of the process in
+degrees.</li>
+<li><strong>mass</strong> (mass, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; the mass of the element</li>
+<li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; The position of the process.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalProcess.thermal_capacity">
+<tt class="descname">thermal_capacity</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.thermal_capacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thermal capacity of the thermal process.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalProcess.temperature">
+<tt class="descname">temperature</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>The temperature of the process.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalProcess.thermal_energy">
+<tt class="descname">thermal_energy</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.thermal_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thermal energy stored inside the thermal process.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalProcess.add_energy">
+<tt class="descname">add_energy</tt><big>(</big><em>self</em>, <em>delta_energy</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.add_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a given amount of energy to the thermal process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>delta_energy</strong> (joule, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The energy to add to the thermal process.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalProcess.reset">
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbstractSimulationElement implementation</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.reset" title="gridsim.core.AbstractSimulationElement.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.reset()</span></tt></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalProcess.calculate">
+<tt class="descname">calculate</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.calculate" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbstractSimulationElement implementation</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.calculate" title="gridsim.core.AbstractSimulationElement.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.calculate()</span></tt></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalProcess.update">
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbstractSimulationElement implementation</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.update" title="gridsim.core.AbstractSimulationElement.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.update()</span></tt></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gridsim.thermal.core.ThermalProcess.room">
+<em class="property">static </em><tt class="descname">room</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.room" title="Permalink to this definition">¶</a></dt>
+<dd><p>room(friendly_name, surface, height, initial_temperature=293.15*units.kelvin, position=Position()):</p>
+<p>Returns the thermal process of a room filled with air and the given
+surface, height and initial temperature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name to give to the returned object.</li>
+<li><strong>surface</strong> (square_meter, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The room&#8217;s surface.</li>
+<li><strong>height</strong> (meter, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The room&#8217;s height.</li>
+<li><strong>initial_temperature</strong> (kelvin, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The initial temperature inside the room.</li>
+<li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; The position of the process.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A new thermal process object representing the room or None on
+error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gridsim.thermal.core.ThermalProcess.solid">
+<em class="property">static </em><tt class="descname">solid</tt><big>(</big><em>friendly_name</em>, <em>specific_thermal_capacity</em>, <em>mass</em>, <em>initial_temperature=&lt;Quantity(20</em>, <em>'degC')&gt;</em>, <em>position=&lt;gridsim.util.Position object at 0x7f6d08dfcb90&gt;</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.solid" title="Permalink to this definition">¶</a></dt>
+<dd><p>solid(friendly_name, specific_thermal_capacity, mass, initial_temperature=units(20, units.degC), position=Position()):</p>
+<p>Returns the thermal process of a solid body and the given mass, initial
+temperature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name to give to the returned object.</li>
+<li><strong>specific_thermal_capacity</strong> (thermal_capacity, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The thermal capacity.</li>
+<li><strong>mass</strong> (mass, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The solid&#8217;s mass.</li>
+<li><strong>initial_temperature</strong> (temperature, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The initial temperature of the solid.</li>
+<li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; The position of the solid.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A new thermal process object representing the solid or None
+on error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.thermal.core.ThermalCoupling">
+<em class="property">class </em><tt class="descclassname">gridsim.thermal.core.</tt><tt class="descname">ThermalCoupling</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>thermal_conductivity</em>, <em>from_process</em>, <em>to_process</em>, <em>contact_area=1*units.metre*units.metre</em>, <em>thickness=1*units.metre</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling" title="Permalink to this definition">¶</a></dt>
+<dd><p>A thermal coupling connects two thermal processes allowing them to
+exchange thermal energy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> (<em>str</em>) &#8211; The friendly name to identify the element.</li>
+<li><strong>thermal_conductivity</strong> (thermal conductivity, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The thermal conductivity of the thermal
+element.</li>
+<li><strong>from_process</strong> (int (ID), <a class="reference internal" href="#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>) &#8211; The first process coupled or the ID of the first
+process.</li>
+<li><strong>to_process</strong> (int (ID), <a class="reference internal" href="#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>) &#8211; The second process coupled or the ID of the second
+process.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalCoupling.thermal_conductivity">
+<tt class="descname">thermal_conductivity</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.thermal_conductivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thermal conductivity of the coupling in W/K.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalCoupling.from_process_id">
+<tt class="descname">from_process_id</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.from_process_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the first process.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalCoupling.to_process_id">
+<tt class="descname">to_process_id</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.to_process_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the second process.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalCoupling.power">
+<tt class="descname">power</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thermal power that gets conducted by the thermal coupling.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalCoupling.contact_area">
+<tt class="descname">contact_area</tt><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.contact_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.thermal.core.ThermalCoupling.thickness">
+<tt class="descname">thickness</tt><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.thickness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalCoupling.reset">
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbstractSimulationElement implementation</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.reset" title="gridsim.core.AbstractSimulationElement.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.reset()</span></tt></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalCoupling.calculate">
+<tt class="descname">calculate</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.calculate" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbstractSimulationElement implementation</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.calculate" title="gridsim.core.AbstractSimulationElement.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.calculate()</span></tt></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.thermal.core.ThermalCoupling.update">
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>AbstractSimulationElement implementation</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.update" title="gridsim.core.AbstractSimulationElement.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.update()</span></tt></a>.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tools.html" class="btn btn-neutral float-right" title="4. The Simulation Tools"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="documentation.html" class="btn btn-neutral" title="2. The Simulator General Use"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
+      Last updated on Dec 10, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1-rc',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

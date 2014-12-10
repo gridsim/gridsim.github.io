@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Overview &mdash; Gridsim 0.1.1-rc documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="index.html"/>
+        <link rel="next" title="2. The Simulator General Use" href="documentation.html"/>
+        <link rel="prev" title="The Gridsim simulator" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Gridsim</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>1. Overview</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/overview.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="overview">
+<span id="overview-ref"></span><h1>1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="modular-concept">
+<h2>1.1. Modular concept<a class="headerlink" href="#modular-concept" title="Permalink to this headline">¶</a></h2>
+<p>Gridsim is spread over multiple modules in order to minimize dependencies and
+maximize the flexibility for the user. Especially each aspect of the simulation
+is kept in a separate package and the simulation is driven from the main package
+<a class="reference internal" href="documentation.html#module-gridsim.simulation" title="gridsim.simulation"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.simulation</span></tt></a>.</p>
+<p>The following illustration shows the idea behind this concept:</p>
+<div class="figure align-center">
+<img alt="_images/drawing.png" src="_images/drawing.png" />
+<p class="caption">Gridsim organisation</p>
+</div>
+<div class="section" id="simulation">
+<h3>1.1.1. Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="core">
+<h4>1.1.1.1. Core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h4>
+<p>The Gridsim core includes several packages which orchestrate the whole
+simulation process and offers useful functionality to users (developers or
+simple users).</p>
+</div>
+<div class="section" id="simulator">
+<h4>1.1.1.2. Simulator<a class="headerlink" href="#simulator" title="Permalink to this headline">¶</a></h4>
+<p>The Gridsim simulator gives an access to the functionality of the simulation via
+a simple API. The <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a> object keeps the time of
+the simulation and enables the user to proceed in time either by steps or by
+running the simulation for a given time and step size.</p>
+</div>
+<div class="section" id="electrical">
+<h4>1.1.1.3. Electrical<a class="headerlink" href="#electrical" title="Permalink to this headline">¶</a></h4>
+<p>The Electrical simulation takes care of the actual electrical simulation
+of Energy Consumers and Producers.</p>
+<p>This module takes care of all connections between electrical nodes. The module
+currently supports 2 calculation methods:</p>
+<ul class="simple">
+<li><strong>Direct Load Flow Computing:</strong> for fast results.</li>
+<li><strong>Newton-Rhapsody Flow Computing:</strong> for a detailed simulation.</li>
+</ul>
+</div>
+<div class="section" id="thermal">
+<h4>1.1.1.4. Thermal<a class="headerlink" href="#thermal" title="Permalink to this headline">¶</a></h4>
+<p>The Thermal simulation module enables simulations of simple thermodynamic
+processes and their interaction between each other and by heating or colling
+them electrically.</p>
+</div>
+</div>
+<div class="section" id="new-simulation-modules">
+<h3>1.1.2. New simulation modules<a class="headerlink" href="#new-simulation-modules" title="Permalink to this headline">¶</a></h3>
+<p>Of course you can add your custom simulation module to the system. If you want
+to develop your own module, you should read <a class="reference internal" href="core.html#gridsim-core"><em>The Simulation Core</em></a> and
+<a class="reference internal" href="tools.html#gridsim-tools"><em>The Simulation Tools</em></a> pages.</p>
+</div>
+<div class="section" id="user-interface">
+<h3>1.1.3. User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="control">
+<h4>1.1.3.1. Control<a class="headerlink" href="#control" title="Permalink to this headline">¶</a></h4>
+<p>Provides control strategies in order to control an attribute of an object based
+on the current values of attributes of that or other objects.</p>
+</div>
+<div class="section" id="time-series">
+<h4>1.1.3.2. Time series<a class="headerlink" href="#time-series" title="Permalink to this headline">¶</a></h4>
+<p>Offers a very simple way to load the content of data from
+<a class="reference internal" href="io.html#module-gridsim.iodata.input" title="gridsim.iodata.input"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.iodata.input</span></tt></a> into object attributes.</p>
+</div>
+<div class="section" id="recorder">
+<h4>1.1.3.3. Recorder<a class="headerlink" href="#recorder" title="Permalink to this headline">¶</a></h4>
+<p>This module can be used to record attributes of numerical time either in order
+to provide data to by <a class="reference internal" href="io.html#module-gridsim.iodata.output" title="gridsim.iodata.output"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.iodata.output</span></tt></a> to save them in a lot of
+formats (e.g.: png, pdf, etc.).</p>
+</div>
+</div>
+</div>
+<div class="section" id="simulation-process">
+<h2>1.2. Simulation process<a class="headerlink" href="#simulation-process" title="Permalink to this headline">¶</a></h2>
+<p>This section provides a brief explanation of how to use the simulator, if you
+want more information about use the simulator you should read
+<a class="reference internal" href="documentation.html#gridsim-use"><em>The Simulator General Use</em></a>.</p>
+<p>Before doing anything else, you have to create an object of the class
+<a class="reference internal" href="documentation.html#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a>. This will automatically, almost magically
+create an instance of each simulation module you have imported into your Python
+file.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gridsim.simulation</span>
+<span class="kn">import</span> <span class="nn">gridsim.electrical</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">Simulator</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The fact that you import the <a class="reference internal" href="documentation.html#module-gridsim.electrical" title="gridsim.electrical"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.electrical</span></tt></a> package registers the electrical
+simulator within the simulator and every time an instance of the class
+<a class="reference internal" href="documentation.html#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a> is created, an instance of the electrical
+simulation will be created too and registered within the main simulation object.
+If you import a class from a module such as
+<a class="reference internal" href="documentation.html#gridsim.electrical.network.ElectricalPVBus" title="gridsim.electrical.network.ElectricalPVBus"><tt class="xref py py-class docutils literal"><span class="pre">ElectricalPVBus</span></tt></a>, you do not need to import
+the package. It will be automatically done.</p>
+<p>The next step would be to add elements to the different simulation packages and
+actually to create a topology by defining the interactions between the elements.
+How this is done hardly depends the simulation module used.</p>
+<p>Once the elements and the topology are defined, the simulation can be started
+using the main simulation object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>                         <span class="c"># Resets the simulation. This is optional and will be</span>
+                                    <span class="c"># called automatically before doing the first step.</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>                       <span class="c"># This will simulate a single step of 0.1 second.</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">Simulator</span><span class="o">.</span><span class="n">HOUR</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>    <span class="c"># This simulates an hour with a resolution of 0.1</span>
+                                    <span class="c"># seconds per step.</span>
+</pre></div>
+</div>
+<p>The following figure shows the typical interaction between the Gridsim simulator
+object and the simulation modules:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-sequence1.png"><img alt="_images/model-sequence1.png" src="_images/model-sequence1.png" style="width: 1023.0px; height: 775.0px;" /></a>
+<p class="caption">Sequence diagram of the code above</p>
+</div>
+<ul class="simple">
+<li>Calling the <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.reset" title="gridsim.simulation.Simulator.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.reset()</span></tt></a> method of the Simulator
+object will call <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationModule.reset" title="gridsim.core.AbstractSimulationModule.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.reset()</span></tt></a>
+on each registered simulation module.</li>
+<li>When a single simulation step has to be executed by calling the
+<a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.step" title="gridsim.simulation.Simulator.step"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.step()</span></tt></a>
+method, the <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.simulation.Simulator</span></tt></a> object calls first the
+<a class="reference internal" href="core.html#gridsim.core.AbstractSimulationModule.calculate" title="gridsim.core.AbstractSimulationModule.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.calculate()</span></tt></a> method on
+every registered simulation module, allowing them to calculate the internal
+states of all their elements. Then the time value is incremented by the step
+size before the <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationModule.calculate" title="gridsim.core.AbstractSimulationModule.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.calculate()</span></tt></a> method
+is called on each registered simulation module in order to make the internal
+states of their elements public.</li>
+<li>The method <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.run" title="gridsim.simulation.Simulator.run"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.run()</span></tt></a> calls the step method
+simply as long as the sum of the step sizes done is less than the given run
+time.</li>
+</ul>
+<p>Despite the fact that the simulation module is completely free how to organize
+its internal simulation behavior, the normal case is shown in the following
+sequence diagram:</p>
+<div class="figure align-center" id="fig-model-sequence2">
+<a class="reference internal image-reference" href="_images/model-sequence2.png"><img alt="_images/model-sequence2.png" src="_images/model-sequence2.png" style="width: 870.0px; height: 669.0px;" /></a>
+<p class="caption">Sequence diagram of a simulation single step</p>
+</div>
+<ul>
+<li><p class="first">If the <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationModule.reset" title="gridsim.core.AbstractSimulationModule.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.reset()</span></tt></a> method is called,
+the module should just call the
+<a class="reference internal" href="core.html#gridsim.core.AbstractSimulationElement.reset" title="gridsim.core.AbstractSimulationElement.reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.reset()</span></tt></a> method on each simulation
+element, as the element probably knows best how to reset his internal and
+external state.</p>
+</li>
+<li><p class="first">For the <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationModule.calculate" title="gridsim.core.AbstractSimulationModule.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.calculate()</span></tt></a> method there
+are basically two scenarios possible:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Delegate the actual calculation to the elements</strong>
+(blue in <a class="reference internal" href="#fig-model-sequence2"><em>Sequence diagram of a simulation single step</em></a>):
+In this case, the simulation module just calls the
+<a class="reference internal" href="core.html#gridsim.core.AbstractSimulationElement.calculate" title="gridsim.core.AbstractSimulationElement.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.calculate()</span></tt></a> method
+on all his elements and the actual simulation calculations are made inside
+these. This is the simplest, but almost for sure the most inefficient
+method.</li>
+<li><strong>The Simulation module calculates the values</strong>
+(green in <a class="reference internal" href="#fig-model-sequence2"><em>Sequence diagram of a simulation single step</em></a>):
+This enables the simulation module to use optimized matrix calculations or
+vectorized version of the algorithms in order to accelerate the
+calculation.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The main simulation object calls the method
+<a class="reference internal" href="core.html#gridsim.core.AbstractSimulationModule.update" title="gridsim.core.AbstractSimulationModule.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationModule.update()</span></tt></a> on all simulation
+modules in order all simulation elements copy their private state just
+calculated to the public attributes. In the most cases, this can be
+implemented by the simulation elements and the simulation module has just to
+call the <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationElement.update" title="gridsim.core.AbstractSimulationElement.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.update()</span></tt></a> method on all
+these elements it manages.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="packages">
+<h2>1.3. Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<p>The following figure shows the structure of the gridsim framework:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-packages.png"><img alt="_images/model-packages.png" src="_images/model-packages.png" style="width: 667.0px; height: 282.0px;" /></a>
+<p class="caption">Package diagram of Gridsim</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This diagram presents the main packages of Gridsim and the link between
+them.</p>
+<p class="last">The number of packages as well as their link will evolve over time as
+new modules and features can be written to handle a new simulation aspect.</p>
+</div>
+</div>
+<div class="section" id="uml-diagrams">
+<h2>1.4. UML diagrams<a class="headerlink" href="#uml-diagrams" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>1.4.1. Simulation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This diagram presents the heart of the Gridsim simulation framework.</p>
+<p>The <a class="reference internal" href="documentation.html#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a> is the main class of Gridsim. It is
+composed of modules (such as
+<a class="reference internal" href="documentation.html#gridsim.electrical.simulation.ElectricalSimulator" title="gridsim.electrical.simulation.ElectricalSimulator"><tt class="xref py py-class docutils literal"><span class="pre">ElectricalSimulator</span></tt></a>) themselves composed of
+elements (such as <a class="reference internal" href="documentation.html#gridsim.electrical.element.ConstantElectricalCPSElement" title="gridsim.electrical.element.ConstantElectricalCPSElement"><tt class="xref py py-class docutils literal"><span class="pre">ConstantElectricalCPSElement</span></tt></a>).
+These elements are the living part of the simulation, they will evolve during
+the time and interact with others to simulate the exchange of energy.</p>
+<p>A simulation with no output is pretty useless, so the
+<a class="reference internal" href="documentation.html#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> module enables to save the simulation data
+either in text based files or enables to plot the values. The following figure
+contains a detailed UML diagram of that module.</p>
+<p>We refer to the <a class="reference internal" href="documentation.html#gridsim-use"><em>The Simulator General Use</em></a> for more details...</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-core.png"><img alt="_images/model-core.png" src="_images/model-core.png" style="width: 611.0px; height: 287.0px;" /></a>
+<p class="caption">Class diagram: The heart of Gridsim</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The packages are not displayed in this diagram.</p>
+</div>
+</div>
+<div class="section" id="gridsim-electrical">
+<h3>1.4.2. gridsim.electrical<a class="headerlink" href="#gridsim-electrical" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="documentation.html#module-gridsim.electrical" title="gridsim.electrical"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.electrical</span></tt></a> module implements the electrical part of the
+gridsim simulator. It basically manages Consuming-Producing-Storing (CPS)
+Elements, which consume (positive sign) and/or produce (negative sign) a certain
+amount of energy (&#8216;delta_energy&#8217;) at each simulation step.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-electrical.png"><img alt="_images/model-electrical.png" src="_images/model-electrical.png" style="width: 2066.0px; height: 667.0px;" /></a>
+</div>
+</div>
+<div class="section" id="gridsim-thermal">
+<h3>1.4.3. gridsim.thermal<a class="headerlink" href="#gridsim-thermal" title="Permalink to this headline">¶</a></h3>
+<p>Enables the simulation of thermal processes and their interactions. The
+following illustration shows a detailed UML diagram:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-thermal.png"><img alt="_images/model-thermal.png" src="_images/model-thermal.png" style="width: 626.0px; height: 667.0px;" /></a>
+</div>
+<p>We refer to the <a class="reference internal" href="documentation.html#gridsim-use"><em>The Simulator General Use</em></a> for more details...</p>
+</div>
+<div class="section" id="gridsim-control">
+<h3>1.4.4. gridsim.control<a class="headerlink" href="#gridsim-control" title="Permalink to this headline">¶</a></h3>
+<p>Enables the simulation of control strategies and devices by writing to Python
+attributes depending the actual value of the same or other attribute values.</p>
+<p>We refer to the <a class="reference internal" href="documentation.html#gridsim-use"><em>The Simulator General Use</em></a> for more details...</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="documentation.html" class="btn btn-neutral float-right" title="2. The Simulator General Use"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="The Gridsim simulator"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
+      Last updated on Dec 10, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1-rc',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

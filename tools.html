@@ -1,0 +1,1481 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. The Simulation Tools &mdash; Gridsim 0.1.1-rc documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.1.1-rc documentation" href="index.html"/>
+        <link rel="next" title="5. The Simulation Unit" href="unit.html"/>
+        <link rel="prev" title="3. The Simulation Core" href="core.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Gridsim</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">4. The Simulation Tools</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">5. The Simulation Unit</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">6. The Gridsim Input/Output</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">7. Further Information</a><ul class="simple">
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>4. The Simulation Tools</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/tools.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="the-simulation-tools">
+<span id="gridsim-tools"></span><h1>4. The Simulation Tools<a class="headerlink" href="#the-simulation-tools" title="Permalink to this headline">¶</a></h1>
+<p>The following section describes the tools provide by Gridsim to develop in a
+better way.</p>
+<p>This page contains information about:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#gridsim-tool-timeseries"><em>Time series</em></a></li>
+<li><a class="reference internal" href="#gridsim-tool-decorator"><em>Decorators</em></a></li>
+<li><a class="reference internal" href="#gridsim-tool-util"><em>Utils</em></a></li>
+</ul>
+<div class="section" id="module-gridsim.timeseries">
+<span id="time-series"></span><span id="gridsim-tool-timeseries"></span><h2>4.1. Time series<a class="headerlink" href="#module-gridsim.timeseries" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p>The <a class="reference internal" href="#module-gridsim.timeseries" title="gridsim.timeseries"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.timeseries</span></tt></a> module allows to import time series based on data
+<a class="reference internal" href="io.html#gridsim.iodata.input.Reader" title="gridsim.iodata.input.Reader"><tt class="xref py py-class docutils literal"><span class="pre">Reader</span></tt></a> as attributes.</p>
+<p>The data are translated into attributes of the <a class="reference internal" href="#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">TimeSeries</span></tt></a> by calling
+the <a class="reference internal" href="#gridsim.timeseries.TimeSeries.load" title="gridsim.timeseries.TimeSeries.load"><tt class="xref py py-func docutils literal"><span class="pre">TimeSeries.load()</span></tt></a> method on a TimeSeriesObject or any subclass of it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">obj</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;../../data/examples/example.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will call the <a class="reference internal" href="io.html#gridsim.iodata.input.Reader.load" title="gridsim.iodata.input.Reader.load"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.input.Reader.load()</span></tt></a> function and process the data to simplify
+the access from the simulator.</p>
+<p>It is important to have a <tt class="docutils literal"><span class="pre">time</span></tt> data or to identify the data representing the
+time.</p>
+<p>If the data contain a <tt class="docutils literal"><span class="pre">temperature</span></tt> data, it can be access with:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">gridsim.iodata.input</span> <span class="kn">import</span> <span class="n">CSVReader</span>
+<span class="kn">from</span> <span class="nn">gridsim.timeseries</span> <span class="kn">import</span> <span class="n">TimeSeriesObject</span>
+
+<span class="c"># Load time series into a new object.</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">TimeSeriesObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">())</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;./data/example.csv&#39;</span><span class="p">)</span>
+
+<span class="c"># Print value at start time.</span>
+<span class="k">print</span> <span class="n">obj</span><span class="o">.</span><span class="n">temperature</span>
+
+<span class="c"># Proceed 120 and output the temperature at that moment.</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">set_time</span><span class="p">(</span><span class="mi">120</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obj</span><span class="o">.</span><span class="n">temperature</span>
+</pre></div>
+</td></tr></table></div>
+<p>This would give an output like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>18.5 kelvin
+</pre></div>
+</div>
+<dl class="class">
+<dt id="gridsim.timeseries.TimeSeries">
+<em class="property">class </em><tt class="descclassname">gridsim.timeseries.</tt><tt class="descname">TimeSeries</tt><big>(</big><em>self</em>, <em>reader</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The time series objects allows to process data from <a class="reference internal" href="io.html#gridsim.iodata.input.Reader" title="gridsim.iodata.input.Reader"><tt class="xref py py-class docutils literal"><span class="pre">Reader</span></tt></a>
+into a time series and allows to access these in a very simple way by
+providing them as attributes.</p>
+<p><em>Example</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">gridsim.core</span> <span class="kn">import</span> <span class="n">AbstractSimulationElement</span><span class="p">,</span> <span class="n">AbstractSimulationModule</span>
+<span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
+<span class="kn">from</span> <span class="nn">gridsim.recorder</span> <span class="kn">import</span> <span class="n">PlotRecorder</span>
+<span class="kn">from</span> <span class="nn">gridsim.timeseries</span> <span class="kn">import</span> <span class="n">TimeSeriesObject</span>
+<span class="kn">from</span> <span class="nn">gridsim.iodata.input</span> <span class="kn">import</span> <span class="n">CSVReader</span>
+<span class="kn">from</span> <span class="nn">gridsim.iodata.output</span> <span class="kn">import</span> <span class="n">FigureSaver</span>
+
+
+<span class="c"># Create own simulation element and module and</span>
+<span class="c"># register them within the simulator.</span>
+<span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">AbstractSimulationElement</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyObject</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span> <span class="o">=</span> <span class="n">TimeSeriesObject</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">time_converter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="o">.</span><span class="n">compute_data</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="o">.</span><span class="n">set_time</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">converter</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">converter</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyModule</span><span class="p">(</span><span class="n">AbstractSimulationModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyModule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">element</span>
+
+    <span class="k">def</span> <span class="nf">attribute_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;my&#39;</span>
+
+    <span class="k">def</span> <span class="nf">all_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elements</span><span class="p">:</span>
+            <span class="n">el</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
+
+<span class="n">Simulator</span><span class="o">.</span><span class="n">register_simulation_module</span><span class="p">(</span><span class="n">MyModule</span><span class="p">)</span>
+
+
+<span class="c"># Create a simulator, add an element and record the temperature signal using</span>
+<span class="c"># a recorder.</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">()</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">my</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MyObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">(),</span> <span class="s">&#39;./data/example_time_series.csv&#39;</span><span class="p">))</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;temperature&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">units</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">))</span>
+
+<span class="n">rec</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
+
+<span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Saving data...&quot;</span><span class="p">)</span>
+
+<span class="n">FigureSaver</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="s">&quot;Temperature&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/timeseries2-example.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result of the script:</p>
+<div class="figure align-center">
+<img alt="_images/timeseries2-example.png" src="_images/timeseries2-example.png" />
+</div>
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeries.map_attribute">
+<tt class="descname">map_attribute</tt><big>(</big><em>self</em>, <em>name</em>, <em>mapped_name</em>, <em>is_time_key=False</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries.map_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the attribute name of the file does not match the target attribute
+name for the object, you can use this method to map the original name to
+a new attribute name.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The old mapping will be removed.</p>
+</div>
+<p><em>Example</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">obj</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s">&#39;temp&#39;</span><span class="p">,</span> <span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The example will change the name of the attribute mapped to the data
+column from &#8216;temp&#8217; to &#8216;temperature&#8217;.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">the old value is delete from the <a class="reference internal" href="#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">TimeSeries</span></tt></a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; Original name of the attribute/column.</li>
+<li><strong>mapped_name</strong> (<em>str</em>) &#8211; New name for the attribute.</li>
+<li><strong>is_time_key</strong> (<em>bool</em>) &#8211; should be True if the modified name is the time key.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeries.convert">
+<tt class="descname">convert</tt><big>(</big><em>self</em>, <em>item</em>, <em>converter</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert each element of the list mapped by <tt class="docutils literal"><span class="pre">item</span></tt> with the <tt class="docutils literal"><span class="pre">convert</span></tt>
+function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>item</strong> (<em>str</em>) &#8211; the key of the list to convert</li>
+<li><strong>converter</strong> (<em>function</em>) &#8211; the conversion function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeries.set_time">
+<tt class="descname">set_time</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries.set_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeries.load">
+<tt class="descname">load</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.timeseries.TimeSeriesObject">
+<em class="property">class </em><tt class="descclassname">gridsim.timeseries.</tt><tt class="descname">TimeSeriesObject</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.timeseries.TimeSeries</span></tt></a></p>
+<p>This class is the standard time series implementation with no assumption
+about data.</p>
+<p>This class has a <tt class="xref py py-func docutils literal"><span class="pre">TimeSeriesObject.compile_data()</span></tt> function to
+optimize the process but is still slow.</p>
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeriesObject.map_attribute">
+<tt class="descname">map_attribute</tt><big>(</big><em>self</em>, <em>name</em>, <em>mapped_name</em>, <em>is_time_key=False</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.map_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.timeseries.TimeSeries.map_attribute" title="gridsim.timeseries.TimeSeries.map_attribute"><tt class="xref py py-func docutils literal"><span class="pre">TimeSeries.map_attribute()</span></tt></a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; Original name of the attribute/column in CSV file.</li>
+<li><strong>mapped_name</strong> (<em>str</em>) &#8211; New name for the attribute.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeriesObject.set_time">
+<tt class="descname">set_time</tt><big>(</big><em>self</em>, <em>time=0*units.second</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.set_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the actual time on the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; the new time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeriesObject.load">
+<tt class="descname">load</tt><big>(</big><em>self</em>, <em>stream</em>, <em>time_converter=None</em>, <em>time_key='time'</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.load" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>stream</strong> &#8211; </li>
+<li><strong>time_converter</strong> &#8211; </li>
+<li><strong>time_key</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.TimeSeriesObject.compute_data">
+<tt class="descname">compute_data</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.compute_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes data, after a call of <a class="reference internal" href="#gridsim.timeseries.TimeSeriesObject.load" title="gridsim.timeseries.TimeSeriesObject.load"><tt class="xref py py-func docutils literal"><span class="pre">TimeSeriesObject.load()</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.timeseries.SortedConstantStepTimeSeriesObject">
+<em class="property">class </em><tt class="descclassname">gridsim.timeseries.</tt><tt class="descname">SortedConstantStepTimeSeriesObject</tt><big>(</big><em>self</em>, <em>reader</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.SortedConstantStepTimeSeriesObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.timeseries.TimeSeries</span></tt></a></p>
+<p>This class is a time series with a constant time step between each data.</p>
+<dl class="method">
+<dt id="gridsim.timeseries.SortedConstantStepTimeSeriesObject.map_attribute">
+<tt class="descname">map_attribute</tt><big>(</big><em>self</em>, <em>name</em>, <em>mapped_name</em>, <em>is_time_key=False</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.SortedConstantStepTimeSeriesObject.map_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#gridsim.timeseries.TimeSeries.map_attribute" title="gridsim.timeseries.TimeSeries.map_attribute"><tt class="xref py py-func docutils literal"><span class="pre">TimeSeries.map_attribute()</span></tt></a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; Original name of the attribute/column in CSV file.</li>
+<li><strong>mapped_name</strong> (<em>str</em>) &#8211; New name for the attribute.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.SortedConstantStepTimeSeriesObject.set_time">
+<tt class="descname">set_time</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.SortedConstantStepTimeSeriesObject.set_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.timeseries.SortedConstantStepTimeSeriesObject.load">
+<tt class="descname">load</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.SortedConstantStepTimeSeriesObject.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.decorators">
+<span id="decorators"></span><span id="gridsim-tool-decorator"></span><h2>4.2. Decorators<a class="headerlink" href="#module-gridsim.decorators" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p>Gridsim decorators module. Defines all decorators used in the Gridsim simulator.</p>
+<dl class="method">
+<dt id="gridsim.decorators.timed">
+<tt class="descclassname">gridsim.decorators.</tt><tt class="descname">timed</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.decorators.timed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This decorator can be used to register the execution time of
+class methods.</p>
+<p><em>Example</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@timed</span>
+    <span class="k">def</span> <span class="nf">my_short_func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">arg1</span> <span class="o">*</span> <span class="n">arg2</span>
+
+    <span class="nd">@timed</span>
+    <span class="k">def</span> <span class="nf">my_long_func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="c"># long section of code</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This decorator only works with class methods and not
+with functions.</p>
+</div>
+<p>At the end of the execution, the console prompt the time for each function:</p>
+<div class="highlight-python"><div class="highlight"><pre>Function MyClass.my_short_func 1 times.  Execution time max: 0.0000119, average: 0.0000119 Total time: 0.0000119
+Function MyClass.my_long_func called 13 times.  Execution time max: 0.0001291, average: 0.0001177 Total time: 0.0015298
+</pre></div>
+</div>
+<dl class="function">
+<dt id="gridsim.decorators.accepts">
+<tt class="descclassname">gridsim.decorators.</tt><tt class="descname">accepts</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.decorators.accepts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type Enforcement. Verifies types of parameters given to the function.</p>
+<p><em>Example:</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@accepts</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="nb">int</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">)))</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">arg1</span> <span class="o">*</span> <span class="n">arg2</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">In a class function, the current class cannot be used (e.g.: <tt class="docutils literal"><span class="pre">self</span></tt>
+type cannot be defined with <tt class="docutils literal"><span class="pre">accepts</span></tt>)</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridsim.decorators.returns">
+<tt class="descclassname">gridsim.decorators.</tt><tt class="descname">returns</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.decorators.returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type Enforcement. Verifies return type of the function.</p>
+<p><em>Example:</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@returns</span><span class="p">((</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">arg1</span> <span class="o">*</span> <span class="n">arg2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridsim.decorators.deprecated">
+<tt class="descclassname">gridsim.decorators.</tt><tt class="descname">deprecated</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.decorators.deprecated" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a decorator which can be used to mark functions
+as deprecated. It will result in a warning being emitted
+when the function is used.</p>
+<p><em>Example:</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@deprecated</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">arg1</span> <span class="o">*</span> <span class="n">arg2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.util">
+<span id="utils"></span><span id="gridsim-tool-util"></span><h2>4.3. Utils<a class="headerlink" href="#module-gridsim.util" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p>Gridsim util module. Defines utility classes and functions.</p>
+<dl class="class">
+<dt id="gridsim.util.Position">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Position</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.util.Position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an abstract position on a three-dimensional space. The
+coordinate system is WGS84.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>latitude</strong> (<em>int, float</em>) &#8211; North-south point location the on the Earth&#8217;s surface.</li>
+<li><strong>longitude</strong> (<em>int, float</em>) &#8211; East-west position of a point on the Earth&#8217;s surface.</li>
+<li><strong>altitude</strong> (<em>int, float</em>) &#8211; Altitude. We recommend to use sea level as reference.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><em>Example:</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.util</span> <span class="kn">import</span> <span class="n">Position</span>
+
+<span class="c"># Create a point and output the coordinates.</span>
+<span class="n">office</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="mf">46.240301</span><span class="p">,</span> <span class="mf">7.358394</span><span class="p">,</span> <span class="mi">566</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">office</span>
+
+<span class="c"># Create a second point.</span>
+<span class="n">home</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="mf">46.309180</span><span class="p">,</span> <span class="mf">7.972517</span><span class="p">,</span> <span class="mi">676</span><span class="p">)</span>
+
+<span class="c"># Calculate the difference between the two points.</span>
+<span class="k">print</span> <span class="n">home</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">office</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Output:</em></p>
+<div class="highlight-python"><div class="highlight"><pre>Position: {
+    latitude: 46,
+    longitude: 7,
+    altitude: 566
+}
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="gridsim.util.Position.latitude">
+<tt class="descname">latitude</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.util.Position.latitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the north-south point location on the Earth&#8217;s surface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.util.Position.longitude">
+<tt class="descname">longitude</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.util.Position.longitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the east-west point position of on the Earth&#8217;s surface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.util.Position.altitude">
+<tt class="descname">altitude</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.util.Position.altitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Altitude, we recommend to use the WGS84&#8217;s sea level as reference.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.util.Position.distance_to">
+<tt class="descname">distance_to</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.util.Position.distance_to" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Calculates the distance between two points in meters [m]. It uses the</dt>
+<dd>haversine formula to calculate the distance, so the altitude is
+ignored completely and the distance is calculated for booth points
+using the earth radius of 6371 km.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<em>Position</em>) &#8211; The point to which the distance has to be calculated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The distance between the two points in meters [m].</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Material">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Material</tt><big>(</big><em>self</em>, <em>c</em>, <em>p</em>, <em>k</em><big>)</big><a class="headerlink" href="#gridsim.util.Material" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This class cannot be instanced directly. Use sub classes instead.
+Each Material must inherit this class.</p>
+</div>
+<p>This class offer simple access to constants of materials.</p>
+<p><em>Example</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gridsim.util</span> <span class="kn">import</span> <span class="n">Air</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">Air</span><span class="p">()</span><span class="o">.</span><span class="n">thermal_conductivity</span>
+<span class="go">0.02587 thermal_conductivity</span>
+</pre></div>
+</div>
+<p>With <tt class="docutils literal"><span class="pre">thermal_conductivity</span></tt> is <tt class="docutils literal"><span class="pre">W/Km</span></tt>, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>
+for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>c</strong> (<em>int, float</em>) &#8211; The thermal capacity in <tt class="docutils literal"><span class="pre">J/gK</span></tt>.</li>
+<li><strong>p</strong> (<em>int, float</em>) &#8211; The weight of the material in <tt class="docutils literal"><span class="pre">g/m3</span></tt>.</li>
+<li><strong>k</strong> (<em>int, float</em>) &#8211; The thermal conductivity in <tt class="docutils literal"><span class="pre">W/Km</span></tt>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.util.Material.thermal_capacity">
+<tt class="descname">thermal_capacity</tt><a class="headerlink" href="#gridsim.util.Material.thermal_capacity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thermal capacity in <strong>[J/gK]</strong>
+In order to get the thermal capacity of an object, you only have to
+multiply this specific capacity with the object&#8217;s mass in gram:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Calculate the thermal capacity of 1kg of air.</span>
+<span class="n">t_cap</span> <span class="o">=</span> <span class="n">AIR</span><span class="p">()</span><span class="o">.</span><span class="n">thermal_capacity</span> <span class="o">*</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Source: <a class="reference external" href="http://www.engineeringtoolbox.com/specific-heat-solids-d_154.html">http://www.engineeringtoolbox.com/specific-heat-solids-d_154.html</a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the thermal capacity</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">thermal capacity, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.util.Material.weight">
+<tt class="descname">weight</tt><a class="headerlink" href="#gridsim.util.Material.weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>The weight of the material in <strong>[g/m3]</strong>.</p>
+<p>In order to get the mass of an object, you have just to multiply this
+specific wight with the object&#8217;s volume in m3:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Calculate the mass capacity of 1m3 of air.</span>
+<span class="n">t_cap</span> <span class="o">=</span> <span class="n">Air</span><span class="p">()</span><span class="o">.</span><span class="n">weight</span> <span class="o">*</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Source: <a class="reference external" href="http://www.simetric.co.uk/si_materials.htm">http://www.simetric.co.uk/si_materials.htm</a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the weight of the material</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">weight, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.util.Material.thermal_conductivity">
+<tt class="descname">thermal_conductivity</tt><a class="headerlink" href="#gridsim.util.Material.thermal_conductivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thermal conductivity in <strong>[W/Km]</strong>.</p>
+<p>In order to get the thermal conductivity of an object, you have just to
+multiply this specific conductivity with the object&#8217;s area in m2 and
+divide it with the objects thickness:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Calculate the thermal conductivity of a window with 1m2 surface</span>
+<span class="c"># and a thickness of 3mm.</span>
+<span class="n">t_cond</span> <span class="o">=</span> <span class="n">Glass</span><span class="p">()</span><span class="o">.</span><span class="n">thermal_conductivity</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">0.003</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Source: <a class="reference external" href="https://www.wolframalpha.com">https://www.wolframalpha.com</a> and
+<a class="reference external" href="http://en.wikipedia.org/wiki/List_of_thermal_conductivities">http://en.wikipedia.org/wiki/List_of_thermal_conductivities</a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The thermal conductivity</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">thermal conductivity, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Steel">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Steel</tt><a class="headerlink" href="#gridsim.util.Steel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of steel:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.49</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">7700000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">46.6</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Stone">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Stone</tt><a class="headerlink" href="#gridsim.util.Stone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of stone:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.49</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2515000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Gold">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Gold</tt><a class="headerlink" href="#gridsim.util.Gold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of gold:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.13</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">19200000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">317.1</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Copper">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Copper</tt><a class="headerlink" href="#gridsim.util.Copper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of copper:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.383</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2200000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">401.2</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Petrol">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Petrol</tt><a class="headerlink" href="#gridsim.util.Petrol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of petrol:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2.14</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">881000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Wax">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Wax</tt><a class="headerlink" href="#gridsim.util.Wax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of wax:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">3.43</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Sandstone">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Sandstone</tt><a class="headerlink" href="#gridsim.util.Sandstone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of sandstone:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.92</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2323000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.5</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Cobalt">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Cobalt</tt><a class="headerlink" href="#gridsim.util.Cobalt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of cobalt:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.46</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">8900000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Zinc">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Zinc</tt><a class="headerlink" href="#gridsim.util.Zinc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of zinc:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.38</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">0.38</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">11</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Marple">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Marple</tt><a class="headerlink" href="#gridsim.util.Marple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of marple:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.88</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2563000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.08</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Granite">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Granite</tt><a class="headerlink" href="#gridsim.util.Granite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of granite:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.79</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2400000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.855</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Silk">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Silk</tt><a class="headerlink" href="#gridsim.util.Silk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of silk:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.38</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Hydrogen">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Hydrogen</tt><a class="headerlink" href="#gridsim.util.Hydrogen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of hydrogen:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">14.32</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">69600</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.HardBrick">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">HardBrick</tt><a class="headerlink" href="#gridsim.util.HardBrick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of hard brick:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2403000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.31</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Platinum">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Platinum</tt><a class="headerlink" href="#gridsim.util.Platinum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of platinum:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.13</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">21450000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">71.61</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Aluminium">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Aluminium</tt><a class="headerlink" href="#gridsim.util.Aluminium" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of aluminium:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.896</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1522000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">236.9</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.ArtificialWool">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">ArtificialWool</tt><a class="headerlink" href="#gridsim.util.ArtificialWool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of artificial wool:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.357</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1314000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.049</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Tar">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Tar</tt><a class="headerlink" href="#gridsim.util.Tar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of tar:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.47</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1153000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Chromium">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Chromium</tt><a class="headerlink" href="#gridsim.util.Chromium" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of chromium:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.5</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">6856000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">93.93</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Slate">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Slate</tt><a class="headerlink" href="#gridsim.util.Slate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of slate:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.76</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2691000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.DryEarth">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DryEarth</tt><a class="headerlink" href="#gridsim.util.DryEarth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of dry earth:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.26</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1249000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.864</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Rubber">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Rubber</tt><a class="headerlink" href="#gridsim.util.Rubber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of rubber:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2.01</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1522000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.16</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Concrete">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Concrete</tt><a class="headerlink" href="#gridsim.util.Concrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of concrete:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.75</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2403000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.04</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Pvc">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Pvc</tt><a class="headerlink" href="#gridsim.util.Pvc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of pvc:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.88</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1200000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Paper">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Paper</tt><a class="headerlink" href="#gridsim.util.Paper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of paper:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.336</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1201000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.05</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Graphite">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Graphite</tt><a class="headerlink" href="#gridsim.util.Graphite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of graphite:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.71</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2070000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Iron">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Iron</tt><a class="headerlink" href="#gridsim.util.Iron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of iron:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.452</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2500000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">80.43</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Clay">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Clay</tt><a class="headerlink" href="#gridsim.util.Clay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of clay:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.92</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1073000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.GraphiteCarbon">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">GraphiteCarbon</tt><a class="headerlink" href="#gridsim.util.GraphiteCarbon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of graphite carbon:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.71</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Salt">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Salt</tt><a class="headerlink" href="#gridsim.util.Salt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of salt:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.88</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1000000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Mercury">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Mercury</tt><a class="headerlink" href="#gridsim.util.Mercury" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of mercury:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.14</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">13534000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Charcoal">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Charcoal</tt><a class="headerlink" href="#gridsim.util.Charcoal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of charcoal:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">208000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Oil">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Oil</tt><a class="headerlink" href="#gridsim.util.Oil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of oil:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.67</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">942000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Nickel">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Nickel</tt><a class="headerlink" href="#gridsim.util.Nickel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of nickel:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.461</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">8666000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">90.95</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Silicone">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Silicone</tt><a class="headerlink" href="#gridsim.util.Silicone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of silicone:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.75</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2330000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.3</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.DryCement">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DryCement</tt><a class="headerlink" href="#gridsim.util.DryCement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of dry cement:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.55</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1506000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Cork">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Cork</tt><a class="headerlink" href="#gridsim.util.Cork" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of cork:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.9</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">240000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.0435</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Chalk">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Chalk</tt><a class="headerlink" href="#gridsim.util.Chalk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of chalk:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.9</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2499000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Gypsum">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Gypsum</tt><a class="headerlink" href="#gridsim.util.Gypsum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of gypsum:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.09</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2787000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Wood">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Wood</tt><a class="headerlink" href="#gridsim.util.Wood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of wood:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">500000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.14</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.GlassWool">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">GlassWool</tt><a class="headerlink" href="#gridsim.util.GlassWool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of glass wool:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.67</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">25000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.04</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Butane">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Butane</tt><a class="headerlink" href="#gridsim.util.Butane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of butane:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.658</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2006</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.01607</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Tungsten">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Tungsten</tt><a class="headerlink" href="#gridsim.util.Tungsten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of tungsten:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.134</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">19220000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">174.2</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Air">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Air</tt><a class="headerlink" href="#gridsim.util.Air" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of air:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.005</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1200</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.02587</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Helium">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Helium</tt><a class="headerlink" href="#gridsim.util.Helium" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of helium:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">5.193</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">138000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.1535</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Silver">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Silver</tt><a class="headerlink" href="#gridsim.util.Silver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of silver:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.23</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">10500000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">429.0</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Diamond">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Diamond</tt><a class="headerlink" href="#gridsim.util.Diamond" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of diamond:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.63</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">3510000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.2</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Lead">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Lead</tt><a class="headerlink" href="#gridsim.util.Lead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of lead:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.129</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">11389000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">35.33</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Asphalt">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Asphalt</tt><a class="headerlink" href="#gridsim.util.Asphalt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of asphalt:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.92</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">721000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.75</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.LightConcrete">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">LightConcrete</tt><a class="headerlink" href="#gridsim.util.LightConcrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of light concrete:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.96</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1400000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.42</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Plaster">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Plaster</tt><a class="headerlink" href="#gridsim.util.Plaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of plaster:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.3</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">849000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.478</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.CommonBrick">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">CommonBrick</tt><a class="headerlink" href="#gridsim.util.CommonBrick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of common brick:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.9</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1922000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.26</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Water">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Water</tt><a class="headerlink" href="#gridsim.util.Water" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of water:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">4.19</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1000000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.5985</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Glass">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Glass</tt><a class="headerlink" href="#gridsim.util.Glass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of glass:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.84</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2579000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.0</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.DrySoil">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DrySoil</tt><a class="headerlink" href="#gridsim.util.DrySoil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of dry soil:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.8</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Ethanol">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Ethanol</tt><a class="headerlink" href="#gridsim.util.Ethanol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of ethanol:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2.43</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">789000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.1664</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Carbon">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Carbon</tt><a class="headerlink" href="#gridsim.util.Carbon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of carbon:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.52</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2146000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.0146</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.WetSoil">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">WetSoil</tt><a class="headerlink" href="#gridsim.util.WetSoil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of wet soil:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.48</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Wool">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Wool</tt><a class="headerlink" href="#gridsim.util.Wool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of wool:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.26</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1314000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.049</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Porcelain">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Porcelain</tt><a class="headerlink" href="#gridsim.util.Porcelain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of porcelain:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.07</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2403000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.DryLeather">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DryLeather</tt><a class="headerlink" href="#gridsim.util.DryLeather" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of dry leather:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.5</span> <span class="pre">J/gK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">945000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.util.Aerogel">
+<em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Aerogel</tt><a class="headerlink" href="#gridsim.util.Aerogel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of aerogel:</p>
+<ul class="simple">
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
+<li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.003</span> <span class="pre">W/Km</span></tt></li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="unit.html" class="btn btn-neutral float-right" title="5. The Simulation Unit"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="core.html" class="btn btn-neutral" title="3. The Simulation Core"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
+      Last updated on Dec 10, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.1-rc',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
