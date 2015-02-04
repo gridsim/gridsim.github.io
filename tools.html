@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. The Simulation Tools &mdash; Gridsim 0.1.1-rc1 documentation</title>
+  <title>4. The Simulation Tools &mdash; Gridsim 0.1.1rc2 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/>
+    <link rel="top" title="Gridsim 0.1.1rc2 documentation" href="index.html"/>
         <link rel="next" title="5. The Simulation Unit" href="unit.html"/>
         <link rel="prev" title="3. The Simulation Core" href="core.html"/> 
 
@@ -139,8 +139,8 @@ the <a class="reference internal" href="#gridsim.timeseries.TimeSeries.load" tit
 <span class="n">obj</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;../../data/examples/example.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will call the <a class="reference internal" href="io.html#gridsim.iodata.input.Reader.load" title="gridsim.iodata.input.Reader.load"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.input.Reader.load()</span></tt></a> function and process the data to simplify
-the access from the simulator.</p>
+<p>This will call the <a class="reference internal" href="io.html#gridsim.iodata.input.Reader.load" title="gridsim.iodata.input.Reader.load"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.input.Reader.load()</span></tt></a> function and process
+the data to simplify the access from the simulator.</p>
 <p>It is important to have a <tt class="docutils literal"><span class="pre">time</span></tt> data or to identify the data representing the
 time.</p>
 <p>If the data contain a <tt class="docutils literal"><span class="pre">temperature</span></tt> data, it can be access with:</p>
@@ -174,7 +174,8 @@ time.</p>
 </pre></div>
 </td></tr></table></div>
 <p>This would give an output like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>18.5 kelvin
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">20.0</span>
+<span class="mf">18.5</span>
 </pre></div>
 </div>
 <dl class="class">
@@ -202,7 +203,6 @@ providing them as attributes.</p>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyObject</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span> <span class="o">=</span> <span class="n">TimeSeriesObject</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">time_converter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="o">.</span><span class="n">compute_data</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_time_series</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
@@ -254,7 +254,7 @@ providing them as attributes.</p>
 <span class="n">obj</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">my</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MyObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">(),</span> <span class="s">&#39;./data/example_time_series.csv&#39;</span><span class="p">))</span>
 <span class="n">obj</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;temperature&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">units</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">))</span>
 
-<span class="n">rec</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
@@ -326,8 +326,17 @@ function.</p>
 
 <dl class="method">
 <dt id="gridsim.timeseries.TimeSeries.set_time">
-<tt class="descname">set_time</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries.set_time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">set_time</tt><big>(</big><em>self</em>, <em>time=0</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeries.set_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the actual time on the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (float, int or time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; the new time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="gridsim.timeseries.TimeSeries.load">
@@ -366,14 +375,33 @@ optimize the process but is still slow.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="gridsim.timeseries.TimeSeriesObject.convert">
+<tt class="descname">convert</tt><big>(</big><em>self</em>, <em>item</em>, <em>converter</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert each element of the list mapped by <tt class="docutils literal"><span class="pre">item</span></tt> with the <tt class="docutils literal"><span class="pre">convert</span></tt>
+function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>item</strong> (<em>str</em>) &#8211; the key of the list to convert</li>
+<li><strong>converter</strong> (<em>function</em>) &#8211; the conversion function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="gridsim.timeseries.TimeSeriesObject.set_time">
-<tt class="descname">set_time</tt><big>(</big><em>self</em>, <em>time=0*units.second</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.set_time" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_time</tt><big>(</big><em>self</em>, <em>time=0</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.set_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Changes the actual time on the object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; the new time.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (float, int or time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; the new time.</td>
 </tr>
 </tbody>
 </table>
@@ -398,12 +426,6 @@ optimize the process but is still slow.</p>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="gridsim.timeseries.TimeSeriesObject.compute_data">
-<tt class="descname">compute_data</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.TimeSeriesObject.compute_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes data, after a call of <a class="reference internal" href="#gridsim.timeseries.TimeSeriesObject.load" title="gridsim.timeseries.TimeSeriesObject.load"><tt class="xref py py-func docutils literal"><span class="pre">TimeSeriesObject.load()</span></tt></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -436,8 +458,17 @@ optimize the process but is still slow.</p>
 
 <dl class="method">
 <dt id="gridsim.timeseries.SortedConstantStepTimeSeriesObject.set_time">
-<tt class="descname">set_time</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.SortedConstantStepTimeSeriesObject.set_time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">set_time</tt><big>(</big><em>self</em>, <em>time=0</em><big>)</big><a class="headerlink" href="#gridsim.timeseries.SortedConstantStepTimeSeriesObject.set_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the actual time on the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>time</strong> (float, int or time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; the new time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="gridsim.timeseries.SortedConstantStepTimeSeriesObject.load">
@@ -632,7 +663,7 @@ for more information.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>c</strong> (<em>int, float</em>) &#8211; The thermal capacity in <tt class="docutils literal"><span class="pre">J/gK</span></tt>.</li>
+<li><strong>c</strong> (<em>int, float</em>) &#8211; The thermal capacity in <tt class="docutils literal"><span class="pre">J/kgK</span></tt>.</li>
 <li><strong>p</strong> (<em>int, float</em>) &#8211; The weight of the material in <tt class="docutils literal"><span class="pre">g/m3</span></tt>.</li>
 <li><strong>k</strong> (<em>int, float</em>) &#8211; The thermal conductivity in <tt class="docutils literal"><span class="pre">W/Km</span></tt>.</li>
 </ul>
@@ -646,11 +677,11 @@ for more information.</p>
 <dl class="attribute">
 <dt id="gridsim.util.Material.thermal_capacity">
 <tt class="descname">thermal_capacity</tt><a class="headerlink" href="#gridsim.util.Material.thermal_capacity" title="Permalink to this definition">¶</a></dt>
-<dd><p>The thermal capacity in <strong>[J/gK]</strong>
+<dd><p>The thermal capacity in <strong>[J/kgK]</strong>
 In order to get the thermal capacity of an object, you only have to
 multiply this specific capacity with the object&#8217;s mass in gram:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Calculate the thermal capacity of 1kg of air.</span>
-<span class="n">t_cap</span> <span class="o">=</span> <span class="n">AIR</span><span class="p">()</span><span class="o">.</span><span class="n">thermal_capacity</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="n">t_cap</span> <span class="o">=</span> <span class="n">AIR</span><span class="p">()</span><span class="o">.</span><span class="n">thermal_capacity</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -672,7 +703,7 @@ multiply this specific capacity with the object&#8217;s mass in gram:</p>
 <dl class="attribute">
 <dt id="gridsim.util.Material.weight">
 <tt class="descname">weight</tt><a class="headerlink" href="#gridsim.util.Material.weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>The weight of the material in <strong>[g/m3]</strong>.</p>
+<dd><p>The weight of the material in <strong>[kg/m3]</strong>.</p>
 <p>In order to get the mass of an object, you have just to multiply this
 specific wight with the object&#8217;s volume in m3:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Calculate the mass capacity of 1m3 of air.</span>
@@ -731,8 +762,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Steel</tt><a class="headerlink" href="#gridsim.util.Steel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of steel:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.49</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">7700000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">490</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">7700</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">46.6</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -742,8 +773,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Stone</tt><a class="headerlink" href="#gridsim.util.Stone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of stone:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.49</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2515000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">750</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2515</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -753,8 +784,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Gold</tt><a class="headerlink" href="#gridsim.util.Gold" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of gold:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.13</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">19200000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">130</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">19200</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">317.1</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -764,8 +795,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Copper</tt><a class="headerlink" href="#gridsim.util.Copper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of copper:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.383</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2200000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">383</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2200</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">401.2</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -775,8 +806,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Petrol</tt><a class="headerlink" href="#gridsim.util.Petrol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of petrol:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2.14</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">881000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2140</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">881</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -786,7 +817,7 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Wax</tt><a class="headerlink" href="#gridsim.util.Wax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of wax:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">3.43</span> <span class="pre">J/gK</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">3430</span> <span class="pre">J/kgK</span></tt></li>
 <li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
@@ -797,8 +828,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Sandstone</tt><a class="headerlink" href="#gridsim.util.Sandstone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of sandstone:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.92</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2323000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">920</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2323</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.5</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -808,8 +839,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Cobalt</tt><a class="headerlink" href="#gridsim.util.Cobalt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of cobalt:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.46</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">8900000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">460</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">8900</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -819,8 +850,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Zinc</tt><a class="headerlink" href="#gridsim.util.Zinc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of zinc:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.38</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">0.38</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">380</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">7140</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">11</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -830,8 +861,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Marple</tt><a class="headerlink" href="#gridsim.util.Marple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of marple:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.88</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2563000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">880</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2563</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.08</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -841,8 +872,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Granite</tt><a class="headerlink" href="#gridsim.util.Granite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of granite:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.79</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2400000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">790</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2400</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.855</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -852,7 +883,7 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Silk</tt><a class="headerlink" href="#gridsim.util.Silk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of silk:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.38</span> <span class="pre">J/gK</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1380</span> <span class="pre">J/kgK</span></tt></li>
 <li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
@@ -863,8 +894,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Hydrogen</tt><a class="headerlink" href="#gridsim.util.Hydrogen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of hydrogen:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">14.32</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">69600</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">14320</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">69600</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -874,8 +905,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">HardBrick</tt><a class="headerlink" href="#gridsim.util.HardBrick" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of hard brick:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2403000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1000</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2403</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.31</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -885,8 +916,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Platinum</tt><a class="headerlink" href="#gridsim.util.Platinum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of platinum:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.13</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">21450000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">130</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">21450</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">71.61</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -896,8 +927,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Aluminium</tt><a class="headerlink" href="#gridsim.util.Aluminium" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of aluminium:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.896</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1522000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">896</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1522</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">236.9</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -907,8 +938,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">ArtificialWool</tt><a class="headerlink" href="#gridsim.util.ArtificialWool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of artificial wool:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.357</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1314000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1357</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1314</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.049</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -918,8 +949,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Tar</tt><a class="headerlink" href="#gridsim.util.Tar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of tar:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.47</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1153000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1470</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1153</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -929,8 +960,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Chromium</tt><a class="headerlink" href="#gridsim.util.Chromium" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of chromium:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.5</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">6856000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">500</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">6856</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">93.93</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -940,8 +971,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Slate</tt><a class="headerlink" href="#gridsim.util.Slate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of slate:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.76</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2691000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">760</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2691</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -951,8 +982,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DryEarth</tt><a class="headerlink" href="#gridsim.util.DryEarth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of dry earth:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.26</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1249000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1260</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1249</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.864</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -962,8 +993,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Rubber</tt><a class="headerlink" href="#gridsim.util.Rubber" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of rubber:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2.01</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1522000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2010</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1522</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.16</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -973,8 +1004,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Concrete</tt><a class="headerlink" href="#gridsim.util.Concrete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of concrete:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.75</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2403000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">750</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2403</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.04</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -984,8 +1015,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Pvc</tt><a class="headerlink" href="#gridsim.util.Pvc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of pvc:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.88</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1200000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">880</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1200</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -995,8 +1026,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Paper</tt><a class="headerlink" href="#gridsim.util.Paper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of paper:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.336</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1201000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1336</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1201</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.05</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1006,8 +1037,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Graphite</tt><a class="headerlink" href="#gridsim.util.Graphite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of graphite:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.71</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2070000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">710</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2070</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1017,8 +1048,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Iron</tt><a class="headerlink" href="#gridsim.util.Iron" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of iron:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.452</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2500000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">452</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2500</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">80.43</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1028,8 +1059,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Clay</tt><a class="headerlink" href="#gridsim.util.Clay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of clay:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.92</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1073000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">920</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1073</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1039,7 +1070,7 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">GraphiteCarbon</tt><a class="headerlink" href="#gridsim.util.GraphiteCarbon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of graphite carbon:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.71</span> <span class="pre">J/gK</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">710</span> <span class="pre">J/kgK</span></tt></li>
 <li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
@@ -1050,8 +1081,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Salt</tt><a class="headerlink" href="#gridsim.util.Salt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of salt:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.88</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1000000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">880</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1000</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1061,8 +1092,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Mercury</tt><a class="headerlink" href="#gridsim.util.Mercury" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of mercury:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.14</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">13534000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">140</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">13534</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1072,8 +1103,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Charcoal</tt><a class="headerlink" href="#gridsim.util.Charcoal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of charcoal:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">208000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1000</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">208</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1083,8 +1114,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Oil</tt><a class="headerlink" href="#gridsim.util.Oil" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of oil:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.67</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">942000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1670.</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">942</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1094,8 +1125,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Nickel</tt><a class="headerlink" href="#gridsim.util.Nickel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of nickel:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.461</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">8666000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">461</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">8666</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">90.95</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1105,8 +1136,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Silicone</tt><a class="headerlink" href="#gridsim.util.Silicone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of silicone:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.75</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2330000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">750</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2330</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.3</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1116,8 +1147,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DryCement</tt><a class="headerlink" href="#gridsim.util.DryCement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of dry cement:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.55</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1506000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1550</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1506</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1127,8 +1158,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Cork</tt><a class="headerlink" href="#gridsim.util.Cork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of cork:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.9</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">240000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1900</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">240</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.0435</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1138,8 +1169,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Chalk</tt><a class="headerlink" href="#gridsim.util.Chalk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of chalk:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.9</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2499000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">900</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2499</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1149,8 +1180,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Gypsum</tt><a class="headerlink" href="#gridsim.util.Gypsum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of gypsum:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.09</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2787000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1090</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2787</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1160,8 +1191,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Wood</tt><a class="headerlink" href="#gridsim.util.Wood" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of wood:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">500000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2000</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">500</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.14</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1171,8 +1202,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">GlassWool</tt><a class="headerlink" href="#gridsim.util.GlassWool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of glass wool:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.67</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">25000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">670</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">25</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.04</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1182,8 +1213,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Butane</tt><a class="headerlink" href="#gridsim.util.Butane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of butane:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.658</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2006</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1658</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2.006</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.01607</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1193,8 +1224,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Tungsten</tt><a class="headerlink" href="#gridsim.util.Tungsten" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of tungsten:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.134</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">19220000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">134</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">19220</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">174.2</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1204,8 +1235,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Air</tt><a class="headerlink" href="#gridsim.util.Air" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of air:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.005</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1200</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1005</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1.200</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.02587</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1215,8 +1246,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Helium</tt><a class="headerlink" href="#gridsim.util.Helium" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of helium:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">5.193</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">138000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">5193</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">138</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.1535</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1226,8 +1257,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Silver</tt><a class="headerlink" href="#gridsim.util.Silver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of silver:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.23</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">10500000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">230</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">10500</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">429.0</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1237,8 +1268,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Diamond</tt><a class="headerlink" href="#gridsim.util.Diamond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of diamond:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.63</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">3510000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">630</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">3510</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">2.2</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1248,8 +1279,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Lead</tt><a class="headerlink" href="#gridsim.util.Lead" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of lead:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.129</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">11389000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">129</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">11389</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">35.33</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1259,8 +1290,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Asphalt</tt><a class="headerlink" href="#gridsim.util.Asphalt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of asphalt:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.92</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">721000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">920.</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">721</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.75</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1270,8 +1301,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">LightConcrete</tt><a class="headerlink" href="#gridsim.util.LightConcrete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of light concrete:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.96</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1400000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">960</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1400</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.42</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1281,8 +1312,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Plaster</tt><a class="headerlink" href="#gridsim.util.Plaster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of plaster:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.3</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">849000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1300</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">849</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.478</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1292,8 +1323,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">CommonBrick</tt><a class="headerlink" href="#gridsim.util.CommonBrick" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of common brick:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.9</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1922000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">900</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1922</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.26</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1303,8 +1334,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Water</tt><a class="headerlink" href="#gridsim.util.Water" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of water:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">4.19</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1000000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">4190</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1000</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.5985</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1314,8 +1345,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Glass</tt><a class="headerlink" href="#gridsim.util.Glass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of glass:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.84</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2579000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">840</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2579</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">1.0</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1325,7 +1356,7 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DrySoil</tt><a class="headerlink" href="#gridsim.util.DrySoil" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of dry soil:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.8</span> <span class="pre">J/gK</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">800</span> <span class="pre">J/kgK</span></tt></li>
 <li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
@@ -1336,8 +1367,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Ethanol</tt><a class="headerlink" href="#gridsim.util.Ethanol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of ethanol:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2.43</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">789000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">2430</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">789</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.1664</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1347,8 +1378,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Carbon</tt><a class="headerlink" href="#gridsim.util.Carbon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of carbon:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">0.52</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2146000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">520</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2146</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.0146</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1358,7 +1389,7 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">WetSoil</tt><a class="headerlink" href="#gridsim.util.WetSoil" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of wet soil:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.48</span> <span class="pre">J/gK</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1480</span> <span class="pre">J/kgK</span></tt></li>
 <li>Weight: <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
@@ -1369,8 +1400,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Wool</tt><a class="headerlink" href="#gridsim.util.Wool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of wool:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.26</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">1314000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1260</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">1314</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">0.049</span> <span class="pre">W/Km</span></tt></li>
 </ul>
 </dd></dl>
@@ -1380,8 +1411,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">Porcelain</tt><a class="headerlink" href="#gridsim.util.Porcelain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of porcelain:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.07</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">2403000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1070</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">2403</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1391,8 +1422,8 @@ divide it with the objects thickness:</p>
 <em class="property">class </em><tt class="descclassname">gridsim.util.</tt><tt class="descname">DryLeather</tt><a class="headerlink" href="#gridsim.util.DryLeather" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of dry leather:</p>
 <ul class="simple">
-<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1.5</span> <span class="pre">J/gK</span></tt></li>
-<li>Weight: <tt class="docutils literal"><span class="pre">945000</span> <span class="pre">g/m3</span></tt></li>
+<li>Thermal capacity: <tt class="docutils literal"><span class="pre">1500</span> <span class="pre">J/kgK</span></tt></li>
+<li>Weight: <tt class="docutils literal"><span class="pre">945</span> <span class="pre">kg/m3</span></tt></li>
 <li>Thermal conductivity <tt class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></tt></li>
 </ul>
 </dd></dl>
@@ -1430,7 +1461,7 @@ divide it with the objects thickness:</p>
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Dec 10, 2014.
+      Last updated on Feb 04, 2015.
     </p>
   </div>
 
@@ -1450,7 +1481,7 @@ divide it with the objects thickness:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc1',
+            VERSION:'0.1.1rc2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

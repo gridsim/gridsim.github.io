@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5. The Simulation Unit &mdash; Gridsim 0.1.1-rc1 documentation</title>
+  <title>5. The Simulation Unit &mdash; Gridsim 0.1.1rc2 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/>
+    <link rel="top" title="Gridsim 0.1.1rc2 documentation" href="index.html"/>
         <link rel="next" title="6. The Gridsim Input/Output" href="io.html"/>
         <link rel="prev" title="4. The Simulation Tools" href="tools.html"/> 
 
@@ -125,6 +125,11 @@
 (<a class="reference external" href="https://pypi.python.org/pypi/Pint/">https://pypi.python.org/pypi/Pint/</a>).</p>
 <div class="section" id="how-to-use-gridsim-units">
 <h2>5.1. How to use <tt class="xref py py-mod docutils literal"><span class="pre">gridsim.units</span></tt><a class="headerlink" href="#how-to-use-gridsim-units" title="Permalink to this headline">¶</a></h2>
+<p>The unit in Gridsim are used for &#8216;user interface&#8217; functions such as
+<a class="reference internal" href="documentation.html#gridsim.simulation.Simulator.run" title="gridsim.simulation.Simulator.run"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.run()</span></tt></a>, but for improves performance Gridsim
+converts all units in SI base unit and uses them as number (int, float, complex).
+Therefore some function parameters are float instead of unit especially when
+extending Gridsim core (see <a class="reference internal" href="core.html#gridsim-core"><em>The Simulation Core</em></a>).</p>
 <p>It provides an object call <tt class="docutils literal"><span class="pre">units</span></tt> which is a wrapper to all useful features
 of pint, thus it should used as follow:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
@@ -179,6 +184,31 @@ different):</p>
 </div>
 </div>
 <dl class="method">
+<dt id="gridsim.unit.to_si">
+<tt class="descclassname">gridsim.unit.</tt><tt class="descname">to_si</tt><big>(</big><em>unit</em><big>)</big><a class="headerlink" href="#gridsim.unit.to_si" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the SI base unit of the given <tt class="docutils literal"><span class="pre">unit</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mass</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">gram</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">to_si</span><span class="p">(</span><span class="n">mass</span><span class="p">)</span>
+<span class="go">1.0 kilogram</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">to_si</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kilometre</span><span class="p">)</span>
+<span class="go">1000.0 meter</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>int, float</em>) &#8211; the value of the measurement</li>
+<li><strong>unit</strong> (see <a class="reference internal" href="#all-unit"><em>Information of existing units</em></a>) &#8211; the unit of the measurement</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="gridsim.unit.units">
 <tt class="descclassname">gridsim.unit.</tt><tt class="descname">units</tt><big>(</big><em>value</em>, <em>unit</em><big>)</big><a class="headerlink" href="#gridsim.unit.units" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a measurement of <tt class="docutils literal"><span class="pre">value</span></tt> times <tt class="docutils literal"><span class="pre">unit</span></tt>
@@ -204,12 +234,12 @@ Equivalent to:</p>
 <dt id="gridsim.unit.units.value">
 <tt class="descclassname">units.</tt><tt class="descname">value</tt><big>(</big><em>measurement</em><big>)</big><a class="headerlink" href="#gridsim.unit.units.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of the <tt class="docutils literal"><span class="pre">measurement</span></tt> without any conversion:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-<span class="go">meter</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kilometer</span>
+<span class="go">1.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">size</span> <span class="o">=</span> <span class="mi">34</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kilometer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
-<span class="go">kilometer</span>
+<span class="go">34</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -310,7 +340,7 @@ This content is based on data of file <tt class="docutils literal"><span class="
 <li><tt class="docutils literal"><span class="pre">second</span> <span class="pre">=</span> <span class="pre">[time]</span> <span class="pre">=</span> <span class="pre">s</span> <span class="pre">=</span> <span class="pre">sec</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">ampere</span> <span class="pre">=</span> <span class="pre">[current]</span> <span class="pre">=</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">amp</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">candela</span> <span class="pre">=</span> <span class="pre">[luminosity]</span> <span class="pre">=</span> <span class="pre">cd</span> <span class="pre">=</span> <span class="pre">candle</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">gram</span> <span class="pre">=</span> <span class="pre">[mass]</span> <span class="pre">=</span> <span class="pre">g</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kilogram</span> <span class="pre">=</span> <span class="pre">[mass]</span> <span class="pre">=</span> <span class="pre">kg</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">mole</span> <span class="pre">=</span> <span class="pre">[substance]</span> <span class="pre">=</span> <span class="pre">mol</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">kelvin</span> <span class="pre">=</span> <span class="pre">[temperature];</span> <span class="pre">offset:</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">K</span> <span class="pre">=</span> <span class="pre">degK</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">radian</span> <span class="pre">=</span> <span class="pre">[]</span> <span class="pre">=</span> <span class="pre">rad</span></tt></li>
@@ -380,8 +410,8 @@ This content is based on data of file <tt class="docutils literal"><span class="
 <p>Gridsim defines its own units to simplify coding as these special units is used
 often times.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">heat_capacity</span> <span class="pre">=</span> <span class="pre">joule/(gram*kelvin)</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mass_density</span> <span class="pre">=</span> <span class="pre">gram/(metre*metre*metre)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">heat_capacity</span> <span class="pre">=</span> <span class="pre">joule/(kilogram*kelvin)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">mass_density</span> <span class="pre">=</span> <span class="pre">kilogram/(metre*metre*metre)</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">thermal_conductivity</span> <span class="pre">=</span> <span class="pre">watt/(kelvin*metre)</span></tt></li>
 </ul>
 </div>
@@ -735,7 +765,7 @@ different).</p>
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Dec 10, 2014.
+      Last updated on Feb 04, 2015.
     </p>
   </div>
 
@@ -755,7 +785,7 @@ different).</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc1',
+            VERSION:'0.1.1rc2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

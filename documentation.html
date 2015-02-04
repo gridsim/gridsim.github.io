@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. The Simulator General Use &mdash; Gridsim 0.1.1-rc1 documentation</title>
+  <title>2. The Simulator General Use &mdash; Gridsim 0.1.1rc2 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/>
+    <link rel="top" title="Gridsim 0.1.1rc2 documentation" href="index.html"/>
         <link rel="next" title="3. The Simulation Core" href="core.html"/>
         <link rel="prev" title="1. Overview" href="overview.html"/> 
 
@@ -178,7 +178,7 @@ Refer to the module you want to use to retrieve the module name.</p>
 </div>
 <dl class="class">
 <dt id="gridsim.simulation.Recorder">
-<em class="property">class </em><tt class="descclassname">gridsim.simulation.</tt><tt class="descname">Recorder</tt><big>(</big><em>self</em>, <em>attribute_name</em><big>)</big><a class="headerlink" href="#gridsim.simulation.Recorder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.simulation.</tt><tt class="descname">Recorder</tt><big>(</big><em>self</em>, <em>attribute_name</em>, <em>x_unit=None</em>, <em>y_unit=None</em><big>)</big><a class="headerlink" href="#gridsim.simulation.Recorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Defines the interface an object has to implement in order to get
 notified between simulation steps with a reference to the observed
@@ -189,8 +189,13 @@ actual value of the observed attribute/property.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute_name</strong> (<em>str</em>) &#8211; The name of the attribute observed by this
-recorder.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>attribute_name</strong> (<em>str</em>) &#8211; The name of the attribute observed by this
+recorder.</li>
+<li><strong>x_unit</strong> (type or unit see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The unit of the horizontal axis</li>
+<li><strong>y_unit</strong> (type or unit see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The unit of the vertical axis</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -601,11 +606,11 @@ also made of branches as connections between buses.</p>
 <span class="n">esim</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="s">&#39;Bus 4&#39;</span><span class="p">,</span> <span class="n">ConstantElectricalCPSElement</span><span class="p">(</span><span class="s">&#39;Gen&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder which records power on each bus.</span>
-<span class="n">bus_pwr</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;P&#39;</span><span class="p">)</span>
+<span class="n">bus_pwr</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;P&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">bus_pwr</span><span class="p">,</span> <span class="n">esim</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">element_class</span><span class="o">=</span><span class="n">ElectricalPQBus</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder which records power on transmission lines.</span>
-<span class="n">line_pwr</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;Pij&#39;</span><span class="p">)</span>
+<span class="n">line_pwr</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;Pij&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">line_pwr</span><span class="p">,</span> <span class="p">[</span><span class="n">tl1</span><span class="p">,</span> <span class="n">tl2</span><span class="p">,</span> <span class="n">tl3</span><span class="p">])</span>
 
 <span class="c"># It is recommended to perform the simulator reset operation.</span>
@@ -632,6 +637,10 @@ also made of branches as connections between buses.</p>
 analysis), to the non-slack buses of which are attached 4 CPS elements :
 1 with constant power, production, 3 with random gaussian distributed power
 consumption.</p>
+<p>Here is the class diagram of the electrical package:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-electrical.png"><img alt="_images/model-electrical.png" src="_images/model-electrical.png" style="width: 2066.0px; height: 667.0px;" /></a>
+</div>
 <div class="section" id="module-gridsim.electrical.simulation">
 <span id="electrical-package"></span><h4>2.1.2.1. Electrical package<a class="headerlink" href="#module-gridsim.electrical.simulation" title="Permalink to this headline">¶</a></h4>
 <p><em>Module author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
@@ -858,8 +867,8 @@ simulator, added by the <tt class="xref py py-func docutils literal"><span class
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
-<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the calculation
+<li><strong>time</strong> (<em>int or float in second</em>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (<em>int or float in second</em>) &#8211; The time period for which the calculation
 has to be done.</li>
 </ul>
 </td>
@@ -880,8 +889,8 @@ calculate the load flow with
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
-<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the calculation
+<li><strong>time</strong> (<em>int or float in second</em>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (<em>int or float in second</em>) &#8211; The time period for which the calculation
 has to be done.</li>
 </ul>
 </td>
@@ -980,7 +989,7 @@ right place in the N-long vectors <cite>P</cite>, <cite>Q</cite>, <cite>V</cite>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>P</strong> (<em>1-dimensional numpy array of float</em>) &#8211; N-long vector of bus active powers, where N is the number of
 buses including slack.</li>
 <li><strong>Q</strong> (<em>1-dimensional numpy array of float</em>) &#8211; N-long vector of bus reactive powers, where N is the number of
@@ -992,6 +1001,12 @@ of buses including slack.</li>
 <li><strong>scaled</strong> (<em>boolean</em>) &#8211; specifies whether electrical input values are scaled or
 not</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">modified [P, Q, V, Th]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">a list of 4 element</p>
 </td>
 </tr>
 </tbody>
@@ -1137,7 +1152,7 @@ all N-long vectors P, Q, V, and Th have to be passed to this method.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>P</strong> (<em>1-dimensional numpy array of float</em>) &#8211; N-long vector of bus active powers, where N is the number of
 buses including slack.</li>
 <li><strong>Q</strong> (<em>1-dimensional numpy array of float</em>) &#8211; N-long vector of bus reactive powers, where N is the number of
@@ -1149,6 +1164,12 @@ buses including slack.</li>
 <li><strong>scaled</strong> (<em>boolean</em>) &#8211; specifies whether electrical input values are scaled or
 not</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">modified [P, Q, V, Th]</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">a list of 4 element</p>
 </td>
 </tr>
 </tbody>
@@ -1316,7 +1337,7 @@ or not</li>
 <p><em>Code author: Gilbert Maitre &lt;<a class="reference external" href="mailto:gilbert&#46;maitre&#37;&#52;&#48;hevs&#46;ch">gilbert<span>&#46;</span>maitre<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
 <dl class="class">
 <dt id="gridsim.electrical.network.ElectricalTransmissionLine">
-<em class="property">class </em><tt class="descclassname">gridsim.electrical.network.</tt><tt class="descname">ElectricalTransmissionLine</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>length</em>, <em>X</em>, <em>R=0*units.ohm</em>, <em>B=0*units.siemens</em><big>)</big><a class="headerlink" href="#gridsim.electrical.network.ElectricalTransmissionLine" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.network.</tt><tt class="descname">ElectricalTransmissionLine</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>length</em>, <em>X</em>, <em>R=0</em>, <em>B=0</em><big>)</big><a class="headerlink" href="#gridsim.electrical.network.ElectricalTransmissionLine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#gridsim.electrical.core.AbstractElectricalTwoPort" title="gridsim.electrical.core.AbstractElectricalTwoPort"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.electrical.core.AbstractElectricalTwoPort</span></tt></a></p>
 <p>Class for representing a transmission line in an electrical network.
 Its parameters are linked to the
@@ -1369,7 +1390,7 @@ friendly name of a bus.</li>
 
 <dl class="class">
 <dt id="gridsim.electrical.network.ElectricalGenTransformer">
-<em class="property">class </em><tt class="descclassname">gridsim.electrical.network.</tt><tt class="descname">ElectricalGenTransformer</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>k_factor</em>, <em>X</em>, <em>R=0*units.ohm</em><big>)</big><a class="headerlink" href="#gridsim.electrical.network.ElectricalGenTransformer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.network.</tt><tt class="descname">ElectricalGenTransformer</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>k_factor</em>, <em>X</em>, <em>R=0</em><big>)</big><a class="headerlink" href="#gridsim.electrical.network.ElectricalGenTransformer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#gridsim.electrical.core.AbstractElectricalTwoPort" title="gridsim.electrical.core.AbstractElectricalTwoPort"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.electrical.core.AbstractElectricalTwoPort</span></tt></a></p>
 <p>Class for representing a transformer and/or a phase shifter in an
 electrical network. Its parameters are
@@ -1793,7 +1814,7 @@ done in seconds.</li>
 
 <dl class="class">
 <dt id="gridsim.electrical.element.TimeSeriesElectricalCPSElement">
-<em class="property">class </em><tt class="descclassname">gridsim.electrical.element.</tt><tt class="descname">TimeSeriesElectricalCPSElement</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>reader</em>, <em>stream</em>, <em>column_name='power'</em><big>)</big><a class="headerlink" href="#gridsim.electrical.element.TimeSeriesElectricalCPSElement" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.electrical.element.</tt><tt class="descname">TimeSeriesElectricalCPSElement</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>reader</em>, <em>stream</em><big>)</big><a class="headerlink" href="#gridsim.electrical.element.TimeSeriesElectricalCPSElement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#gridsim.electrical.core.AbstractElectricalCPSElement" title="gridsim.electrical.core.AbstractElectricalCPSElement"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.electrical.core.AbstractElectricalCPSElement</span></tt></a></p>
 <p>This class provides a Consuming-Producing-Storing element whose consumed
 or produced power is read from a stream by the given reader.</p>
@@ -1808,8 +1829,6 @@ or produced power is read from a stream by the given reader.</p>
 Should be unique within the simulation module.</li>
 <li><strong>reader</strong> (<a class="reference internal" href="tools.html#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">TimeSeries</span></tt></a>) &#8211; The time series</li>
 <li><strong>stream</strong> (<em>str</em>) &#8211; The file name</li>
-<li><strong>column_name</strong> (<em>str</em>) &#8211; The name of the column in the data with a the
-requested power value.</li>
 </ul>
 </td>
 </tr>
@@ -2038,7 +2057,7 @@ the thermal conductivity of the couplings between them.</p>
                                 <span class="n">room</span><span class="p">,</span> <span class="n">outside</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the temperatures of all thermal processes.</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
@@ -2056,33 +2075,23 @@ the thermal conductivity of the couplings between them.</p>
 <span class="n">CSVSaver</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/thermal-example.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<ul>
-<li><p class="first">On line 10 we create a new simulation.</p>
-</li>
-<li><dl class="first docutils">
-<dt>On lines 21 to 34 we create a very simple thermal process with one room and</dt>
-<dd><p class="first last">the outside temperature from a data file.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>On line 37 we create a plot recorder and on line 38 we record all temperatures</dt>
-<dd><p class="first last">using the plot recorder.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>On line 43 &amp; 44 we initialize the simulation and start the simulation for the</dt>
-<dd><p class="first last">month avril with a resolution of 1 hour.</p>
-</dd>
-</dl>
-</li>
-<li><p class="first">On linea 50 to 52 we save the data in several formats.</p>
-</li>
+<ul class="simple">
+<li>On line 11 we create a new simulation.</li>
+<li>On lines 22 to 35 we create a very simple thermal process with one room and
+the outside temperature from a data file.</li>
+<li>On line 38 we create a plot recorder and on line 39 we record all temperatures
+using the plot recorder.</li>
+<li>On line 44 &amp; 45 we initialize the simulation and start the simulation for the
+month avril with a resolution of 1 hour.</li>
+<li>On linea 51 to 53 we save the data in several formats.</li>
 </ul>
 <p>The figure looks like this one:</p>
 <div class="figure align-center">
 <img alt="_images/thermal-example.png" src="_images/thermal-example.png" />
+</div>
+<p>Here is the class diagram of the thermal package:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/model-thermal.png"><img alt="_images/model-thermal.png" src="_images/model-thermal.png" style="width: 626.0px; height: 667.0px;" /></a>
 </div>
 <div class="section" id="module-gridsim.thermal.simulation">
 <span id="thermal-package"></span><h4>2.1.3.1. Thermal package<a class="headerlink" href="#module-gridsim.thermal.simulation" title="Permalink to this headline">¶</a></h4>
@@ -2093,8 +2102,8 @@ the thermal conductivity of the couplings between them.</p>
 <p>Gridsim main simulation class for thermal part. This module is
 automatically added to the <a class="reference internal" href="#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a> when
 importing any class or module of <a class="reference internal" href="#module-gridsim.thermal" title="gridsim.thermal"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.thermal</span></tt></a> package.</p>
-<p>To access this class from simulation, use
-<a class="reference internal" href="#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a> as follow:</p>
+<p>To access this class from simulation, use <a class="reference internal" href="#gridsim.simulation.Simulator" title="gridsim.simulation.Simulator"><tt class="xref py py-class docutils literal"><span class="pre">Simulator</span></tt></a> as
+follow:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Create the simulation.</span>
 <span class="n">sim</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">()</span>
 <span class="n">thsim</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span>
@@ -2131,6 +2140,16 @@ contained in the module.
 The core simulator will use these lists in order to be able
 to retrieve objects or list of objects by certain criteria using
 <a class="reference internal" href="#gridsim.simulation.Simulator.find" title="gridsim.simulation.Simulator.find"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.find()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of all <a class="reference internal" href="core.html#gridsim.thermal.core.AbstractThermalElement" title="gridsim.thermal.core.AbstractThermalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractThermalElement</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -2153,8 +2172,8 @@ the <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalCo
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
-<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the calculation
+<li><strong>time</strong> (<em>int or float in second</em>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (<em>int or float in second</em>) &#8211; The time period for which the calculation
 has to be done.</li>
 </ul>
 </td>
@@ -2175,8 +2194,8 @@ calculate the load flow with
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
-<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the calculation
+<li><strong>time</strong> (<em>int or float in second</em>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (<em>int or float in second</em>) &#8211; The time period for which the calculation
 has to be done.</li>
 </ul>
 </td>
@@ -2207,7 +2226,7 @@ module.</p>
 <span id="thermal-elements"></span><h4>2.1.3.2. Thermal elements<a class="headerlink" href="#module-gridsim.thermal.element" title="Permalink to this headline">¶</a></h4>
 <dl class="class">
 <dt id="gridsim.thermal.element.ConstantTemperatureProcess">
-<em class="property">class </em><tt class="descclassname">gridsim.thermal.element.</tt><tt class="descname">ConstantTemperatureProcess</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.ConstantTemperatureProcess" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.thermal.element.</tt><tt class="descname">ConstantTemperatureProcess</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>temperature</em>, <em>position=Position()</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.ConstantTemperatureProcess" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.thermal.core.ThermalProcess</span></tt></a></p>
 <p>This is a special thermal process with an infinite thermal capacity
 which results that the temperature of the process is constant,
@@ -2227,21 +2246,34 @@ independent how much energy is taken from or given to the process.</p>
 </table>
 <dl class="method">
 <dt id="gridsim.thermal.element.ConstantTemperatureProcess.add_energy">
-<tt class="descname">add_energy</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.ConstantTemperatureProcess.add_energy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">add_energy</tt><big>(</big><em>self</em>, <em>delta_energy</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.ConstantTemperatureProcess.add_energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does nothing at all for this type of <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="gridsim.thermal.element.ConstantTemperatureProcess.update">
-<tt class="descname">update</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.ConstantTemperatureProcess.update" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.ConstantTemperatureProcess.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does nothing at all for this type of <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (<em>float in second</em>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (<em>float in second</em>) &#8211; The delta time for which the calculation has to be
+done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="gridsim.thermal.element.TimeSeriesThermalProcess">
-<em class="property">class </em><tt class="descclassname">gridsim.thermal.element.</tt><tt class="descname">TimeSeriesThermalProcess</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.thermal.element.</tt><tt class="descname">TimeSeriesThermalProcess</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>time_series</em>, <em>stream</em>, <em>time_converter=None</em>, <em>temperature_calculator=lambda t: units.convert(t</em>, <em>units.kelvin)</em>, <em>position=Position()</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.thermal.core.ThermalProcess</span></tt></a></p>
 <p>Thermal process that reads the temperature out of a time series object
 (CSV file). It has an infinite thermal capacity.</p>
@@ -2249,7 +2281,7 @@ independent how much energy is taken from or given to the process.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">It is important that the given data contains the
 field &#8216;temperature&#8217; or you map a field to the attribute
-&#8216;temperature&#8217; using the function <tt class="xref py py-func docutils literal"><span class="pre">TimeSeriesObject.map_attribute()</span></tt>.</p>
+&#8216;temperature&#8217; using the function <a class="reference internal" href="tools.html#gridsim.timeseries.TimeSeriesObject.map_attribute" title="gridsim.timeseries.TimeSeriesObject.map_attribute"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.timeseries.TimeSeriesObject.map_attribute()</span></tt></a>.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2259,7 +2291,7 @@ field &#8216;temperature&#8217; or you map a field to the attribute
 <li><strong>friendly_name</strong> (<em>str, unicode</em>) &#8211; Friendly name to give to the process.</li>
 <li><strong>stream</strong> (<em>str or stream</em>) &#8211; The stream</li>
 <li><strong>temperature_calculator</strong> &#8211; </li>
-<li><strong>position</strong> (<tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt>) &#8211; The position of the thermal process.</li>
+<li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; The position of the thermal process.</li>
 </ul>
 </td>
 </tr>
@@ -2267,7 +2299,7 @@ field &#8216;temperature&#8217; or you map a field to the attribute
 </table>
 <dl class="method">
 <dt id="gridsim.thermal.element.TimeSeriesThermalProcess.reset">
-<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess.reset" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">reset</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the time to default (<tt class="docutils literal"><span class="pre">0</span></tt>).</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
@@ -2277,8 +2309,21 @@ field &#8216;temperature&#8217; or you map a field to the attribute
 
 <dl class="method">
 <dt id="gridsim.thermal.element.TimeSeriesThermalProcess.calculate">
-<tt class="descname">calculate</tt><big>(</big><em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess.calculate" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calculate</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess.calculate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the temperature of the element during the simulation step.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (<em>float in second</em>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (<em>float in second</em>) &#8211; The delta time for which the calculation has to be
+done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="tools.html#gridsim.timeseries.TimeSeriesObject.set_time" title="gridsim.timeseries.TimeSeriesObject.set_time"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.timeseries.TimeSeriesObject.set_time()</span></tt></a></p>
@@ -2287,8 +2332,21 @@ field &#8216;temperature&#8217; or you map a field to the attribute
 
 <dl class="method">
 <dt id="gridsim.thermal.element.TimeSeriesThermalProcess.update">
-<tt class="descname">update</tt><big>(</big><em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess.update" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update</tt><big>(</big><em>self</em>, <em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.thermal.element.TimeSeriesThermalProcess.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does nothing for this type of <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (<em>float in second</em>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (<em>float in second</em>) &#8211; The delta time for which the calculation has to be
+done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -2578,12 +2636,7 @@ classical example is a simple thermostat:</p>
 271
 272
 273
-274
-275
-276
-277
-278
-279</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+274</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">gridsim.util</span> <span class="kn">import</span> <span class="n">Position</span>
 <span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="kn">from</span> <span class="nn">gridsim.recorder</span> <span class="kn">import</span> <span class="n">PlotRecorder</span>
@@ -2646,13 +2699,13 @@ classical example is a simple thermostat:</p>
 <span class="sd">        :type position: :class:`Position`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Thermostat</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">friendly_name</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_temperature</span> <span class="o">=</span> <span class="n">target_temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_temperature</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">target_temperature</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The temperature to try to retain inside the observer thermal process by</span>
 <span class="sd">        conducting an electrothermal element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">hysteresis</span> <span class="o">=</span> <span class="n">hysteresis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hysteresis</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">hysteresis</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The +- hysteresis applied to the temperature measure in order to avoid</span>
 <span class="sd">        to fast on/off switching.</span>
@@ -2724,15 +2777,11 @@ classical example is a simple thermostat:</p>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ElectroThermalHeaterCooler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">friendly_name</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">efficiency_factor</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;efficiency_factor must be a float or int!&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_efficiency_factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">efficiency_factor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_efficiency_factor</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">efficiency_factor</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">thermal_process</span><span class="p">,</span> <span class="n">ThermalProcess</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;thermal_process must be of type ThermalProcess!&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thermal_process</span> <span class="o">=</span> <span class="n">thermal_process</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">=</span> <span class="n">pwr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">pwr</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_on</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2757,7 +2806,7 @@ classical example is a simple thermostat:</p>
     <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_internal_delta_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">*</span> <span class="n">delta_time</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_delta_energy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">joule</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_internal_delta_energy</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ElectroThermalHeaterCooler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
@@ -2826,7 +2875,7 @@ classical example is a simple thermostat:</p>
 <span class="c">#                __|__    |__________________________|</span>
 <span class="c">#                 ---</span>
 <span class="c">#</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="c"># the hysteresis is a delta of temperature</span>
 <span class="n">hysteresis</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">delta_degC</span>
 
@@ -2836,18 +2885,17 @@ classical example is a simple thermostat:</p>
                                            <span class="n">room</span><span class="p">,</span> <span class="n">heater</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the temperatures of all thermal processes.</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the control value of the thermostat given</span>
 <span class="c"># to the heater.</span>
-<span class="n">control</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;on&#39;</span><span class="p">)</span>
+<span class="n">control</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">electrical</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;on&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the power used by the electrical heater.</span>
-<span class="n">power</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;delta_energy&#39;</span><span class="p">)</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">friendly_name</span><span class="o">=</span><span class="s">&#39;heater&#39;</span><span class="p">),</span>
-           <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">context</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">context</span><span class="o">.</span><span class="n">delta_time</span><span class="p">)</span>
+<span class="n">power</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;delta_energy&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">joule</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">friendly_name</span><span class="o">=</span><span class="s">&#39;heater&#39;</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
 
@@ -2901,7 +2949,7 @@ Defaults to [0,0,0].</li>
 <p>Simulation module for all controller simulation aspects.</p>
 <dl class="method">
 <dt id="gridsim.controller.ControllerSimulator.attribute_name">
-<tt class="descname">attribute_name</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.controller.ControllerSimulator.attribute_name" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">attribute_name</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.controller.ControllerSimulator.attribute_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>AbstractSimulationModule implementation</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
@@ -2931,7 +2979,7 @@ Defaults to [0,0,0].</li>
 
 <dl class="method">
 <dt id="gridsim.controller.ControllerSimulator.calculate">
-<tt class="descname">calculate</tt><big>(</big><em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.controller.ControllerSimulator.calculate" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">calculate</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.controller.ControllerSimulator.calculate" title="Permalink to this definition">¶</a></dt>
 <dd><p>AbstractSimulationModule implementation</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
@@ -2941,7 +2989,7 @@ Defaults to [0,0,0].</li>
 
 <dl class="method">
 <dt id="gridsim.controller.ControllerSimulator.update">
-<tt class="descname">update</tt><big>(</big><em>time</em>, <em>delta_time</em><big>)</big><a class="headerlink" href="#gridsim.controller.ControllerSimulator.update" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.controller.ControllerSimulator.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>AbstractSimulationModule implementation</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
@@ -3037,31 +3085,29 @@ recorders are added to the simulation:</em></p>
 56
 57
 58
-59
-60</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
+59</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">gridsim.recorder</span> <span class="kn">import</span> <span class="n">Recorder</span>
 <span class="kn">from</span> <span class="nn">gridsim.thermal.core</span> <span class="kn">import</span> <span class="n">ThermalProcess</span><span class="p">,</span> <span class="n">ThermalCoupling</span>
-<span class="kn">from</span> <span class="nn">gridsim.decorators</span> <span class="kn">import</span> <span class="n">timed</span>
 
 
 <span class="c">#Custom recorder.</span>
 <span class="k">class</span> <span class="nc">ConsoleRecorder</span><span class="p">(</span><span class="n">Recorder</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ConsoleRecorder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">attribute_name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">,</span> <span class="n">x_unit</span><span class="p">,</span> <span class="n">y_unit</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConsoleRecorder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">attribute_name</span><span class="p">,</span> <span class="n">x_unit</span><span class="p">,</span> <span class="n">y_unit</span><span class="p">)</span>
 
-    <span class="nd">@timed</span>
     <span class="k">def</span> <span class="nf">on_simulation_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subjects</span><span class="p">):</span>
         <span class="k">print</span> <span class="s">&#39;RESET, observing: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">subjects</span><span class="p">)</span>
 
-    <span class="nd">@timed</span>
     <span class="k">def</span> <span class="nf">on_simulation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;time = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span>
+        <span class="c"># time is given in SI unit (i.e. second)</span>
+        <span class="k">print</span> <span class="s">&#39;time = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">time</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x_unit</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span>
 
     <span class="k">def</span> <span class="nf">on_observed_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c"># time and value are given in SI unit (i.e. second and kelvin)</span>
         <span class="k">print</span> <span class="s">&#39;    &#39;</span> <span class="o">+</span> <span class="n">subject</span> <span class="o">+</span> <span class="s">&#39;.&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribute_name</span> <span class="o">+</span>\
-              <span class="s">&#39; = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+              <span class="s">&#39; = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">value</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_unit</span><span class="p">))</span>
 
 <span class="c"># Create simulator.</span>
 <span class="n">sim</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">()</span>
@@ -3075,13 +3121,13 @@ recorders are added to the simulation:</em></p>
 <span class="c">#          |__________|      &lt;-----------&gt;        |___________|</span>
 <span class="c">#                                 1m</span>
 
-<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="n">hot_room</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalProcess</span><span class="o">.</span><span class="n">room</span><span class="p">(</span><span class="s">&#39;hot_room&#39;</span><span class="p">,</span>
                                                <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
                                                <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>
                                                <span class="n">celsius</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
 
-<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">units</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
 <span class="n">cold_room</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ThermalProcess</span><span class="o">.</span><span class="n">room</span><span class="p">(</span><span class="s">&#39;cold_room&#39;</span><span class="p">,</span>
                                                 <span class="mi">50</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">meter</span><span class="p">,</span>
                                                 <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>
@@ -3093,101 +3139,95 @@ recorders are added to the simulation:</em></p>
 
 <span class="c"># Add a custom console recorder to the attribute &quot;temperature&quot; of the hot</span>
 <span class="c"># room thermal process.</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ConsoleRecorder</span><span class="p">(</span><span class="s">&quot;temperature&quot;</span><span class="p">),</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">ConsoleRecorder</span><span class="p">(</span><span class="s">&quot;temperature&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">),</span>
            <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">element_class</span><span class="o">=</span><span class="n">ThermalProcess</span><span class="p">))</span>
 
 <span class="c"># Simulate</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<ul>
-<li><p class="first">On line 7 to 21 we implement our custom recorder.</p>
 <ul class="simple">
-<li>On line 13 we re-implement the abstract method
+<li>On lines 8 to 23 we implement our custom recorder.<ul>
+<li>On lines 13 &amp; 14 we re-implement the abstract method
 <a class="reference internal" href="#gridsim.simulation.Recorder.on_simulation_reset" title="gridsim.simulation.Recorder.on_simulation_reset"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Recorder.on_simulation_reset()</span></tt></a>.
 We log which objects we observe.</li>
-<li>On line 16 we implement the
+<li>On lines 16 to 18 we implement the
 <a class="reference internal" href="#gridsim.simulation.Recorder.on_simulation_step" title="gridsim.simulation.Recorder.on_simulation_step"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Recorder.on_simulation_step()</span></tt></a> method.
-We just output the current time.</li>
-<li>On line 19 we re-implement the abstract method
+We just output the current time. The time is given in a float in second.</li>
+<li>On lines 20 to 23 we re-implement the abstract method
 <a class="reference internal" href="#gridsim.simulation.Recorder.on_observed_value" title="gridsim.simulation.Recorder.on_observed_value"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Recorder.on_observed_value()</span></tt></a>.
-Basically we just output the value to the console.</li>
+Basically we just output the value to the console. The time is given in a
+float in second.</li>
 </ul>
 </li>
-<li><p class="first">On line 24 we create the gridsim simulation object.</p>
-</li>
-<li><p class="first">On line 35 to 48 we setup a very simple thermal process, where we define 2
-rooms and a thermal coupling between them:</p>
-<ul class="simple">
-<li>hot_room (line 36) has a <strong>surface</strong> of <tt class="docutils literal"><span class="pre">50m2</span></tt> and a <strong>height</strong> of
-<tt class="docutils literal"><span class="pre">2.5m</span></tt>, so the <strong>volume</strong> is <tt class="docutils literal"><span class="pre">125m3</span></tt>. The room is filled with
-<a class="reference internal" href="tools.html#gridsim.util.Air" title="gridsim.util.Air"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.util.Air</span></tt></a> (specific thermal capacity=`1.005 J/gK``) with the <strong>initial temperature of 60
-degree celsius</strong>.</li>
-<li>cold_room (line 42) has the same volume, but an initial <strong>temperature of 20
-degree celsius</strong>.</li>
-<li>the two rooms are coupled with a thermal conductivity of <strong>100 Watts per
-Kelvin</strong> (line 47).</li>
+<li>On line 26 we create the gridsim simulation object.</li>
+<li>On lines 37 to 51 we setup a very simple thermal process, where we define 2
+rooms and a thermal coupling between them:<ul>
+<li>hot_room (line 38) has a <tt class="docutils literal"><span class="pre">surface</span></tt> of <tt class="docutils literal"><span class="pre">50m2</span></tt> and a <tt class="docutils literal"><span class="pre">height</span></tt> of
+<tt class="docutils literal"><span class="pre">2.5m</span></tt>, so the <tt class="docutils literal"><span class="pre">volume</span></tt> is <tt class="docutils literal"><span class="pre">125m3</span></tt>. The room is filled with
+<a class="reference internal" href="tools.html#gridsim.util.Air" title="gridsim.util.Air"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.util.Air</span></tt></a> (specific thermal capacity=`1005 J/kgK``) with
+the initial temperature of 60 degree celsius (line 38).</li>
+<li>cold_room (line 44) has the same volume, but an initial temperature of 20
+degree celsius (line 43).</li>
+<li>the two rooms are coupled with a thermal conductivity of <tt class="docutils literal"><span class="pre">100</span> <span class="pre">Watts</span> <span class="pre">per</span>
+<span class="pre">Kelvin</span></tt> (lines 49 to 51).</li>
 </ul>
 </li>
-<li><dl class="first docutils">
-<dt>On line 53 we add a new recorder (of our custom recorder class) to the</dt>
-<dd><p class="first last">attribute <strong>temperature</strong> of all ThermalProcesses. That is all we have
-actually to do to add a recorder, the simulation will call the recorder&#8217;s
+<li>On lines 55 &amp; 56 we add the recorder to the simulation. The recorder will
+listen all <tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt> and record their <tt class="docutils literal"><span class="pre">temperature</span></tt> parameter.
+The horizontal unit will be in second and the vertical unit in degree celsius.
+The simulation will call the recorder&#8217;s
 <strong>on_simulation_step()</strong> and <strong>on_observed_value()</strong> method each time the
-simulation did a step.</p>
-</dd>
-</dl>
-</li>
-<li><p class="first">On line 57 we actually start the simulation for 1 hour with a resolution
-of 5 minutes.</p>
-</li>
+simulation did a step.</li>
+<li>On line 59 we actually start the simulation for 1 hour with a resolution
+of 5 minutes.</li>
 </ul>
 <p><em>The output of the console logger should be something like this</em>:</p>
 <div class="highlight-python"><div class="highlight"><pre>RESET, observing: [&#39;hot_room&#39;, &#39;cold_room&#39;]
 time = 0 second:
-    hot_room.temperature = 333.15 kelvin
-    cold_room.temperature = 293.15 kelvin
+    hot_room.temperature = 60.0 degC
+    cold_room.temperature = 20.0 degC
 time = 300.0 second:
-    hot_room.temperature = 325.189800995 kelvin
-    cold_room.temperature = 301.110199005 kelvin
+    hot_room.temperature = 52.039800995 degC
+    cold_room.temperature = 27.960199005 degC
 time = 600.0 second:
-    hot_room.temperature = 320.3978404 kelvin
-    cold_room.temperature = 305.9021596 kelvin
+    hot_room.temperature = 47.2478404 degC
+    cold_room.temperature = 32.7521596 degC
 time = 900.0 second:
-    hot_room.temperature = 317.513127803 kelvin
-    cold_room.temperature = 308.786872197 kelvin
+    hot_room.temperature = 44.363127803 degC
+    cold_room.temperature = 35.636872197 degC
 time = 1200.0 second:
-    hot_room.temperature = 315.776559523 kelvin
-    cold_room.temperature = 310.523440477 kelvin
+    hot_room.temperature = 42.6265595232 degC
+    cold_room.temperature = 37.3734404768 degC
 time = 1500.0 second:
-    hot_room.temperature = 314.731162698 kelvin
-    cold_room.temperature = 311.568837302 kelvin
+    hot_room.temperature = 41.581162698 degC
+    cold_room.temperature = 38.418837302 degC
 time = 1800.0 second:
-    hot_room.temperature = 314.101844211 kelvin
-    cold_room.temperature = 312.198155789 kelvin
+    hot_room.temperature = 40.9518442113 degC
+    cold_room.temperature = 39.0481557887 degC
 time = 2100.0 second:
-    hot_room.temperature = 313.723000744 kelvin
-    cold_room.temperature = 312.576999256 kelvin
+    hot_room.temperature = 40.5730007441 degC
+    cold_room.temperature = 39.4269992559 degC
 time = 2400.0 second:
-    hot_room.temperature = 313.494940746 kelvin
-    cold_room.temperature = 312.805059254 kelvin
+    hot_room.temperature = 40.3449407464 degC
+    cold_room.temperature = 39.6550592536 degC
 time = 2700.0 second:
-    hot_room.temperature = 313.357650897 kelvin
-    cold_room.temperature = 312.942349103 kelvin
+    hot_room.temperature = 40.2076508971 degC
+    cold_room.temperature = 39.7923491029 degC
 time = 3000.0 second:
-    hot_room.temperature = 313.275003774 kelvin
-    cold_room.temperature = 313.024996226 kelvin
+    hot_room.temperature = 40.1250037739 degC
+    cold_room.temperature = 39.8749962261 degC
 time = 3300.0 second:
-    hot_room.temperature = 313.225251028 kelvin
-    cold_room.temperature = 313.074748972 kelvin
+    hot_room.temperature = 40.0752510281 degC
+    cold_room.temperature = 39.9247489719 degC
 time = 3600.0 second:
-    hot_room.temperature = 313.19530037 kelvin
-    cold_room.temperature = 313.10469963 kelvin
+    hot_room.temperature = 40.0453003701 degC
+    cold_room.temperature = 39.9546996299 degC
 </pre></div>
 </div>
 <dl class="class">
 <dt id="gridsim.recorder.PlotRecorder">
-<em class="property">class </em><tt class="descclassname">gridsim.recorder.</tt><tt class="descname">PlotRecorder</tt><big>(</big><em>self</em>, <em>attribute_name</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.recorder.</tt><tt class="descname">PlotRecorder</tt><big>(</big><em>self</em>, <em>attribute_name</em>, <em>x_unit=None</em>, <em>y_unit=None</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.simulation.Recorder</span></tt></a>, <a class="reference internal" href="io.html#gridsim.iodata.output.AttributesGetter" title="gridsim.iodata.output.AttributesGetter"><tt class="xref py py-class docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter</span></tt></a></p>
 <p>A <a class="reference internal" href="#gridsim.recorder.PlotRecorder" title="gridsim.recorder.PlotRecorder"><tt class="xref py py-class docutils literal"><span class="pre">PlotRecorder</span></tt></a> can be used to record one or multiple signals
 and plot them at the end of the simulation either to a image file,
@@ -3196,12 +3236,24 @@ add them to a PDF or show them on a window.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute_name</strong> (<em>str</em>) &#8211; The attribute name to observe. Every
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>attribute_name</strong> (<em>str</em>) &#8211; The attribute name to observe. Every
 <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractSimulationElement</span></tt></a> with a param of this name can
-be recorded</td>
+be recorded</li>
+<li><strong>x_unit</strong> (int, float, type or unit see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The unit of the horizontal axis</li>
+<li><strong>y_unit</strong> (int, float, type or unit see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The unit of the vertical axis</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
+<p>If no information are give to the constructor of a <a class="reference internal" href="#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a>,
+the data are not preprocessed.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The preprocess can take a long time if a lot of data are
+stored in a <a class="reference internal" href="#gridsim.recorder.PlotRecorder" title="gridsim.recorder.PlotRecorder"><tt class="xref py py-class docutils literal"><span class="pre">PlotRecorder</span></tt></a>.</p>
+</div>
 <p><em>Example:</em></p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -3274,8 +3326,7 @@ be recorded</td>
 69
 70
 71
-72
-73</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+72</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="kn">from</span> <span class="nn">gridsim.thermal.core</span> <span class="kn">import</span> <span class="n">ThermalCoupling</span><span class="p">,</span> <span class="n">ThermalProcess</span>
 <span class="kn">from</span> <span class="nn">gridsim.thermal.element</span> <span class="kn">import</span> <span class="n">ConstantTemperatureProcess</span>
@@ -3320,19 +3371,18 @@ be recorded</td>
                                 <span class="n">room1</span><span class="p">,</span> <span class="n">room2</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the temperatures of all thermal processes.</span>
-<span class="n">kelvin</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">kelvin</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">kelvin</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the temperatures of all thermal</span>
 <span class="c"># processes in Kelvin.</span>
-<span class="n">celsius</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">),</span>
-           <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">))</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">minutes</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a second plot recorder which records all energy flows</span>
 <span class="c"># (thermal couplings) between the different processes.</span>
 
-<span class="n">flow</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;power&#39;</span><span class="p">)</span>
+<span class="n">flow</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;power&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">flow</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">element_class</span><span class="o">=</span><span class="n">ThermalCoupling</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
@@ -3350,45 +3400,24 @@ be recorded</td>
 <span class="n">CSVSaver</span><span class="p">(</span><span class="n">celsius</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/fig2.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<ul>
-<li><p class="first">In this example, only new concept are detailed.</p>
-</li>
-<li><p class="first">On line 46, we create a <a class="reference internal" href="#gridsim.recorder.PlotRecorder" title="gridsim.recorder.PlotRecorder"><tt class="xref py py-class docutils literal"><span class="pre">PlotRecorder</span></tt></a> which recorder the
-<tt class="docutils literal"><span class="pre">temperature</span></tt> attribute.</p>
-</li>
-<li><p class="first">On line 47, we use that recorder in order to record all elements in
+<ul class="simple">
+<li>In this example, only new concept are detailed.</li>
+<li>On line 46, we create a <a class="reference internal" href="#gridsim.recorder.PlotRecorder" title="gridsim.recorder.PlotRecorder"><tt class="xref py py-class docutils literal"><span class="pre">PlotRecorder</span></tt></a> which recorder the
+<tt class="docutils literal"><span class="pre">temperature</span></tt> attribute in Kelvin.</li>
+<li>On line 47, we use that recorder in order to record all elements in
 the thermal module who have the attribute &#8216;temperature&#8217; by using the
 powerful <a class="reference internal" href="#gridsim.simulation.Simulator.find" title="gridsim.simulation.Simulator.find"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.find()</span></tt></a> method by asking
-to return a list of all elements that have the attribute &#8216;temperature&#8217;.</p>
-</li>
-<li><p class="first">On line 51, we create a very similar recorder as before,</p>
-</li>
-<li><p class="first">On line 52, this time we do not want to record the temperature in
-kelvin, we want the temperature in degrees celsius. As the
-simulator needs temperatures in kelvin (see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a> for
-mor information), we have to add a conversion lambda function
-which will convert the temperature in degrees celsius.
-The lambda gets a named tuple as parameter which contains the
-following keys:</p>
-<ul class="simple">
-<li>&#8220;value&#8221;: the value just read from the attribute,</li>
-<li>&#8220;time&#8221;: the actual simulation time and</li>
-<li>&#8220;delta_time&#8221;: the time interval for which the value has been
-calculated.</li>
-</ul>
-<p>The <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a> module provides a simple way to convert
-data, thus we use it.</p>
-</li>
-<li><p class="first">On line 69, we create a first <a class="reference internal" href="io.html#gridsim.iodata.output.FigureSaver" title="gridsim.iodata.output.FigureSaver"><tt class="xref py py-class docutils literal"><span class="pre">FigureSaver</span></tt></a> instance with the
+to return a list of all elements that have the attribute &#8216;temperature&#8217;.</li>
+<li>On line 51, we create a very similar recorder as before, but
+the attribute will be in celsius and the time in minutes.</li>
+<li>On line 52, we recorder same objects as above,</li>
+<li>On line 68, we create a first <a class="reference internal" href="io.html#gridsim.iodata.output.FigureSaver" title="gridsim.iodata.output.FigureSaver"><tt class="xref py py-class docutils literal"><span class="pre">FigureSaver</span></tt></a> instance with the
 title &#8216;Temperature (K)&#8217; which will use the data returned by the
-<a class="reference internal" href="#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> to <tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt> the data in a figure.</p>
-</li>
-<li><p class="first">On line 70, we also save the data of the other <a class="reference internal" href="#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a>.
+<a class="reference internal" href="#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> to <tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt> the data in a figure.</li>
+<li>On line 69, we also save the data of the other <a class="reference internal" href="#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a>.
 The figures below show that the result is quite the same except that
-the y-coordinates have the right unit.</p>
-</li>
-<li><p class="first">On line 73, we save the data using another saver: <a class="reference internal" href="io.html#gridsim.iodata.output.CSVSaver" title="gridsim.iodata.output.CSVSaver"><tt class="xref py py-class docutils literal"><span class="pre">CSVSaver</span></tt></a>.</p>
-</li>
+the y-coordinates have the right unit.</li>
+<li>On line 72, we save the data using another saver: <a class="reference internal" href="io.html#gridsim.iodata.output.CSVSaver" title="gridsim.iodata.output.CSVSaver"><tt class="xref py py-class docutils literal"><span class="pre">CSVSaver</span></tt></a>.</li>
 </ul>
 <p>The resulting 3 images of this simulation are show here:</p>
 <div class="figure align-center">
@@ -3435,8 +3464,8 @@ for details.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.PlotRecorder.get_x_values">
-<tt class="descname">get_x_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.get_x_values" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.PlotRecorder.x_values">
+<tt class="descname">x_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.x_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a list of time, on for each <a class="reference internal" href="#gridsim.recorder.PlotRecorder.on_observed_value" title="gridsim.recorder.PlotRecorder.on_observed_value"><tt class="xref py py-func docutils literal"><span class="pre">on_observed_value()</span></tt></a> and
 ordered following the call of <a class="reference internal" href="#gridsim.simulation.Simulator.step" title="gridsim.simulation.Simulator.step"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.simulation.Simulator.step()</span></tt></a>.</p>
 <p><em>Example</em>:</p>
@@ -3467,8 +3496,8 @@ ordered following the call of <a class="reference internal" href="#gridsim.simul
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.PlotRecorder.get_x_unit">
-<tt class="descname">get_x_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.get_x_unit" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.PlotRecorder.x_unit">
+<tt class="descname">x_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.x_unit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the unit of the time.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3483,8 +3512,8 @@ ordered following the call of <a class="reference internal" href="#gridsim.simul
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.PlotRecorder.get_y_values">
-<tt class="descname">get_y_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.get_y_values" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.PlotRecorder.y_values">
+<tt class="descname">y_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.y_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a map of the recorded data:</p>
 <div class="highlight-python"><div class="highlight"><pre>{
     id1: [list of recorded values]
@@ -3507,14 +3536,14 @@ and <a class="reference internal" href="#gridsim.recorder.PlotRecorder.on_simula
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.PlotRecorder.get_y_unit">
-<tt class="descname">get_y_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.get_y_unit" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.PlotRecorder.y_unit">
+<tt class="descname">y_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.recorder.PlotRecorder.y_unit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the unit od the recorded data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the unit, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the type or the unit, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
 </tr>
@@ -3541,6 +3570,8 @@ and <a class="reference internal" href="#gridsim.recorder.PlotRecorder.on_simula
 <li><strong>x_min</strong> &#8211; </li>
 <li><strong>x_max</strong> &#8211; </li>
 <li><strong>nb_bins</strong> &#8211; </li>
+<li><strong>x_unit</strong> (type or unit see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The unit of the horizontal axis</li>
+<li><strong>y_unit</strong> (<em>type</em>) &#8211; The unit of the vertical axis</li>
 </ul>
 </td>
 </tr>
@@ -3586,23 +3617,23 @@ into the file.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.HistogramRecorder.get_x_values">
-<tt class="descname">get_x_values</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.get_x_values" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.HistogramRecorder.x_values">
+<tt class="descname">x_values</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.x_values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.HistogramRecorder.get_x_unit">
-<tt class="descname">get_x_unit</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.get_x_unit" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.HistogramRecorder.x_unit">
+<tt class="descname">x_unit</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.x_unit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.HistogramRecorder.get_y_values">
-<tt class="descname">get_y_values</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.get_y_values" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.HistogramRecorder.y_values">
+<tt class="descname">y_values</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.y_values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="gridsim.recorder.HistogramRecorder.get_y_unit">
-<tt class="descname">get_y_unit</tt><big>(</big><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.get_y_unit" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.recorder.HistogramRecorder.y_unit">
+<tt class="descname">y_unit</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.recorder.HistogramRecorder.y_unit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3630,7 +3661,7 @@ into the file.</p>
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Jan 12, 2015.
+      Last updated on Feb 04, 2015.
     </p>
   </div>
 
@@ -3650,7 +3681,7 @@ into the file.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc1',
+            VERSION:'0.1.1rc2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

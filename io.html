@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6. The Gridsim Input/Output &mdash; Gridsim 0.1.1-rc1 documentation</title>
+  <title>6. The Gridsim Input/Output &mdash; Gridsim 0.1.1rc2 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/>
+    <link rel="top" title="Gridsim 0.1.1rc2 documentation" href="index.html"/>
         <link rel="next" title="7. Further Information" href="copyright.html"/>
         <link rel="prev" title="5. The Simulation Unit" href="unit.html"/> 
 
@@ -305,8 +305,7 @@ interface.</p>
 69
 70
 71
-72
-73</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+72</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="kn">from</span> <span class="nn">gridsim.thermal.core</span> <span class="kn">import</span> <span class="n">ThermalCoupling</span><span class="p">,</span> <span class="n">ThermalProcess</span>
 <span class="kn">from</span> <span class="nn">gridsim.thermal.element</span> <span class="kn">import</span> <span class="n">ConstantTemperatureProcess</span>
@@ -351,19 +350,18 @@ interface.</p>
                                 <span class="n">room1</span><span class="p">,</span> <span class="n">room2</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the temperatures of all thermal processes.</span>
-<span class="n">kelvin</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">kelvin</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">kelvin</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a plot recorder that records the temperatures of all thermal</span>
 <span class="c"># processes in Kelvin.</span>
-<span class="n">celsius</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">)</span>
-<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">),</span>
-           <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">))</span>
+<span class="n">celsius</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">minutes</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">has_attribute</span><span class="o">=</span><span class="s">&#39;temperature&#39;</span><span class="p">))</span>
 
 <span class="c"># Create a second plot recorder which records all energy flows</span>
 <span class="c"># (thermal couplings) between the different processes.</span>
 
-<span class="n">flow</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;power&#39;</span><span class="p">)</span>
+<span class="n">flow</span> <span class="o">=</span> <span class="n">PlotRecorder</span><span class="p">(</span><span class="s">&#39;power&#39;</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">second</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">watt</span><span class="p">)</span>
 <span class="n">sim</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">flow</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">element_class</span><span class="o">=</span><span class="n">ThermalCoupling</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Running simulation...&quot;</span><span class="p">)</span>
@@ -382,9 +380,9 @@ interface.</p>
 </pre></div>
 </td></tr></table></div>
 <ul class="simple">
-<li>On lines 46, 51 and 85, we create <a class="reference internal" href="documentation.html#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> objects.</li>
-<li>On lines 47, 52 and 86, we add the recorders to the simulation.</li>
-<li>On lines 69 to 71, we use the recorders as <tt class="xref py py-class docutils literal"><span class="pre">AttributeGetter</span></tt> to
+<li>On lines 46, 51 and 57, we create <a class="reference internal" href="documentation.html#gridsim.simulation.Recorder" title="gridsim.simulation.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> objects.</li>
+<li>On lines 47, 52 and 58, we add the recorders to the simulation.</li>
+<li>On lines 68 to 70, we use the recorders as <tt class="xref py py-class docutils literal"><span class="pre">AttributeGetter</span></tt> to
 save them in figure. Here, the 3 images file saved:</li>
 </ul>
 <div class="figure align-center">
@@ -397,7 +395,7 @@ save them in figure. Here, the 3 images file saved:</li>
 <img alt="_images/fig3.png" src="_images/fig3.png" />
 </div>
 <ul class="simple">
-<li>On line 73, we use a second saver to save in a csv file the a recorder we
+<li>On line 72, we use a second saver to save in a csv file the a recorder we
 already saved, here the 20th first lines:</li>
 </ul>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -419,26 +417,26 @@ already saved, here the 20th first lines:</li>
 17
 18
 19
-20</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">second</span><span class="p">,</span><span class="n">outside</span><span class="p">,</span><span class="n">room2</span><span class="p">,</span><span class="n">room1</span>
-<span class="mi">0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">25.0</span><span class="p">,</span><span class="mf">18.0</span>
-<span class="mi">1</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9963515755</span><span class="p">,</span><span class="mf">18.0014593698</span>
-<span class="mi">2</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9927050871</span><span class="p">,</span><span class="mf">18.0029169487</span>
-<span class="mi">3</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9890605334</span><span class="p">,</span><span class="mf">18.004372738</span>
-<span class="mi">4</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9854179132</span><span class="p">,</span><span class="mf">18.0058267391</span>
-<span class="mi">5</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9817772251</span><span class="p">,</span><span class="mf">18.0072789533</span>
-<span class="mi">6</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9781384676</span><span class="p">,</span><span class="mf">18.008729382</span>
-<span class="mi">7</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9745016395</span><span class="p">,</span><span class="mf">18.0101780265</span>
-<span class="mi">8</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9708667394</span><span class="p">,</span><span class="mf">18.0116248882</span>
-<span class="mi">9</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9672337658</span><span class="p">,</span><span class="mf">18.0130699684</span>
-<span class="mi">10</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9636027176</span><span class="p">,</span><span class="mf">18.0145132685</span>
-<span class="mi">11</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9599735932</span><span class="p">,</span><span class="mf">18.0159547898</span>
-<span class="mi">12</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9563463914</span><span class="p">,</span><span class="mf">18.0173945337</span>
-<span class="mi">13</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9527211107</span><span class="p">,</span><span class="mf">18.0188325015</span>
-<span class="mi">14</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9490977499</span><span class="p">,</span><span class="mf">18.0202686946</span>
-<span class="mi">15</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9454763076</span><span class="p">,</span><span class="mf">18.0217031143</span>
-<span class="mi">16</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9418567824</span><span class="p">,</span><span class="mf">18.0231357619</span>
-<span class="mi">17</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.938239173</span><span class="p">,</span><span class="mf">18.0245666388</span>
-<span class="mi">18</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.934623478</span><span class="p">,</span><span class="mf">18.0259957463</span>
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="n">time</span><span class="p">],</span><span class="n">outside</span><span class="p">,</span><span class="n">room2</span><span class="p">,</span><span class="n">room1</span>
+<span class="mf">0.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">25.0</span><span class="p">,</span><span class="mf">18.0</span>
+<span class="mf">0.0166666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9963515755</span><span class="p">,</span><span class="mf">18.0014593698</span>
+<span class="mf">0.0333333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9927050871</span><span class="p">,</span><span class="mf">18.0029169487</span>
+<span class="mf">0.05</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9890605334</span><span class="p">,</span><span class="mf">18.004372738</span>
+<span class="mf">0.0666666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9854179132</span><span class="p">,</span><span class="mf">18.0058267391</span>
+<span class="mf">0.0833333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9817772251</span><span class="p">,</span><span class="mf">18.0072789533</span>
+<span class="mf">0.1</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9781384676</span><span class="p">,</span><span class="mf">18.008729382</span>
+<span class="mf">0.116666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9745016395</span><span class="p">,</span><span class="mf">18.0101780265</span>
+<span class="mf">0.133333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9708667394</span><span class="p">,</span><span class="mf">18.0116248882</span>
+<span class="mf">0.15</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9672337658</span><span class="p">,</span><span class="mf">18.0130699684</span>
+<span class="mf">0.166666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9636027176</span><span class="p">,</span><span class="mf">18.0145132685</span>
+<span class="mf">0.183333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9599735932</span><span class="p">,</span><span class="mf">18.0159547898</span>
+<span class="mf">0.2</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9563463914</span><span class="p">,</span><span class="mf">18.0173945337</span>
+<span class="mf">0.216666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9527211107</span><span class="p">,</span><span class="mf">18.0188325015</span>
+<span class="mf">0.233333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9490977499</span><span class="p">,</span><span class="mf">18.0202686946</span>
+<span class="mf">0.25</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9454763076</span><span class="p">,</span><span class="mf">18.0217031143</span>
+<span class="mf">0.266666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9418567824</span><span class="p">,</span><span class="mf">18.0231357619</span>
+<span class="mf">0.283333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.938239173</span><span class="p">,</span><span class="mf">18.0245666388</span>
+<span class="mf">0.3</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.934623478</span><span class="p">,</span><span class="mf">18.0259957463</span>
 </pre></div>
 </td></tr></table></div>
 <dl class="class">
@@ -447,8 +445,8 @@ already saved, here the 20th first lines:</li>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>This is the based class for all data which have to be saved.</p>
 <dl class="method">
-<dt id="gridsim.iodata.output.AttributesGetter.get_x_values">
-<tt class="descname">get_x_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_x_values" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.iodata.output.AttributesGetter.x_values">
+<tt class="descname">x_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.x_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns x values of data stored.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -463,8 +461,8 @@ already saved, here the 20th first lines:</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.iodata.output.AttributesGetter.get_x_unit">
-<tt class="descname">get_x_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_x_unit" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.iodata.output.AttributesGetter.x_unit">
+<tt class="descname">x_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.x_unit" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns x unit of data stored.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -479,8 +477,8 @@ already saved, here the 20th first lines:</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.iodata.output.AttributesGetter.get_y_values">
-<tt class="descname">get_y_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_y_values" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.iodata.output.AttributesGetter.y_values">
+<tt class="descname">y_values</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.y_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns y values of data stored. As more than one data can
 be sent, the values have to be sent with the following format:
 <tt class="docutils literal"><span class="pre">[(label1,</span> <span class="pre">data1),</span> <span class="pre">(label2,</span> <span class="pre">data2),</span> <span class="pre">...]</span></tt>
@@ -500,8 +498,8 @@ with:
 </dd></dl>
 
 <dl class="method">
-<dt id="gridsim.iodata.output.AttributesGetter.get_y_unit">
-<tt class="descname">get_y_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.get_y_unit" title="Permalink to this definition">¶</a></dt>
+<dt id="gridsim.iodata.output.AttributesGetter.y_unit">
+<tt class="descname">y_unit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#gridsim.iodata.output.AttributesGetter.y_unit" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns y unit of data stored.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -536,6 +534,16 @@ and plot it in a file.</p>
 </tbody>
 </table>
 <dl class="attribute">
+<dt id="gridsim.iodata.output.FigureSaver.x_label">
+<tt class="descname">x_label</tt><a class="headerlink" href="#gridsim.iodata.output.FigureSaver.x_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.iodata.output.FigureSaver.y_label">
+<tt class="descname">y_label</tt><a class="headerlink" href="#gridsim.iodata.output.FigureSaver.y_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="gridsim.iodata.output.FigureSaver.figure">
 <tt class="descname">figure</tt><a class="headerlink" href="#gridsim.iodata.output.FigureSaver.figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>The matplotlib figure identifier. If the figure was not already
@@ -551,7 +559,7 @@ before actually returning the figure.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">you do not need to call this method explicitly as it will get
 called as soon as needed by other methods like <a class="reference internal" href="#gridsim.iodata.output.FigureSaver.save" title="gridsim.iodata.output.FigureSaver.save"><tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt></a>
-or the property getter <strong>figure</strong> are called. This method
+or the property getter <tt class="docutils literal"><span class="pre">figure</span></tt> are called. This method
 offers some fine tuning parameters to control the look of the
 figure.</p>
 </div>
@@ -623,8 +631,8 @@ format is deduced from the file extension.</td>
 <dd><p>Saves the data in the given file (<tt class="docutils literal"><span class="pre">file_name</span></tt>). The format is a text
 file regardless the extension of the file.
 The data is store with the csv format and the header are the data
-returned by <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.get_x_unit" title="gridsim.iodata.output.AttributesGetter.get_x_unit"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter.get_x_unit()</span></tt></a>
-and <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.get_y_unit" title="gridsim.iodata.output.AttributesGetter.get_y_unit"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter.get_y_unit()</span></tt></a></p>
+returned by <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.x_unit" title="gridsim.iodata.output.AttributesGetter.x_unit"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter.x_unit()</span></tt></a>
+and <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.y_unit" title="gridsim.iodata.output.AttributesGetter.y_unit"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.iodata.output.AttributesGetter.y_unit()</span></tt></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -659,7 +667,7 @@ and <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Dec 10, 2014.
+      Last updated on Feb 04, 2015.
     </p>
   </div>
 
@@ -679,7 +687,7 @@ and <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc1',
+            VERSION:'0.1.1rc2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

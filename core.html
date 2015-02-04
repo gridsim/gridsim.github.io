@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. The Simulation Core &mdash; Gridsim 0.1.1-rc1 documentation</title>
+  <title>3. The Simulation Core &mdash; Gridsim 0.1.1rc2 documentation</title>
   
 
   
@@ -31,7 +31,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/>
+    <link rel="top" title="Gridsim 0.1.1rc2 documentation" href="index.html"/>
         <link rel="next" title="4. The Simulation Tools" href="tools.html"/>
         <link rel="prev" title="2. The Simulator General Use" href="documentation.html"/> 
 
@@ -318,7 +318,7 @@ simulation module will be returned.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>uid</strong> (<em>int</em>) &#8211; ID of the element. Note that these ID&#8217;s are only unique for
 a given class , so you should never search just for an ID without 
 specifying the class.</li>
@@ -331,6 +331,12 @@ whereas this can be the superclass of the object too.</li>
 name. This can be used in order to find all objects that have a 
 &#8216;power&#8217; attribute.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of all <a class="reference internal" href="#gridsim.thermal.core.AbstractThermalElement" title="gridsim.thermal.core.AbstractThermalElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractThermalElement</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
 </tr>
 </tbody>
@@ -356,8 +362,8 @@ method on all simulation elements it owns/manages.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
-<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the update has
+<li><strong>time</strong> (<em>int or float in in second</em>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (<em>int or float in second</em>) &#8211; The time period for which the update has
 to be done.</li>
 </ul>
 </td>
@@ -378,8 +384,8 @@ the <a class="reference internal" href="#gridsim.core.AbstractSimulationModule.u
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The actual simulation time.</li>
-<li><strong>delta_time</strong> (time, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The time period for which the calculation
+<li><strong>time</strong> (<em>int or float in in second</em>) &#8211; The actual simulation time.</li>
+<li><strong>delta_time</strong> (<em>int or float in second</em>) &#8211; The time period for which the calculation
 has to be done.</li>
 </ul>
 </td>
@@ -886,12 +892,6 @@ degrees.</li>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="gridsim.thermal.core.ThermalProcess.thermal_capacity">
-<tt class="descname">thermal_capacity</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.thermal_capacity" title="Permalink to this definition">¶</a></dt>
-<dd><p>The thermal capacity of the thermal process.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="gridsim.thermal.core.ThermalProcess.temperature">
 <tt class="descname">temperature</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>The temperature of the process.</p>
@@ -935,6 +935,19 @@ degrees.</li>
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.calculate" title="gridsim.core.AbstractSimulationElement.calculate"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.calculate()</span></tt></a>.</p>
 </div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (<em>float in second</em>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (<em>float in second</em>) &#8211; The delta time for which the calculation has to be
+done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -945,12 +958,25 @@ degrees.</li>
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="#gridsim.core.AbstractSimulationElement.update" title="gridsim.core.AbstractSimulationElement.update"><tt class="xref py py-func docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement.update()</span></tt></a>.</p>
 </div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time</strong> (<em>float in second</em>) &#8211; The actual time of the simulator.</li>
+<li><strong>delta_time</strong> (<em>float in second</em>) &#8211; The delta time for which the calculation has to be
+done.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="gridsim.thermal.core.ThermalProcess.room">
 <em class="property">static </em><tt class="descname">room</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.room" title="Permalink to this definition">¶</a></dt>
-<dd><p>room(friendly_name, surface, height, initial_temperature=293.15*units.kelvin, position=Position()):</p>
+<dd><p>room(friendly_name, surface, height, initial_temperature=293.15, position=Position()):</p>
 <p>Returns the thermal process of a room filled with air and the given
 surface, height and initial temperature.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -976,8 +1002,8 @@ error.</p>
 
 <dl class="staticmethod">
 <dt id="gridsim.thermal.core.ThermalProcess.solid">
-<em class="property">static </em><tt class="descname">solid</tt><big>(</big><em>friendly_name</em>, <em>specific_thermal_capacity</em>, <em>mass</em>, <em>initial_temperature=&lt;Quantity(20</em>, <em>'degC')&gt;</em>, <em>position=&lt;gridsim.util.Position object at 0x7fecc619bb90&gt;</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.solid" title="Permalink to this definition">¶</a></dt>
-<dd><p>solid(friendly_name, specific_thermal_capacity, mass, initial_temperature=units(20, units.degC), position=Position()):</p>
+<em class="property">static </em><tt class="descname">solid</tt><big>(</big><em>*args</em>, <em>**keywords</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalProcess.solid" title="Permalink to this definition">¶</a></dt>
+<dd><p>solid(friendly_name, specific_thermal_capacity, mass, initial_temperature=293.15, position=Position()):</p>
 <p>Returns the thermal process of a solid body and the given mass, initial
 temperature.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1005,7 +1031,7 @@ on error.</p>
 
 <dl class="class">
 <dt id="gridsim.thermal.core.ThermalCoupling">
-<em class="property">class </em><tt class="descclassname">gridsim.thermal.core.</tt><tt class="descname">ThermalCoupling</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>thermal_conductivity</em>, <em>from_process</em>, <em>to_process</em>, <em>contact_area=1*units.metre*units.metre</em>, <em>thickness=1*units.metre</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">gridsim.thermal.core.</tt><tt class="descname">ThermalCoupling</tt><big>(</big><em>self</em>, <em>friendly_name</em>, <em>thermal_conductivity</em>, <em>from_process</em>, <em>to_process</em>, <em>contact_area=1</em>, <em>thickness=1</em><big>)</big><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling" title="Permalink to this definition">¶</a></dt>
 <dd><p>A thermal coupling connects two thermal processes allowing them to
 exchange thermal energy.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1016,9 +1042,9 @@ exchange thermal energy.</p>
 <li><strong>friendly_name</strong> (<em>str</em>) &#8211; The friendly name to identify the element.</li>
 <li><strong>thermal_conductivity</strong> (thermal conductivity, see <a class="reference internal" href="unit.html#module-gridsim.unit" title="gridsim.unit"><tt class="xref py py-mod docutils literal"><span class="pre">gridsim.unit</span></tt></a>) &#8211; The thermal conductivity of the thermal
 element.</li>
-<li><strong>from_process</strong> (int (ID), <a class="reference internal" href="#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>) &#8211; The first process coupled or the ID of the first
+<li><strong>from_process</strong> (<a class="reference internal" href="#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>) &#8211; The first process coupled
 process.</li>
-<li><strong>to_process</strong> (int (ID), <a class="reference internal" href="#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>) &#8211; The second process coupled or the ID of the second
+<li><strong>to_process</strong> (<a class="reference internal" href="#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><tt class="xref py py-class docutils literal"><span class="pre">ThermalProcess</span></tt></a>) &#8211; The second process coupled
 process.</li>
 </ul>
 </td>
@@ -1029,18 +1055,6 @@ process.</li>
 <dt id="gridsim.thermal.core.ThermalCoupling.thermal_conductivity">
 <tt class="descname">thermal_conductivity</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.thermal_conductivity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The thermal conductivity of the coupling in W/K.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="gridsim.thermal.core.ThermalCoupling.from_process_id">
-<tt class="descname">from_process_id</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.from_process_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>The ID of the first process.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="gridsim.thermal.core.ThermalCoupling.to_process_id">
-<tt class="descname">to_process_id</tt><em class="property"> = None</em><a class="headerlink" href="#gridsim.thermal.core.ThermalCoupling.to_process_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>The ID of the second process.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1113,7 +1127,7 @@ process.</li>
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Dec 10, 2014.
+      Last updated on Feb 04, 2015.
     </p>
   </div>
 
@@ -1133,7 +1147,7 @@ process.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc1',
+            VERSION:'0.1.1rc2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

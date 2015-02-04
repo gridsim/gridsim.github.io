@@ -8,7 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; Gridsim 0.1.1-rc1 documentation</title>
+  <title>Index &mdash; Gridsim 0.1.1rc2 documentation</title>
   
 
   
@@ -32,7 +32,7 @@
 
   
         <link rel="copyright" title="Copyright" href="copyright.html"/>
-    <link rel="top" title="Gridsim 0.1.1-rc1 documentation" href="index.html"/> 
+    <link rel="top" title="Gridsim 0.1.1rc2 documentation" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -140,6 +140,7 @@
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  | <a href="#X"><strong>X</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
  | <a href="#Z"><strong>Z</strong></a>
  
 </div>
@@ -427,10 +428,6 @@
   </dt>
 
       
-  <dt><a href="tools.html#gridsim.timeseries.TimeSeriesObject.compute_data">compute_data() (gridsim.timeseries.TimeSeriesObject method)</a>
-  </dt>
-
-      
   <dt><a href="tools.html#gridsim.util.Concrete">Concrete (class in gridsim.util)</a>
   </dt>
 
@@ -461,6 +458,10 @@
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="tools.html#gridsim.timeseries.TimeSeriesObject.convert">(gridsim.timeseries.TimeSeriesObject method)</a>
+  </dt>
+
         
   <dt><a href="unit.html#gridsim.unit.units.convert">(gridsim.unit.units method)</a>
   </dt>
@@ -636,10 +637,6 @@
   <dt><a href="core.html#gridsim.electrical.core.ElectricalNetworkBranch.from_bus_id">from_bus_id (gridsim.electrical.core.ElectricalNetworkBranch attribute)</a>
   </dt>
 
-      
-  <dt><a href="core.html#gridsim.thermal.core.ThermalCoupling.from_process_id">from_process_id (gridsim.thermal.core.ThermalCoupling attribute)</a>
-  </dt>
-
   </dl></td>
 </tr></table>
 
@@ -667,62 +664,6 @@
       <dd><dl>
         
   <dt><a href="documentation.html#gridsim.electrical.loadflow.DirectLoadFlowCalculator.get_branch_power_flows">(gridsim.electrical.loadflow.DirectLoadFlowCalculator method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.get_x_unit">get_x_unit() (gridsim.iodata.output.AttributesGetter method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.get_x_unit">(gridsim.recorder.HistogramRecorder method)</a>
-  </dt>
-
-        
-  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.get_x_unit">(gridsim.recorder.PlotRecorder method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.get_x_values">get_x_values() (gridsim.iodata.output.AttributesGetter method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.get_x_values">(gridsim.recorder.HistogramRecorder method)</a>
-  </dt>
-
-        
-  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.get_x_values">(gridsim.recorder.PlotRecorder method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.get_y_unit">get_y_unit() (gridsim.iodata.output.AttributesGetter method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.get_y_unit">(gridsim.recorder.HistogramRecorder method)</a>
-  </dt>
-
-        
-  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.get_y_unit">(gridsim.recorder.PlotRecorder method)</a>
-  </dt>
-
-      </dl></dd>
-      
-  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.get_y_values">get_y_values() (gridsim.iodata.output.AttributesGetter method)</a>
-  </dt>
-
-      <dd><dl>
-        
-  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.get_y_values">(gridsim.recorder.HistogramRecorder method)</a>
-  </dt>
-
-        
-  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.get_y_values">(gridsim.recorder.PlotRecorder method)</a>
   </dt>
 
       </dl></dd>
@@ -770,8 +711,6 @@
   <dt><a href="core.html#module-gridsim.electrical.core">gridsim.electrical.core (module)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="documentation.html#module-gridsim.electrical.element">gridsim.electrical.element (module)</a>
   </dt>
@@ -780,6 +719,8 @@
   <dt><a href="documentation.html#module-gridsim.electrical.loadflow">gridsim.electrical.loadflow (module)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="documentation.html#module-gridsim.electrical.network">gridsim.electrical.network (module)</a>
   </dt>
@@ -1373,15 +1314,9 @@
   </dt>
 
       
-  <dt><a href="core.html#gridsim.thermal.core.ThermalProcess.thermal_capacity">thermal_capacity (gridsim.thermal.core.ThermalProcess attribute)</a>
+  <dt><a href="tools.html#gridsim.util.Material.thermal_capacity">thermal_capacity (gridsim.util.Material attribute)</a>
   </dt>
 
-      <dd><dl>
-        
-  <dt><a href="tools.html#gridsim.util.Material.thermal_capacity">(gridsim.util.Material attribute)</a>
-  </dt>
-
-      </dl></dd>
       
   <dt><a href="core.html#gridsim.thermal.core.ThermalCoupling.thermal_conductivity">thermal_conductivity (gridsim.thermal.core.ThermalCoupling attribute)</a>
   </dt>
@@ -1439,7 +1374,7 @@
   </dt>
 
       
-  <dt><a href="core.html#gridsim.thermal.core.ThermalCoupling.to_process_id">to_process_id (gridsim.thermal.core.ThermalCoupling attribute)</a>
+  <dt><a href="unit.html#gridsim.unit.to_si">to_si() (in module gridsim.unit)</a>
   </dt>
 
       
@@ -1586,6 +1521,80 @@
   <dt><a href="core.html#gridsim.electrical.core.AbstractElectricalTwoPort.X">X (gridsim.electrical.core.AbstractElectricalTwoPort attribute)</a>
   </dt>
 
+      
+  <dt><a href="io.html#gridsim.iodata.output.FigureSaver.x_label">x_label (gridsim.iodata.output.FigureSaver attribute)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.x_unit">x_unit() (gridsim.iodata.output.AttributesGetter method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.x_unit">(gridsim.recorder.HistogramRecorder method)</a>
+  </dt>
+
+        
+  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.x_unit">(gridsim.recorder.PlotRecorder method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.x_values">x_values() (gridsim.iodata.output.AttributesGetter method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.x_values">(gridsim.recorder.HistogramRecorder method)</a>
+  </dt>
+
+        
+  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.x_values">(gridsim.recorder.PlotRecorder method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="io.html#gridsim.iodata.output.FigureSaver.y_label">y_label (gridsim.iodata.output.FigureSaver attribute)</a>
+  </dt>
+
+      
+  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.y_unit">y_unit() (gridsim.iodata.output.AttributesGetter method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.y_unit">(gridsim.recorder.HistogramRecorder method)</a>
+  </dt>
+
+        
+  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.y_unit">(gridsim.recorder.PlotRecorder method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="io.html#gridsim.iodata.output.AttributesGetter.y_values">y_values() (gridsim.iodata.output.AttributesGetter method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="documentation.html#gridsim.recorder.HistogramRecorder.y_values">(gridsim.recorder.HistogramRecorder method)</a>
+  </dt>
+
+        
+  <dt><a href="documentation.html#gridsim.recorder.PlotRecorder.y_values">(gridsim.recorder.PlotRecorder method)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -1610,7 +1619,7 @@
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Jan 13, 2015.
+      Last updated on Feb 04, 2015.
     </p>
   </div>
 
@@ -1630,7 +1639,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.1-rc1',
+            VERSION:'0.1.1rc2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
