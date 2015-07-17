@@ -137,7 +137,7 @@ for CSV file (<a class="reference internal" href="#gridsim.iodata.output.CSVSave
 
 <dl class="method">
 <dt id="gridsim.iodata.input.Reader.load">
-<tt class="descname">load</tt><big>(</big><em>self</em>, <em>stream</em>, <em>data_type=str</em>, <em>clear_data=False</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.Reader.load" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">load</tt><big>(</big><em>self</em>, <em>data_type=None</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.Reader.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method MUST returns formatted data following this format
 <tt class="docutils literal"><span class="pre">[(label1,</span> <span class="pre">data1],</span> <span class="pre">(label2,</span> <span class="pre">data2),</span> <span class="pre">...]</span></tt></p>
 <p>with:</p>
@@ -149,19 +149,12 @@ for CSV file (<a class="reference internal" href="#gridsim.iodata.output.CSVSave
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>stream</strong> (<em>str, BufferedReader</em>) &#8211; a stream of data or a file name</li>
-<li><strong>data_type</strong> (<em>type (default str)</em>) &#8211; the type of stored data</li>
-<li><strong>clear_data</strong> (<em>bool</em>) &#8211; if clear data is <tt class="docutils literal"><span class="pre">True</span></tt> load the file even if the
-file is already loaded.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_type</strong> (<em>type (default None)</em>) &#8211; the type of stored data if <tt class="docutils literal"><span class="pre">None</span></tt> no conversion
+are done.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dict of values</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a dict of values</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
@@ -180,6 +173,14 @@ file is already loaded.</li>
 <li><tt class="docutils literal"><span class="pre">labelX</span></tt>: a str</li>
 <li><tt class="docutils literal"><span class="pre">dataX</span></tt>: a list of <tt class="docutils literal"><span class="pre">data_type</span></tt></li>
 </ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stream</strong> (<em>str, BufferedReader</em>) &#8211; a stream of data or a file name</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="gridsim.iodata.input.CSVReader.DEFAULT_DATA_NAME">
 <tt class="descname">DEFAULT_DATA_NAME</tt><em class="property"> = 'DATA_'</em><a class="headerlink" href="#gridsim.iodata.input.CSVReader.DEFAULT_DATA_NAME" title="Permalink to this definition">¶</a></dt>
@@ -204,19 +205,14 @@ integer representing the column in the file:</p>
 
 <dl class="method">
 <dt id="gridsim.iodata.input.CSVReader.load">
-<tt class="descname">load</tt><big>(</big><em>self</em>, <em>stream</em>, <em>data_type=str</em>, <em>clear_data=False</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.CSVReader.load" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">load</tt><big>(</big><em>self</em>, <em>stream</em>, <em>data_type=None</em>, <em>clear_data=False</em><big>)</big><a class="headerlink" href="#gridsim.iodata.input.CSVReader.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the data from the given CSV data file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>stream</strong> (<em>str, BufferedReader</em>) &#8211; A stream of the CSV data to read</li>
-<li><strong>data_type</strong> (<em>type</em>) &#8211; the type of the stored data</li>
-<li><strong>clear_data</strong> (<em>bool</em>) &#8211; if <tt class="docutils literal"><span class="pre">True</span></tt> clear the data if the reader already
-loads a file.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_type</strong> (<em>type</em>) &#8211; the type of the stored data if <tt class="docutils literal"><span class="pre">None</span></tt> no conversion
+are done.</td>
 </tr>
 </tbody>
 </table>
@@ -417,7 +413,7 @@ already saved, here the 20th first lines:</li>
 17
 18
 19
-20</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="n">time</span><span class="p">],</span><span class="n">outside</span><span class="p">,</span><span class="n">room2</span><span class="p">,</span><span class="n">room1</span>
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">minute</span><span class="p">,</span><span class="n">outside</span><span class="p">,</span><span class="n">room2</span><span class="p">,</span><span class="n">room1</span>
 <span class="mf">0.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">25.0</span><span class="p">,</span><span class="mf">18.0</span>
 <span class="mf">0.0166666666667</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9963515755</span><span class="p">,</span><span class="mf">18.0014593698</span>
 <span class="mf">0.0333333333333</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">24.9927050871</span><span class="p">,</span><span class="mf">18.0029169487</span>
@@ -667,7 +663,7 @@ and <a class="reference internal" href="#gridsim.iodata.output.AttributesGetter.
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Feb 04, 2015.
+      Last updated on Jul 08, 2015.
     </p>
   </div>
 

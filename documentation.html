@@ -436,7 +436,8 @@ receive the data of the given attribute after each simulation step.</p>
 notified about the changes of the object&#8217;s attribute at each
 simulation step.</li>
 <li><strong>subjects</strong> (list or tuple of <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><tt class="xref py py-class docutils literal"><span class="pre">AbstractSimulationElement</span></tt></a>) &#8211; The subjects of the recorder, in other words the 
-objects which is attributes has to be recorded.</li>
+objects which is attributes has to be recorded. If <cite>None</cite>, the time
+is the only one value recorded, with <tt class="xref py py-func docutils literal"><span class="pre">on_simulation_step()</span></tt>.</li>
 <li><strong>conversion</strong> (<em>lambda context</em>) &#8211; <p>Lambda function to convert the actual value taken
 from the attribute before recording. The lambda function gets a
 single parameter <tt class="docutils literal"><span class="pre">context</span></tt> which is a named tuple with the following
@@ -1827,8 +1828,7 @@ or produced power is read from a stream by the given reader.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>friendly_name</strong> (<em>str</em>) &#8211; Friendly name for the element.
 Should be unique within the simulation module.</li>
-<li><strong>reader</strong> (<a class="reference internal" href="tools.html#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">TimeSeries</span></tt></a>) &#8211; The time series</li>
-<li><strong>stream</strong> (<em>str</em>) &#8211; The file name</li>
+<li><strong>time_series</strong> (<a class="reference internal" href="tools.html#gridsim.timeseries.TimeSeries" title="gridsim.timeseries.TimeSeries"><tt class="xref py py-class docutils literal"><span class="pre">TimeSeries</span></tt></a>) &#8211; The time series</li>
 </ul>
 </td>
 </tr>
@@ -2019,8 +2019,7 @@ the thermal conductivity of the couplings between them.</p>
 49
 50
 51
-52
-53</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+52</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="kn">from</span> <span class="nn">gridsim.recorder</span> <span class="kn">import</span> <span class="n">PlotRecorder</span>
 <span class="kn">from</span> <span class="nn">gridsim.thermal.core</span> <span class="kn">import</span> <span class="n">ThermalProcess</span><span class="p">,</span> <span class="n">ThermalCoupling</span>
@@ -2047,8 +2046,7 @@ the thermal conductivity of the couplings between them.</p>
                                            <span class="mf">2.5</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">metre</span><span class="p">,</span>
                                            <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
 <span class="n">outside</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-    <span class="n">TimeSeriesThermalProcess</span><span class="p">(</span><span class="s">&#39;outside&#39;</span><span class="p">,</span> <span class="n">SortedConstantStepTimeSeriesObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">()),</span>
-                             <span class="s">&#39;./data/example_time_series.csv&#39;</span><span class="p">,</span>
+    <span class="n">TimeSeriesThermalProcess</span><span class="p">(</span><span class="s">&#39;outside&#39;</span><span class="p">,</span> <span class="n">SortedConstantStepTimeSeriesObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">(</span><span class="s">&#39;./data/example_time_series.csv&#39;</span><span class="p">)),</span>
                              <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">hours</span><span class="p">,</span>
                              <span class="n">temperature_calculator</span><span class="o">=</span>
                                 <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">units</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">),</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
@@ -2289,7 +2287,6 @@ field &#8216;temperature&#8217; or you map a field to the attribute
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>friendly_name</strong> (<em>str, unicode</em>) &#8211; Friendly name to give to the process.</li>
-<li><strong>stream</strong> (<em>str or stream</em>) &#8211; The stream</li>
 <li><strong>temperature_calculator</strong> &#8211; </li>
 <li><strong>position</strong> (<a class="reference internal" href="tools.html#gridsim.util.Position" title="gridsim.util.Position"><tt class="xref py py-class docutils literal"><span class="pre">Position</span></tt></a>) &#8211; The position of the thermal process.</li>
 </ul>
@@ -2635,8 +2632,7 @@ classical example is a simple thermostat:</p>
 270
 271
 272
-273
-274</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
+273</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gridsim.unit</span> <span class="kn">import</span> <span class="n">units</span>
 <span class="kn">from</span> <span class="nn">gridsim.util</span> <span class="kn">import</span> <span class="n">Position</span>
 <span class="kn">from</span> <span class="nn">gridsim.simulation</span> <span class="kn">import</span> <span class="n">Simulator</span>
 <span class="kn">from</span> <span class="nn">gridsim.recorder</span> <span class="kn">import</span> <span class="n">PlotRecorder</span>
@@ -2834,8 +2830,7 @@ classical example is a simple thermostat:</p>
                                            <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">)))</span>
 
 <span class="n">outside</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">thermal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-    <span class="n">TimeSeriesThermalProcess</span><span class="p">(</span><span class="s">&#39;outside&#39;</span><span class="p">,</span> <span class="n">SortedConstantStepTimeSeriesObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">()),</span>
-                             <span class="s">&#39;./data/example_time_series.csv&#39;</span><span class="p">,</span>
+    <span class="n">TimeSeriesThermalProcess</span><span class="p">(</span><span class="s">&#39;outside&#39;</span><span class="p">,</span> <span class="n">SortedConstantStepTimeSeriesObject</span><span class="p">(</span><span class="n">CSVReader</span><span class="p">(</span><span class="s">&#39;./data/example_time_series.csv&#39;</span><span class="p">)),</span>
                              <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span>
                              <span class="n">temperature_calculator</span><span class="o">=</span>
                                 <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">units</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">degC</span><span class="p">),</span>
@@ -2907,14 +2902,14 @@ classical example is a simple thermostat:</p>
 
 <span class="c"># Create a PDF document, add the two figures of the plot recorder to the</span>
 <span class="c"># document and close the document.</span>
-<span class="n">FigureSaver</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="s">&quot;Temperature&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/thermostat-fig1.png&#39;</span><span class="p">)</span>
+<span class="n">FigureSaver</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="s">&quot;Temperature&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/thermostat-fig1.pdf&#39;</span><span class="p">)</span>
 <span class="n">FigureSaver</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="s">&quot;Control&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/thermostat-fig2.png&#39;</span><span class="p">)</span>
 <span class="n">FigureSaver</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="s">&quot;Power&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;./output/thermostat-fig3.png&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
 <p>This simulation outputs the following plots:</p>
 <div class="figure align-center">
-<img alt="_images/thermostat-fig1.png" src="_images/thermostat-fig1.png" />
+<img alt="../../demo/output/thermostat-fig1.png" src="../../demo/output/thermostat-fig1.png" />
 </div>
 <div class="figure align-center">
 <img alt="_images/thermostat-fig2.png" src="_images/thermostat-fig2.png" />
@@ -3661,7 +3656,7 @@ into the file.</p>
   <div role="contentinfo">
     <p>
         &copy; <a href="copyright.html">Copyright</a> 2013-2014, The Gridsim Team.
-      Last updated on Feb 04, 2015.
+      Last updated on Jul 08, 2015.
     </p>
   </div>
 
