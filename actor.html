@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. The Actors &mdash; Gridsim 0.3.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+        <link rel="copyright" title="Copyright" href="copyright.html"/>
+    <link rel="top" title="Gridsim 0.3.0 documentation" href="index.html"/>
+        <link rel="next" title="6. The Simulation Unit" href="unit.html"/>
+        <link rel="prev" title="4. The Simulation Tools" href="tools.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Gridsim
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">2. The Simulator General Use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">3. The Simulation Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">4. The Simulation Tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. The Actors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unit.html">6. The Simulation Unit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">7. The Gridsim Input/Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">8. Further Information</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Gridsim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>5. The Actors</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/actor.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-actors">
+<span id="gridsim-actor"></span><h1>5. The Actors<a class="headerlink" href="#the-actors" title="Permalink to this headline">¶</a></h1>
+<p>The following section describes the <code class="xref py py-class docutils literal"><span class="pre">Actor</span></code> include in Gridsim.</p>
+<p>It consists into four actors :</p>
+<ul class="simple">
+<li><a class="reference internal" href="#gridsim-actor-battery"><span class="std std-ref">The battery model</span></a></li>
+<li><a class="reference internal" href="#gridsim-actor-domestichotwater"><span class="std std-ref">The domestic hot water model</span></a></li>
+<li><a class="reference internal" href="#gridsim-actor-spaceheating"><span class="std std-ref">The space heating model</span></a></li>
+<li><a class="reference internal" href="#gridsim-actor-pqfilereader"><span class="std std-ref">A file reader model</span></a></li>
+</ul>
+<span class="target" id="module-gridsim.cyberphysical.actor"></span><p>The class <a class="reference internal" href="documentation.html#gridsim.cyberphysical.element.Actor" title="gridsim.cyberphysical.element.Actor"><code class="xref py py-class docutils literal"><span class="pre">gridsim.cyberphysical.element.Actor</span></code></a> represents a virtual device that can be connected to an
+<a class="reference internal" href="documentation.html#gridsim.cyberphysical.element.AbstractCyberPhysicalSystem" title="gridsim.cyberphysical.element.AbstractCyberPhysicalSystem"><code class="xref py py-class docutils literal"><span class="pre">gridsim.cyberphysical.element.AbstractCyberPhysicalSystem</span></code></a> to communicate with the real world.</p>
+<div class="section" id="module-gridsim.cyberphysical.actor.battery">
+<span id="the-battery-model"></span><span id="gridsim-actor-battery"></span><h2>5.1. The battery model<a class="headerlink" href="#module-gridsim.cyberphysical.actor.battery" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Yann Maret &lt;<a class="reference external" href="mailto:yann&#46;maret&#37;&#52;&#48;hevs&#46;ch">yann<span>&#46;</span>maret<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Yann Maret &lt;<a class="reference external" href="mailto:yann&#46;maret&#37;&#52;&#48;hevs&#46;ch">yann<span>&#46;</span>maret<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<dl class="class">
+<dt id="gridsim.cyberphysical.actor.battery.Battery">
+<em class="property">class </em><code class="descclassname">gridsim.cyberphysical.actor.battery.</code><code class="descname">Battery</code><span class="sig-paren">(</span><em>self</em>, <em>friendly_name</em>, <em>start_energy</em>, <em>max_energy</em>, <em>power</em>, <em>read_params</em>, <em>write_params</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery" title="Permalink to this definition">¶</a></dt>
+<dd><p>This <code class="xref py py-class docutils literal"><span class="pre">Actor</span></code> simulates the behavior of a battery. The charge and discharge is considered equal.
+The battery reach a max energy when the battery is full and the empty state when the battery is low.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">On consumption, the power is considered positive.
+On injection, the power is considered negative.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> &#8211; friendly name for the <a class="reference internal" href="core.html#gridsim.core.AbstractSimulationElement" title="gridsim.core.AbstractSimulationElement"><code class="xref py py-class docutils literal"><span class="pre">gridsim.core.AbstractSimulationElement</span></code></a></li>
+<li><strong>start_energy</strong> &#8211; amount of energy to start with</li>
+<li><strong>max_energy</strong> &#8211; max energy of the battery, the battery will stop storing</li>
+<li><strong>power</strong> &#8211; power rate for the storage and discharge</li>
+<li><strong>read_params</strong> &#8211; read parameter for the actor</li>
+<li><strong>write_params</strong> &#8211; write parameter for the actor</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.battery.Battery.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.battery.Battery.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.battery.Battery.calculate">
+<code class="descname">calculate</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.battery.Battery.notify_read_param">
+<code class="descname">notify_read_param</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery.notify_read_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.battery.Battery.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.battery.Battery.cyberphysical_module_end">
+<code class="descname">cyberphysical_module_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.battery.Battery.cyberphysical_module_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.cyberphysical.actor.domestichotwater">
+<span id="the-domestic-hot-water-model"></span><span id="gridsim-actor-domestichotwater"></span><h2>5.2. The domestic hot water model<a class="headerlink" href="#module-gridsim.cyberphysical.actor.domestichotwater" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Yann Maret &lt;<a class="reference external" href="mailto:yann&#46;maret&#37;&#52;&#48;hevs&#46;ch">yann<span>&#46;</span>maret<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<dl class="class">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.BoilerMaterial">
+<em class="property">class </em><code class="descclassname">gridsim.cyberphysical.actor.domestichotwater.</code><code class="descname">BoilerMaterial</code><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.BoilerMaterial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of steel:</p>
+<ul class="simple">
+<li>Thermal capacity: <code class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></code></li>
+<li>Weight: <code class="docutils literal"><span class="pre">unknown</span> <span class="pre">(None)</span></code></li>
+<li>Thermal conductivity <code class="docutils literal"><span class="pre">0.04</span> <span class="pre">W/Km</span></code></li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler">
+<em class="property">class </em><code class="descclassname">gridsim.cyberphysical.actor.domestichotwater.</code><code class="descname">Boiler</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>friendly_name</strong> (<em>str, unicode</em>) &#8211; Friendly name to give to the process.</li>
+<li><strong>height</strong> (<em>units.metre</em>) &#8211; the height of the boiler</li>
+<li><strong>radius</strong> (<em>units.metre</em>) &#8211; the radius of the boiler</li>
+<li><strong>thickness</strong> (<em>units.metre</em>) &#8211; the thickness of the boiler</li>
+<li><strong>initial_temperature</strong> (<em>units.kelvin</em>) &#8211; the initial temperature of the water
+in the boiler.</li>
+<li><strong>heat_transfer_coeff</strong> (<em>units.watt/(units.kelvin*(units.meter**2)</em>) &#8211; the heat transfer coefficient</li>
+<li><strong>power</strong> (<em>units.watt</em>) &#8211; the electrical power to heat the boiler</li>
+<li><strong>temperature_in</strong> (<em>units.kelvin</em>) &#8211; the temperature of the input water</li>
+<li><strong>time_series</strong> (class:<cite>gridsim.timeseries.TimeSeries</cite>) &#8211; the time_series to load the stream</li>
+<li><strong>readparamlist</strong> &#8211; read parameter of the actor</li>
+<li><strong>writeparamlist</strong> &#8211; write parameter of the actor</li>
+<li><strong>time_converter</strong> (types.FunctionType or <code class="docutils literal"><span class="pre">None</span></code>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.temperature">
+<code class="descname">temperature</code><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>The water temperature is consider as uniform in the tank.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.on">
+<code class="descname">on</code><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.on" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal"><span class="pre">on</span></code> parameter allows to turn on or off the boiler.
+If <code class="docutils literal"><span class="pre">on</span> <span class="pre">is</span> <span class="pre">True</span></code> the boiler is running (maintains the boiler temperature between hysteresis), otherwise the
+boiler is shutdown (and cannot heat the water).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.power">
+<code class="descname">power</code><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.power" title="Permalink to this definition">¶</a></dt>
+<dd><p>The electrical power of the boiler <code class="docutils literal"><span class="pre">power</span></code> if heating, otherwise <code class="docutils literal"><span class="pre">0</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the time to default (<code class="docutils literal"><span class="pre">0</span></code>).</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="tools.html#gridsim.timeseries.TimeSeriesObject.set_time" title="gridsim.timeseries.TimeSeriesObject.set_time"><code class="xref py py-func docutils literal"><span class="pre">gridsim.timeseries.TimeSeriesObject.set_time()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.calculate">
+<code class="descname">calculate</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.notify_read_param">
+<code class="descname">notify_read_param</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.notify_read_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.domestichotwater.Boiler.cyberphysical_module_end">
+<code class="descname">cyberphysical_module_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.domestichotwater.Boiler.cyberphysical_module_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.cyberphysical.actor.spaceheating">
+<span id="the-space-heating-model"></span><span id="gridsim-actor-spaceheating"></span><h2>5.3. The space heating model<a class="headerlink" href="#module-gridsim.cyberphysical.actor.spaceheating" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Michael Clausen &lt;<a class="reference external" href="mailto:clm&#37;&#52;&#48;hevs&#46;ch">clm<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Gillian Basso &lt;<a class="reference external" href="mailto:gillian&#46;basso&#37;&#52;&#48;hevs&#46;ch">gillian<span>&#46;</span>basso<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Yann Maret &lt;<a class="reference external" href="mailto:yann&#46;maret&#37;&#52;&#48;hevs&#46;ch">yann<span>&#46;</span>maret<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<dl class="class">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler">
+<em class="property">class </em><code class="descclassname">gridsim.cyberphysical.actor.spaceheating.</code><code class="descname">ElectroThermalHeaterCooler</code><span class="sig-paren">(</span><em>self</em>, <em>friendly_name</em>, <em>pwr</em>, <em>efficiency_factor</em>, <em>thermal_process</em>, <em>readparamlist</em>, <em>writeparamlist</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This <code class="xref py py-class docutils literal"><span class="pre">Actor</span></code> can either heat of cool a <a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><code class="xref py py-class docutils literal"><span class="pre">gridsim.thermal.core.ThermalProcess</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> &#8211; friendly name for the AbstractElectricalCPSElement</li>
+<li><strong>pwr</strong> &#8211; power of the heater/cooler system</li>
+<li><strong>efficiency_factor</strong> &#8211; efficiency factor of the system</li>
+<li><strong>thermal_process</strong> &#8211; thermal process of the system</li>
+<li><strong>read_params</strong> &#8211; read parameter of the actor</li>
+<li><strong>write_params</strong> &#8211; write parameter of the actor</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.on">
+<code class="descname">on</code><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.on" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal"><span class="pre">on</span></code> parameter allows to turn on or off the system.
+If <code class="docutils literal"><span class="pre">on</span> <span class="pre">is</span> <span class="pre">True</span></code> the system is running (change temperature of the
+<a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><code class="xref py py-class docutils literal"><span class="pre">gridsim.thermal.core.ThermalProcess</span></code></a>), otherwise the system is shutdown (and do not influence the
+<a class="reference internal" href="core.html#gridsim.thermal.core.ThermalProcess" title="gridsim.thermal.core.ThermalProcess"><code class="xref py py-class docutils literal"><span class="pre">gridsim.thermal.core.ThermalProcess</span></code></a>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.calculate">
+<code class="descname">calculate</code><span class="sig-paren">(</span><em>time</em>, <em>delta_time</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>time</em>, <em>delta_time</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.notify_read_param">
+<code class="descname">notify_read_param</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.notify_read_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.cyberphysical_module_end">
+<code class="descname">cyberphysical_module_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.spaceheating.ElectroThermalHeaterCooler.cyberphysical_module_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gridsim.cyberphysical.actor.pqfilereader">
+<span id="a-file-reader-model"></span><span id="gridsim-actor-pqfilereader"></span><h2>5.4. A file reader model<a class="headerlink" href="#module-gridsim.cyberphysical.actor.pqfilereader" title="Permalink to this headline">¶</a></h2>
+<p><em>Module author: Yann Maret &lt;<a class="reference external" href="mailto:yann&#46;maret&#37;&#52;&#48;hevs&#46;ch">yann<span>&#46;</span>maret<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<p><em>Code author: Yann Maret &lt;<a class="reference external" href="mailto:yann&#46;maret&#37;&#52;&#48;hevs&#46;ch">yann<span>&#46;</span>maret<span>&#64;</span>hevs<span>&#46;</span>ch</a>&gt;</em></p>
+<dl class="class">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader">
+<em class="property">class </em><code class="descclassname">gridsim.cyberphysical.actor.pqfilereader.</code><code class="descname">PQFileReader</code><span class="sig-paren">(</span><em>self</em>, <em>friendly_name</em>, <em>infile</em>, <em>outfile</em>, <em>read_params</em>, <em>write_params</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the PQFileReader Actor with the read_params and write_params dependency list.
+Data are read from infile, and get to the simulation on getValue function call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>friendly_name</strong> &#8211; Element name id</li>
+<li><strong>in_file_name</strong> &#8211; csv file to read value from (P,Q)</li>
+<li><strong>out_file_name</strong> &#8211; log the data out</li>
+<li><strong>read_params</strong> &#8211; Read param to register on</li>
+<li><strong>write_params</strong> &#8211; Write param to register on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.initFile">
+<code class="descname">initFile</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.initFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the File to read data from,
+and prepare the output file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>time</em>, <em>delta_time</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.calculate">
+<code class="descname">calculate</code><span class="sig-paren">(</span><em>time</em>, <em>delta_time</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.cyberphysical_read_end">
+<code class="descname">cyberphysical_read_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.cyberphysical_read_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.notify_read_param">
+<code class="descname">notify_read_param</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.notify_read_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gridsim.cyberphysical.actor.pqfilereader.PQFileReader.cyberphysical_module_end">
+<code class="descname">cyberphysical_module_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gridsim.cyberphysical.actor.pqfilereader.PQFileReader.cyberphysical_module_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="unit.html" class="btn btn-neutral float-right" title="6. The Simulation Unit" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tools.html" class="btn btn-neutral" title="4. The Simulation Tools" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="copyright.html">Copyright</a> 2013-2015, The Gridsim Team.
+      Last updated on Dec 05, 2016.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
